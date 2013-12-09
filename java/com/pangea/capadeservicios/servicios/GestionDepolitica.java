@@ -35,6 +35,28 @@ politicaFacade politicaFacade;
     
     
      
+       @WebMethod(operationName = "listar")
+    public  List<politica> listar() {
+        return politicaFacade.listarPolitica();
+    }
+    
+    @WebMethod(operationName = "insertarPolitica")
+    public void insertarPolitica(@WebParam(name = "registroUsuario") politica registro) {
+ 
+      politicaFacade.insertarPolitica(registro);
+    }
+    
+     @WebMethod(operationName = "editarPolitica")
+    public void editarPolitica(@WebParam(name = "registroUsuario") politica registro) {
+ 
+      politicaFacade.editarPolitica(registro);
+    }
+      @WebMethod(operationName = "eliminarPolitica")
+    public void eliminarPolitica(@WebParam(name = "idPolitica") String ID) {
+ 
+      politicaFacade.eliminarPolitica(ID);
+    }
+    
    
        @WebMethod(operationName = "contarPolitica")
     public int contarPolitica() {
@@ -47,5 +69,6 @@ politicaFacade politicaFacade;
 
         return  politicaFacade.find(ID);
     }
+       
     
 }

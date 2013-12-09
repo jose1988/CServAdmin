@@ -6,6 +6,7 @@ package com.pangea.capadeservicios.servicios;
 
 
 import com.pangea.capadeservicios.beans.skinFacade;
+import com.pangea.capadeservicios.entidades.politica;
 import com.pangea.capadeservicios.entidades.skin;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +33,40 @@ skinFacade skinFacade;
         return "Hello " + txt + " !";
     }
         
-   
     
        @WebMethod(operationName = "contarSkin")
     public int contarSkin() {
 
         return skinFacade.count();
     }
+       
+       @WebMethod(operationName = "listar")
+    public  List<skin> listar() {
+        return skinFacade.listarSkin();
+    }
+    
+    @WebMethod(operationName = "insertarSkin")
+    public void insertarSkin(@WebParam(name = "registroUsuario") skin registro) {
+ 
+      skinFacade.insertarSkin(registro);
+    }
+    
+     @WebMethod(operationName = "editarSkin")
+    public void editarSkin(@WebParam(name = "registroUsuario") skin registro) {
+ 
+      skinFacade.editarSkin(registro);
+    }
+      @WebMethod(operationName = "eliminarSkin")
+    public void eliminarSkin(@WebParam(name = "idPolitica") String ID) {
+ 
+     skinFacade.eliminarSkin(ID);
+    }
+    
+           @WebMethod(operationName = "buscarSkin")
+    public skin  buscarSkin(@WebParam(name = "buscarPolitica") Long ID)  {
+
+        return  skinFacade.find(ID);
+    }
+      
+  
 }

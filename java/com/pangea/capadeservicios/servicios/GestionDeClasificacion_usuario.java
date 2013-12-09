@@ -20,20 +20,37 @@ import javax.jws.WebParam;
  */
 @WebService(serviceName = "GestionDeClasificacion_usuario")
 public class GestionDeClasificacion_usuario {
-
-    /**
-     * This is a sample web service operation
-     */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
-    @EJB
+@EJB
     clasificacion_usuarioFacade clasificacion_usuarioFacade;
     
+       @WebMethod(operationName = "listar")
+    public  List<clasificacion_usuario> listar() {
+        return clasificacion_usuarioFacade.listaclasificacion_usuario();
+    }
     
+    @WebMethod(operationName = "insertarClasificacionUsuario")
+    public void insertarClasificacionUsuario(@WebParam(name = "registroUsuario") clasificacion_usuario registro) {
+ 
+      clasificacion_usuarioFacade.insertarclasificacion_usuario(registro);
+    }
     
-     
+     @WebMethod(operationName = "editarClasificacionUsuario")
+    public void editarClasificacionUsuario(@WebParam(name = "registroUsuario") clasificacion_usuario registro) {
+ 
+      clasificacion_usuarioFacade.editarclasificacion_usuario(registro);
+    }
+      @WebMethod(operationName = "eliminarClasificacionUsuario")
+    public void eliminarClasificacionUsuario(@WebParam(name = "idPolitica") String ID) {
+ 
+      clasificacion_usuarioFacade.eliminarclasificacion_usuario(ID);
+    }
+ 
+          @WebMethod(operationName = "buscarClasificacionUsuario")
+    public clasificacion_usuario buscarClasificacionUsuario(@WebParam(name = "buscarPolitica") Long ID)  {
+
+        return  clasificacion_usuarioFacade.find(ID);
+    }
+    
      
      @WebMethod(operationName = "contarClasificacion_usuario")
     public int contarClasificacion_usuario() {
