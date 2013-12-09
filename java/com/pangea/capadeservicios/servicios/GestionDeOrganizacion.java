@@ -6,6 +6,7 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.organizacionFacade;
 import com.pangea.capadeservicios.entidades.organizacion;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -46,9 +47,9 @@ public class GestionDeOrganizacion {
      * @param registro
      */
     @WebMethod(operationName = "insertarOrganizacion")
-    public void insertarOrganizacion(@WebParam(name = "registroOrganizacion") organizacion registro) {
+    public void insertarOrganizacion(@WebParam(name = "registroOrganizacion") organizacion registroOrganizacion) {
  
-      organizacionFacade.insertarOrganizacion(registro);
+      organizacionFacade.insertarOrganizacion(registroOrganizacion);
     }
     
     /**
@@ -56,9 +57,9 @@ public class GestionDeOrganizacion {
      * @param registro
      */
     @WebMethod(operationName = "editarOrganizacion")
-    public void editarOrganizacion(@WebParam(name = "registroOrganizacion") organizacion registro) {
+    public void editarOrganizacion(@WebParam(name = "registroOrganizacion") organizacion registroOrganizacion) {
  
-      organizacionFacade.editarOrganizacion(registro);
+      organizacionFacade.editarOrganizacion(registroOrganizacion);
     }
     
     /**
@@ -66,8 +67,23 @@ public class GestionDeOrganizacion {
      * @param ID
      */
     @WebMethod(operationName = "eliminarOrganizacion")
-    public void eliminarOrganizacion(@WebParam(name = "idOrganizacion") String ID) {
+    public void eliminarOrganizacion(@WebParam(name = "idOrganizacion") String idOrganizacion) {
  
-      organizacionFacade.eliminarOrganizacion(ID);
+      organizacionFacade.eliminarOrganizacion(idOrganizacion);
+    }
+    
+    /**
+     * Método que busca la organizacion
+     * @param ID
+     */
+    @WebMethod(operationName = "buscarOrganizacion")
+    public organizacion buscarOrganizacion(@WebParam(name = "idOrganizacion") String idOrganizacion)  {
+
+        try {
+            organizacion find = organizacionFacade.find(new BigDecimal(idOrganizacion));
+            return find;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

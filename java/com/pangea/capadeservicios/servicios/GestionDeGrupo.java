@@ -13,6 +13,8 @@ import com.pangea.capadeservicios.entidades.usuario_grupo_rol;
 import com.pangea.capadeservicios.envoltorios.WR_rol;
 import com.pangea.capadeservicios.envoltorios.WR_usuario_grupo_rol;
 import com.pangea.capadeservicios.validadores.GestionDeGrupoValidador;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -157,9 +159,9 @@ public class GestionDeGrupo {
      * @param registro
      */
     @WebMethod(operationName = "insertarGrupo")
-    public void insertarGrupo(@WebParam(name = "registroGrupo") grupo registro) {
+    public void insertarGrupo(@WebParam(name = "registroGrupo") grupo registroGrupo) {
  
-      grupoFacade.insertarGrupo(registro);
+      grupoFacade.insertarGrupo(registroGrupo);
     }
     
     /**
@@ -167,9 +169,9 @@ public class GestionDeGrupo {
      * @param registro
      */
     @WebMethod(operationName = "editarGrupo")
-    public void editarGrupo(@WebParam(name = "registroGrupo") grupo registro) {
+    public void editarGrupo(@WebParam(name = "registroGrupo") grupo registroGrupo) {
  
-      grupoFacade.editarGrupo(registro);
+      grupoFacade.editarGrupo(registroGrupo);
     }
     
     /**
@@ -177,8 +179,23 @@ public class GestionDeGrupo {
      * @param ID
      */
     @WebMethod(operationName = "eliminarGrupo")
-    public void eliminarGrupo(@WebParam(name = "idGrupo") String ID) {
+    public void eliminarGrupo(@WebParam(name = "idGrupo") String idGrupo) {
  
-      grupoFacade.eliminarGrupo(ID);
+      grupoFacade.eliminarGrupo(idGrupo);
+    }
+    
+    /**
+     * Método que busca el grupo
+     * @param ID
+     */
+    @WebMethod(operationName = "buscarGrupo")
+    public grupo buscarGrupo(@WebParam(name = "idGrupo") String idGrupo)  {
+        
+        try {
+            grupo find = grupoFacade.find(idGrupo);
+            return find;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

@@ -6,6 +6,7 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.reporteFacade;
 import com.pangea.capadeservicios.entidades.reporte;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -46,9 +47,9 @@ public class GestionarReporte {
      * @param registro
      */
     @WebMethod(operationName = "insertarReporte")
-    public void insertarReporte(@WebParam(name = "registroReporte") reporte registro) {
+    public void insertarReporte(@WebParam(name = "registroReporte") reporte registroReporte) {
  
-      reporteFacade.create(registro);
+      reporteFacade.create(registroReporte);
     }
     
     /**
@@ -56,9 +57,9 @@ public class GestionarReporte {
      * @param registro
      */
     @WebMethod(operationName = "editarReporte")
-    public void editarReporte(@WebParam(name = "registroReporte") reporte registro) {
+    public void editarReporte(@WebParam(name = "registroReporte") reporte registroReporte) {
  
-      reporteFacade.edit(registro);
+      reporteFacade.edit(registroReporte);
     }
     
     /**
@@ -66,8 +67,23 @@ public class GestionarReporte {
      * @param ID
      */
     @WebMethod(operationName = "eliminarReporte")
-    public void eliminarReporte(@WebParam(name = "idReporte") String ID) {
+    public void eliminarReporte(@WebParam(name = "idReporte") String idReporte) {
  
-      reporteFacade.eliminarReporte(ID);
+      reporteFacade.eliminarReporte(idReporte);
+    }
+    
+    /**
+     * Método que busca el reporte
+     * @param ID
+     */
+    @WebMethod(operationName = "buscarReporte")
+    public reporte buscarReporte(@WebParam(name = "idReporte") String idReporte)  {
+
+        try {
+            reporte find = reporteFacade.find(new BigDecimal(idReporte));
+            return find;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }
