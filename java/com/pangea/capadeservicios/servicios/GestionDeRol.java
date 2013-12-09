@@ -1,0 +1,63 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.pangea.capadeservicios.servicios;
+
+import com.pangea.capadeservicios.beans.rolFacade;
+import com.pangea.capadeservicios.beans.usuario_grupo_rolFacade;
+import com.pangea.capadeservicios.entidades.rol;
+import com.pangea.capadeservicios.entidades.usuario_grupo_rol;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+/**
+ *
+ * @author Pangea
+ */
+@WebService(serviceName = "GestionDeRol")
+public class GestionDeRol {
+
+    @EJB
+    rolFacade rolFacade;
+    @EJB
+    usuario_grupo_rolFacade usuarioGrupoRolFacade;
+
+    /**
+     * This is a sample web service operation
+     */
+    @WebMethod(operationName = "hello")
+    public String hello(@WebParam(name = "name") String txt) {
+        return "Hello " + txt + " !";
+    }
+
+    @WebMethod(operationName = "contarRol")
+    public int contarRol() {
+        return rolFacade.count();
+    }
+
+    @WebMethod(operationName = "listarRol")
+    public List<rol> listarRol() {
+        return rolFacade.listar();
+    }
+
+    @WebMethod(operationName = "insertarRol")
+    public void insertarRol(@WebParam(name = "registroRol") rol registro) {
+        rolFacade.insertar(registro);
+    }
+
+    @WebMethod(operationName = "editarRol")
+    public void editarRol(@WebParam(name = "registroRol") rol registro) {
+        rolFacade.editar(registro);
+    }
+
+    @WebMethod(operationName = "eliminarRol")
+    public void eliminarRol(@WebParam(name = "idRol") String ID) {
+        rolFacade.eliminar(ID);
+    }
+}
