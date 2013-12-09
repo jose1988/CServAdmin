@@ -6,16 +6,13 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.grupoFacade;
 import com.pangea.capadeservicios.beans.usuario_grupo_rolFacade;
-import com.pangea.capadeservicios.clienteweb.Grupo;
 import com.pangea.capadeservicios.entidades.grupo;
 import com.pangea.capadeservicios.entidades.rol;
 import com.pangea.capadeservicios.entidades.usuario;
 import com.pangea.capadeservicios.entidades.usuario_grupo_rol;
-import com.pangea.capadeservicios.envoltorios.WR_resultado;
 import com.pangea.capadeservicios.envoltorios.WR_rol;
 import com.pangea.capadeservicios.envoltorios.WR_usuario_grupo_rol;
 import com.pangea.capadeservicios.validadores.GestionDeGrupoValidador;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -37,26 +34,15 @@ public class GestionDeGrupo {
     GestionDeGrupoValidador myValidador = new GestionDeGrupoValidador();
 
     /**
-     * This is a sample web service operation
-     *
-     * @param txt
-     * @return
-     */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
-
-    /**
-     *
-     * @return
+     * Método que cuenta la cantidad de grupos que estan almacenados
+     * @return número entero con la cantidad de grupos
      */
     @WebMethod(operationName = "contarGrupo")
     public int contarGrupo() {
 
         return grupoFacade.count();
     }
-
+    
     /**
      * Método que lista la información de la tabla usuario_grupo_rol
      * especificamente por el usuario ingresado cuando se inicia sesión,
@@ -74,7 +60,7 @@ public class GestionDeGrupo {
     /**
      * Método que lista los grupos almacenados y los ordena por nombre
      *
-     * @return
+     * @return lista de tipo grupo
      */
     @WebMethod(operationName = "listarGrupos")
     public List<grupo> listarGrupos() {
@@ -163,5 +149,36 @@ public class GestionDeGrupo {
             e.printStackTrace();
         }
         return Resultado;
+    }
+    
+    
+    /**
+     * Método que inserta el grupo
+     * @param registro
+     */
+    @WebMethod(operationName = "insertarGrupo")
+    public void insertarGrupo(@WebParam(name = "registroGrupo") grupo registro) {
+ 
+      grupoFacade.insertarGrupo(registro);
+    }
+    
+    /**
+     * Método que edita el grupo
+     * @param registro
+     */
+    @WebMethod(operationName = "editarGrupo")
+    public void editarGrupo(@WebParam(name = "registroGrupo") grupo registro) {
+ 
+      grupoFacade.editarGrupo(registro);
+    }
+    
+    /**
+     * Método que elimina el grupo de manera lógica
+     * @param ID
+     */
+    @WebMethod(operationName = "eliminarGrupo")
+    public void eliminarGrupo(@WebParam(name = "idGrupo") String ID) {
+ 
+      grupoFacade.eliminarGrupo(ID);
     }
 }
