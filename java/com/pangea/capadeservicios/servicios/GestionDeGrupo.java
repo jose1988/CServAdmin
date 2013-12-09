@@ -13,8 +13,6 @@ import com.pangea.capadeservicios.entidades.usuario_grupo_rol;
 import com.pangea.capadeservicios.envoltorios.WR_rol;
 import com.pangea.capadeservicios.envoltorios.WR_usuario_grupo_rol;
 import com.pangea.capadeservicios.validadores.GestionDeGrupoValidador;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -192,7 +190,7 @@ public class GestionDeGrupo {
     public grupo buscarGrupo(@WebParam(name = "idGrupo") String idGrupo)  {
         
         try {
-            grupo find = grupoFacade.find(idGrupo);
+            grupo find = grupoFacade.find(new Long(idGrupo));
             return find;
         } catch (Exception ex) {
             return null;

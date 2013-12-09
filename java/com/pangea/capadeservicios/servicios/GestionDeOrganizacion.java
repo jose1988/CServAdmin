@@ -6,7 +6,6 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.organizacionFacade;
 import com.pangea.capadeservicios.entidades.organizacion;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -80,7 +79,7 @@ public class GestionDeOrganizacion {
     public organizacion buscarOrganizacion(@WebParam(name = "idOrganizacion") String idOrganizacion)  {
 
         try {
-            organizacion find = organizacionFacade.find(new BigDecimal(idOrganizacion));
+            organizacion find = organizacionFacade.find(new Long(idOrganizacion));
             return find;
         } catch (Exception ex) {
             return null;

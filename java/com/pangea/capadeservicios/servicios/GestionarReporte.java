@@ -6,7 +6,6 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.reporteFacade;
 import com.pangea.capadeservicios.entidades.reporte;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
@@ -80,7 +79,7 @@ public class GestionarReporte {
     public reporte buscarReporte(@WebParam(name = "idReporte") String idReporte)  {
 
         try {
-            reporte find = reporteFacade.find(new BigDecimal(idReporte));
+            reporte find = reporteFacade.find(new Long(idReporte));
             return find;
         } catch (Exception ex) {
             return null;
