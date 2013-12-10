@@ -8,6 +8,7 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.politicaFacade;
 import com.pangea.capadeservicios.entidades.politica;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -65,9 +66,9 @@ politicaFacade politicaFacade;
     }
     
           @WebMethod(operationName = "buscarPolitica")
-    public politica  buscarPolitica(@WebParam(name = "buscarPolitica") Long ID)  {
-
-        return  politicaFacade.find(ID);
+    public politica  buscarPolitica(@WebParam(name = "ID") String ID)  {
+    
+        return  politicaFacade.find(new Long(ID));
     }
        
     

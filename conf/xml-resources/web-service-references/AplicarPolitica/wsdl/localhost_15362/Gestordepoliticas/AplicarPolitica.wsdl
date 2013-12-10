@@ -4,31 +4,31 @@
 <xsd:import namespace="http://servicios.gestordepoliticas.pangea.com/" schemaLocation="http://localhost:15362/Gestordepoliticas/AplicarPolitica?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="ConsultarCandidatos">
-<part name="parameters" element="tns:ConsultarCandidatos"/>
-</message>
-<message name="ConsultarCandidatosResponse">
-<part name="parameters" element="tns:ConsultarCandidatosResponse"/>
-</message>
 <message name="AplicarPolitica">
 <part name="parameters" element="tns:AplicarPolitica"/>
 </message>
 <message name="AplicarPoliticaResponse">
 <part name="parameters" element="tns:AplicarPoliticaResponse"/>
 </message>
+<message name="ConsultarCandidatos">
+<part name="parameters" element="tns:ConsultarCandidatos"/>
+</message>
+<message name="ConsultarCandidatosResponse">
+<part name="parameters" element="tns:ConsultarCandidatosResponse"/>
+</message>
 <portType name="AplicarPolitica">
-<operation name="ConsultarCandidatos">
-<input wsam:Action="http://servicios.gestordepoliticas.pangea.com/AplicarPolitica/ConsultarCandidatosRequest" message="tns:ConsultarCandidatos"/>
-<output wsam:Action="http://servicios.gestordepoliticas.pangea.com/AplicarPolitica/ConsultarCandidatosResponse" message="tns:ConsultarCandidatosResponse"/>
-</operation>
 <operation name="AplicarPolitica">
 <input wsam:Action="http://servicios.gestordepoliticas.pangea.com/AplicarPolitica/AplicarPoliticaRequest" message="tns:AplicarPolitica"/>
 <output wsam:Action="http://servicios.gestordepoliticas.pangea.com/AplicarPolitica/AplicarPoliticaResponse" message="tns:AplicarPoliticaResponse"/>
 </operation>
+<operation name="ConsultarCandidatos">
+<input wsam:Action="http://servicios.gestordepoliticas.pangea.com/AplicarPolitica/ConsultarCandidatosRequest" message="tns:ConsultarCandidatos"/>
+<output wsam:Action="http://servicios.gestordepoliticas.pangea.com/AplicarPolitica/ConsultarCandidatosResponse" message="tns:ConsultarCandidatosResponse"/>
+</operation>
 </portType>
 <binding name="AplicarPoliticaPortBinding" type="tns:AplicarPolitica">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="ConsultarCandidatos">
+<operation name="AplicarPolitica">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -37,7 +37,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="AplicarPolitica">
+<operation name="ConsultarCandidatos">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
