@@ -30,9 +30,9 @@ public class clasificacion_rolFacade extends AbstractFacade<clasificacion_rol> {
         super(clasificacion_rol.class);
     }
 
-    public List<clasificacion_rol> listar() {
+    public List<clasificacion_rol> listarClasifRol(boolean borrado) {
         List<clasificacion_rol> c = null;
-        c = (List<clasificacion_rol>) em.createNamedQuery("clasificacion_rol.findAll").getResultList();
+        c = (List<clasificacion_rol>) em.createNamedQuery("clasificacion_rol.findByBorrado").setParameter("borrado",borrado).getResultList();
         return c;
     }
 
@@ -48,5 +48,10 @@ public class clasificacion_rolFacade extends AbstractFacade<clasificacion_rol> {
         Query q = em.createNativeQuery("UPDATE clasificacion_rol SET borrado='true' WHERE id=?");
         q.setParameter(1, ID);
         q.executeUpdate();
+    }
+       public clasificacion_rol consultarClasifRol(long idClasifRol) {
+        clasificacion_rol Registro;
+        Registro=this.find(idClasifRol);
+        return Registro;
     }
 }

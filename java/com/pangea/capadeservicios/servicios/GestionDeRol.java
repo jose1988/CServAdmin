@@ -42,8 +42,8 @@ public class GestionDeRol {
     }
 
     @WebMethod(operationName = "listarRol")
-    public List<rol> listarRol() {
-        return rolFacade.listar();
+    public List<rol> listarRol(@WebParam(name = "borrado") boolean borrado) {
+        return rolFacade.listarRol(borrado);
     }
 
     @WebMethod(operationName = "insertarRol")
@@ -59,5 +59,10 @@ public class GestionDeRol {
     @WebMethod(operationName = "eliminarRol")
     public void eliminarRol(@WebParam(name = "idRol") String ID) {
         rolFacade.eliminar(ID);
+    }
+
+    @WebMethod(operationName = "consultarRol")
+    public rol consultarRol(@WebParam(name = "idRol") String idRol) {
+       return rolFacade.consultarRol(Long.parseLong(idRol));
     }
 }

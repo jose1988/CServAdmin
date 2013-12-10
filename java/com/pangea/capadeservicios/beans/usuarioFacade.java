@@ -61,4 +61,9 @@ public class usuarioFacade extends AbstractFacade<usuario> {
         q.setParameter(1, ID);
         q.executeUpdate();
     }
+      public usuario consultarUsuario(long idUsuario) {
+        usuario Registro;
+        Registro=this.find(idUsuario);
+        return Registro;
+    }
 }

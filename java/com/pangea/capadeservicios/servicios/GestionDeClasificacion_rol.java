@@ -21,7 +21,7 @@ import javax.jws.WebParam;
 public class GestionDeClasificacion_rol {
 
     @EJB
-    clasificacion_rolFacade clasificacion_rol_Facadee;
+    clasificacion_rolFacade clasificacionRolFacade;
 
     /**
      * This is a sample web service operation
@@ -33,26 +33,30 @@ public class GestionDeClasificacion_rol {
 
     @WebMethod(operationName = "contarClasificacion")
     public int contarClasificacionRol() {
-        return clasificacion_rol_Facadee.count();
+        return clasificacionRolFacade.count();
     }
 
     @WebMethod(operationName = "listarClasificacionRol")
-    public List<clasificacion_rol> listarClasificacionRol() {
-        return clasificacion_rol_Facadee.listar();
+    public List<clasificacion_rol> listarClasificacionRol(@WebParam(name = "borrado") boolean borrado) {
+        return clasificacionRolFacade.listarClasifRol(borrado);
     }
 
     @WebMethod(operationName = "insertarClasificacionRol")
     public void insertarClasificacionRol(@WebParam(name = "registroClaRol") clasificacion_rol registro) {
-        clasificacion_rol_Facadee.insertar(registro);
+        clasificacionRolFacade.insertar(registro);
     }
 
     @WebMethod(operationName = "editarClasificacionRol")
     public void editarClasificacionRol(@WebParam(name = "registroClaRol") clasificacion_rol registro) {
-        clasificacion_rol_Facadee.editar(registro);
+        clasificacionRolFacade.editar(registro);
     }
 
     @WebMethod(operationName = "eliminarClasificacionRol")
     public void eliminarClasificacionRol(@WebParam(name = "idClaRol") String ID) {
-        clasificacion_rol_Facadee.eliminar(ID);
+        clasificacionRolFacade.eliminar(ID);
+    }
+    @WebMethod(operationName = "consultarClasifRol")
+    public clasificacion_rol consultarClasifRol(@WebParam(name = "idClasifRol") String idClasifRol) {
+       return clasificacionRolFacade.consultarClasifRol(Long.parseLong(idClasifRol));
     }
 }

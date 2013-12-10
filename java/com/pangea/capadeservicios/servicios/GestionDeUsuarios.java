@@ -70,4 +70,8 @@ public class GestionDeUsuarios {
     public void eliminarUsuario(@WebParam(name = "idUsuario") String ID) {
         usuarioFacade.eliminar(ID);
     }
+    @WebMethod(operationName = "consultarUsuario")
+    public usuario consultarUsuario(@WebParam(name = "idUsuario") String idUsuario) {
+       return usuarioFacade.consultarUsuario(Long.parseLong(idUsuario));
+    }
 }

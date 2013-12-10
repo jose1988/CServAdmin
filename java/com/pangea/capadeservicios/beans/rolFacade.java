@@ -30,9 +30,9 @@ public class rolFacade extends AbstractFacade<rol> {
         super(rol.class);
     }
 
-    public List<rol> listar() {
+    public List<rol> listarRol(boolean borrado) {
         List<rol> c = null;
-        c = (List<rol>) em.createNamedQuery("rol.findAll").getResultList();
+        c = (List<rol>) em.createNamedQuery("rol.findByBorrado").setParameter("borrado", borrado).getResultList();
         return c;
     }
 
@@ -48,5 +48,11 @@ public class rolFacade extends AbstractFacade<rol> {
         Query q = em.createNativeQuery("UPDATE rol SET borrado='true' WHERE id=?");
         q.setParameter(1, ID);
         q.executeUpdate();
+    }
+
+    public rol consultarRol(long idRol) {
+        rol Registro;
+        Registro=this.find(idRol);
+        return Registro;
     }
 }
