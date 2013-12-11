@@ -6,6 +6,7 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.rolFacade;
 import com.pangea.capadeservicios.beans.usuario_grupo_rolFacade;
+import com.pangea.capadeservicios.entidades.clasificacion_rol;
 import com.pangea.capadeservicios.entidades.rol;
 import com.pangea.capadeservicios.entidades.usuario_grupo_rol;
 import java.util.ArrayList;
@@ -47,13 +48,13 @@ public class GestionDeRol {
     }
 
     @WebMethod(operationName = "insertarRol")
-    public void insertarRol(@WebParam(name = "registroRol") rol registro) {
-        rolFacade.insertar(registro);
+    public void insertarRol(@WebParam(name = "registroRol") rol registroRol) {
+        rolFacade.insertar(registroRol);
     }
 
     @WebMethod(operationName = "editarRol")
-    public void editarRol(@WebParam(name = "registroRol") rol registro) {
-        rolFacade.editar(registro);
+    public void editarRol(@WebParam(name = "registroRol") rol registroRol) {
+        rolFacade.editar(registroRol);
     }
 
     @WebMethod(operationName = "eliminarRol")
@@ -63,6 +64,6 @@ public class GestionDeRol {
 
     @WebMethod(operationName = "consultarRol")
     public rol consultarRol(@WebParam(name = "idRol") String idRol) {
-       return rolFacade.consultarRol(Long.parseLong(idRol));
+        return rolFacade.consultarRol(Long.parseLong(idRol));
     }
 }
