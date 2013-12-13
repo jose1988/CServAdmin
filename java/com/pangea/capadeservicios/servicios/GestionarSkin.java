@@ -46,24 +46,24 @@ skinFacade skinFacade;
     }
     
     @WebMethod(operationName = "insertarSkin")
-    public void insertarSkin(@WebParam(name = "registroUsuario") skin registro) {
+    public void insertarSkin(@WebParam(name = "registroSkin") skin registro) {
  
       skinFacade.insertarSkin(registro);
     }
     
      @WebMethod(operationName = "editarSkin")
-    public void editarSkin(@WebParam(name = "registroUsuario") skin registro) {
+    public void editarSkin(@WebParam(name = "registroSkin") skin registro) {
  
       skinFacade.editarSkin(registro);
     }
       @WebMethod(operationName = "eliminarSkin")
-    public void eliminarSkin(@WebParam(name = "idPolitica") String ID) {
+    public void eliminarSkin(@WebParam(name = "idSkin") String ID) {
  
      skinFacade.eliminarSkin(ID);
     }
     
            @WebMethod(operationName = "buscarSkin")
-    public skin  buscarSkin(@WebParam(name = "buscarPolitica") Long ID)  {
+    public skin  buscarSkin(@WebParam(name = "buscarSkin") Long ID)  {
 
         return  skinFacade.find(ID);
     }

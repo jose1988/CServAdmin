@@ -42,13 +42,13 @@ politicaFacade politicaFacade;
     }
     
     @WebMethod(operationName = "insertarPolitica")
-    public void insertarPolitica(@WebParam(name = "registroUsuario") politica registro) {
+    public void insertarPolitica(@WebParam(name = "registroPolitica") politica registro) {
  
       politicaFacade.insertarPolitica(registro);
     }
     
      @WebMethod(operationName = "editarPolitica")
-    public void editarPolitica(@WebParam(name = "registroUsuario") politica registro) {
+    public void editarPolitica(@WebParam(name = "registroPolitica") politica registro) {
  
       politicaFacade.editarPolitica(registro);
     }
@@ -70,6 +70,5 @@ politicaFacade politicaFacade;
     
         return  politicaFacade.find(new Long(ID));
     }
-       
-    
+        
 }

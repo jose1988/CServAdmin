@@ -57,6 +57,10 @@ public class clasificacion_usuarioFacade extends AbstractFacade<clasificacion_us
  
    }  
     
-    
+   public List<clasificacion_usuario> listarClasificacion(boolean borrado) {
+        List<clasificacion_usuario> lista;
+        lista = em.createNamedQuery("clasificacion_usuario.findByBorrado").setParameter("borrado", borrado).getResultList();
+        return lista;
+    }  
     
 }

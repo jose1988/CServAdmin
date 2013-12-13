@@ -29,24 +29,24 @@ public class GestionDeClasificacion_usuario {
     }
     
     @WebMethod(operationName = "insertarClasificacionUsuario")
-    public void insertarClasificacionUsuario(@WebParam(name = "registroUsuario") clasificacion_usuario registro) {
+    public void insertarClasificacionUsuario(@WebParam(name = "registroClaUsuario") clasificacion_usuario registro) {
  
       clasificacion_usuarioFacade.insertarclasificacion_usuario(registro);
     }
     
      @WebMethod(operationName = "editarClasificacionUsuario")
-    public void editarClasificacionUsuario(@WebParam(name = "registroUsuario") clasificacion_usuario registro) {
+    public void editarClasificacionUsuario(@WebParam(name = "registroClaUsuario") clasificacion_usuario registro) {
  
       clasificacion_usuarioFacade.editarclasificacion_usuario(registro);
     }
       @WebMethod(operationName = "eliminarClasificacionUsuario")
-    public void eliminarClasificacionUsuario(@WebParam(name = "idPolitica") String ID) {
+    public void eliminarClasificacionUsuario(@WebParam(name = "idClaUsuario") String ID) {
  
       clasificacion_usuarioFacade.eliminarclasificacion_usuario(ID);
     }
  
           @WebMethod(operationName = "buscarClasificacionUsuario")
-    public clasificacion_usuario buscarClasificacionUsuario(@WebParam(name = "buscarPolitica") Long ID)  {
+    public clasificacion_usuario buscarClasificacionUsuario(@WebParam(name = "buscarClaUsu") Long ID)  {
 
         return  clasificacion_usuarioFacade.find(ID);
     }
@@ -57,4 +57,9 @@ public class GestionDeClasificacion_usuario {
 
         return  clasificacion_usuarioFacade.count();
     }
+     
+    @WebMethod(operationName = "listarClasificacionUsuario")
+    public List<clasificacion_usuario> listarClasificacionUsuario(@WebParam(name = "borrado") boolean borrado) {
+        return clasificacion_usuarioFacade.listarClasificacion(borrado);
+    } 
 }
