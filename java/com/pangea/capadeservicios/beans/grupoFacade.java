@@ -67,5 +67,16 @@ public class grupoFacade extends AbstractFacade<grupo> {
         Query q=em.createNativeQuery("UPDATE grupo SET borrado='true' WHERE id=?");
         q.setParameter(1, ID);
         q.executeUpdate();
-   }   
+   }
+    
+    /**
+     * Método que lista los grupos dependiendo del estado
+     * @param borrado 1 si el borrado es FALSE y 1 si es TRUE
+     * @return lista de tipo grupo
+     */
+    public List<grupo> listarGruposByBorrado(boolean borrado){
+        List<grupo> c = null;
+        c = (List<grupo>) em.createNamedQuery("grupo.findByBorrado").setParameter("borrado", borrado).getResultList();
+        return c;
+    }
 }

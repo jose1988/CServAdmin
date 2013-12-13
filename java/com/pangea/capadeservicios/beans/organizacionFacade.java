@@ -67,5 +67,16 @@ public class organizacionFacade extends AbstractFacade<organizacion> {
         Query q=em.createNativeQuery("UPDATE organizacion SET borrado='true' WHERE id=?");
         q.setParameter(1, ID);
         q.executeUpdate();
-   }    
+   }
+    
+    /**
+     * Método que lista las organizaciones dependiendo del estado
+     * @param borrado 1 si el borrado es FALSE y 1 si es TRUE
+     * @return lista de tipo organizacion
+     */
+    public List<organizacion> listarOrganizacionByBorrado(boolean borrado){
+        List<organizacion> c = null;
+        c = (List<organizacion>) em.createNamedQuery("organizacion.findByBorrado").setParameter("borrado", borrado).getResultList();
+        return c;
+    }
 }

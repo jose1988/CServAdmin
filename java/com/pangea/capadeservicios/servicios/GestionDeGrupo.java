@@ -196,4 +196,14 @@ public class GestionDeGrupo {
             return null;
         }
     }
+    
+    /**
+     * Método que lista los grupos dependiendo del estado
+     * @param borrado 1 si el borrado es FALSE y 1 si es TRUE
+     * @return lista de tipo grupo
+     */
+    @WebMethod(operationName = "listarGruposByBorrado")
+    public List<grupo> listarGruposByBorrado(@WebParam(name = "borrado") boolean borrado) {
+        return grupoFacade.listarGruposByBorrado(borrado);
+    }
 }

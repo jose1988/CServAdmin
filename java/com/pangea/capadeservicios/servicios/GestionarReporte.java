@@ -85,4 +85,14 @@ public class GestionarReporte {
             return null;
         }
     }
+    
+    /**
+     * Método que lista los reportes dependiendo del estado
+     * @param borrado 1 si el borrado es FALSE y 1 si es TRUE
+     * @return lista de tipo reporte
+     */
+    @WebMethod(operationName = "listarReporteByBorrado")
+    public List<reporte> listarReporteByBorrado(@WebParam(name = "borrado") boolean borrado) {
+        return reporteFacade.listarReporteByBorrado(borrado);
+    }
 }

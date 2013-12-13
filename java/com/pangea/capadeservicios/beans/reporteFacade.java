@@ -67,5 +67,16 @@ public class reporteFacade extends AbstractFacade<reporte> {
         Query q=em.createNativeQuery("UPDATE reporte SET borrado='true' WHERE id=?");
         q.setParameter(1, ID);
         q.executeUpdate();
-   }     
+   }
+    
+    /**
+     * Método que lista los reportes dependiendo del estado
+     * @param borrado 1 si el borrado es FALSE y 1 si es TRUE
+     * @return lista de tipo reporte
+     */
+    public List<reporte> listarReporteByBorrado(boolean borrado){
+        List<reporte> c = null;
+        c = (List<reporte>) em.createNamedQuery("reporte.findByBorrado").setParameter("borrado", borrado).getResultList();
+        return c;
+    }
 }

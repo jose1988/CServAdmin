@@ -85,4 +85,14 @@ public class GestionDeOrganizacion {
             return null;
         }
     }
+    
+    /**
+     * Método que lista las organizaciones dependiendo del estado
+     * @param borrado 1 si el borrado es FALSE y 1 si es TRUE
+     * @return lista de tipo organizacion
+     */
+    @WebMethod(operationName = "listarOrganizacionByBorrado")
+    public List<organizacion> listarOrganizacionByBorrado(@WebParam(name = "borrado") boolean borrado) {
+        return organizacionFacade.listarOrganizacionByBorrado(borrado);
+    }
 }
