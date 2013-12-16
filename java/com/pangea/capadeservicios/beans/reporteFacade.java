@@ -62,10 +62,10 @@ public class reporteFacade extends AbstractFacade<reporte> {
      * Método que elimina el reporte de manera lógica
      * @param ID
      */
-    public void eliminarReporte(String ID){
+    public void eliminarReporte(Long idReporte){
     
-        Query q=em.createNativeQuery("UPDATE reporte SET borrado='true' WHERE id=?");
-        q.setParameter(1, ID);
+        Query q=em.createNativeQuery("UPDATE reporte SET borrado='1' WHERE id=?");
+        q.setParameter(1, idReporte);
         q.executeUpdate();
    }
     
@@ -79,4 +79,15 @@ public class reporteFacade extends AbstractFacade<reporte> {
         c = (List<reporte>) em.createNamedQuery("reporte.findByBorrado").setParameter("borrado", borrado).getResultList();
         return c;
     }
+    
+    /**
+     * Método que restaura el reporte de manera lógica
+     * @param ID
+     */
+    public void restaurarReporte(Long idReporte){
+    
+        Query q=em.createNativeQuery("UPDATE reporte SET borrado='0' WHERE id=?");
+        q.setParameter(1, idReporte);
+        q.executeUpdate();
+   }
 }

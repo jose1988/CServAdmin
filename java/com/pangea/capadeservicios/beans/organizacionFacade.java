@@ -62,10 +62,10 @@ public class organizacionFacade extends AbstractFacade<organizacion> {
      * Método que elimina la organizacion de manera lógica
      * @param ID
      */
-    public void eliminarOrganizacion(String ID){
+    public void eliminarOrganizacion(Long idOrganizacion){
     
-        Query q=em.createNativeQuery("UPDATE organizacion SET borrado='true' WHERE id=?");
-        q.setParameter(1, ID);
+        Query q=em.createNativeQuery("UPDATE organizacion SET borrado='1' WHERE id=?");
+        q.setParameter(1, idOrganizacion);
         q.executeUpdate();
    }
     
@@ -79,4 +79,15 @@ public class organizacionFacade extends AbstractFacade<organizacion> {
         c = (List<organizacion>) em.createNamedQuery("organizacion.findByBorrado").setParameter("borrado", borrado).getResultList();
         return c;
     }
+    
+    /**
+     * Método que restaura la organizacion de manera lógica
+     * @param ID
+     */
+    public void restaurarOrganizacion(Long idOrganizacion){
+    
+        Query q=em.createNativeQuery("UPDATE organizacion SET borrado='0' WHERE id=?");
+        q.setParameter(1, idOrganizacion);
+        q.executeUpdate();
+   }
 }

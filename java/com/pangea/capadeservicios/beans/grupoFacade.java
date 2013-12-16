@@ -62,10 +62,10 @@ public class grupoFacade extends AbstractFacade<grupo> {
      * Método que elimina el grupo de manera lógica
      * @param ID
      */
-    public void eliminarGrupo(String ID){
+    public void eliminarGrupo(Long idGrupo){
     
-        Query q=em.createNativeQuery("UPDATE grupo SET borrado='true' WHERE id=?");
-        q.setParameter(1, ID);
+        Query q=em.createNativeQuery("UPDATE grupo SET borrado='1' WHERE id=?");
+        q.setParameter(1, idGrupo);
         q.executeUpdate();
    }
     
@@ -79,4 +79,15 @@ public class grupoFacade extends AbstractFacade<grupo> {
         c = (List<grupo>) em.createNamedQuery("grupo.findByBorrado").setParameter("borrado", borrado).getResultList();
         return c;
     }
+    
+    /**
+     * Método que restaura el grupo de manera lógica
+     * @param ID
+     */
+    public void restaurarGrupo(Long idGrupo){
+    
+        Query q=em.createNativeQuery("UPDATE grupo SET borrado='0' WHERE id=?");
+        q.setParameter(1, idGrupo);
+        q.executeUpdate();
+   }
 }

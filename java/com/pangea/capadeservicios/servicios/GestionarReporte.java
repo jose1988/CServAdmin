@@ -48,7 +48,7 @@ public class GestionarReporte {
     @WebMethod(operationName = "insertarReporte")
     public void insertarReporte(@WebParam(name = "registroReporte") reporte registroReporte) {
  
-      reporteFacade.create(registroReporte);
+        reporteFacade.create(registroReporte);
     }
     
     /**
@@ -58,7 +58,7 @@ public class GestionarReporte {
     @WebMethod(operationName = "editarReporte")
     public void editarReporte(@WebParam(name = "registroReporte") reporte registroReporte) {
  
-      reporteFacade.edit(registroReporte);
+        reporteFacade.edit(registroReporte);
     }
     
     /**
@@ -68,7 +68,7 @@ public class GestionarReporte {
     @WebMethod(operationName = "eliminarReporte")
     public void eliminarReporte(@WebParam(name = "idReporte") String idReporte) {
  
-      reporteFacade.eliminarReporte(idReporte);
+        reporteFacade.eliminarReporte(new Long(idReporte));
     }
     
     /**
@@ -94,5 +94,15 @@ public class GestionarReporte {
     @WebMethod(operationName = "listarReporteByBorrado")
     public List<reporte> listarReporteByBorrado(@WebParam(name = "borrado") boolean borrado) {
         return reporteFacade.listarReporteByBorrado(borrado);
+    }
+    
+    /**
+     * Método que elimina el reporte de manera lógica
+     * @param ID
+     */
+    @WebMethod(operationName = "restaurarReporte")
+    public void restaurarReporte(@WebParam(name = "idReporte") String idReporte) {
+ 
+        reporteFacade.restaurarReporte(new Long(idReporte));
     }
 }

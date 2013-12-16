@@ -48,7 +48,7 @@ public class GestionDeOrganizacion {
     @WebMethod(operationName = "insertarOrganizacion")
     public void insertarOrganizacion(@WebParam(name = "registroOrganizacion") organizacion registroOrganizacion) {
  
-      organizacionFacade.insertarOrganizacion(registroOrganizacion);
+        organizacionFacade.insertarOrganizacion(registroOrganizacion);
     }
     
     /**
@@ -58,7 +58,7 @@ public class GestionDeOrganizacion {
     @WebMethod(operationName = "editarOrganizacion")
     public void editarOrganizacion(@WebParam(name = "registroOrganizacion") organizacion registroOrganizacion) {
  
-      organizacionFacade.editarOrganizacion(registroOrganizacion);
+        organizacionFacade.editarOrganizacion(registroOrganizacion);
     }
     
     /**
@@ -68,7 +68,7 @@ public class GestionDeOrganizacion {
     @WebMethod(operationName = "eliminarOrganizacion")
     public void eliminarOrganizacion(@WebParam(name = "idOrganizacion") String idOrganizacion) {
  
-      organizacionFacade.eliminarOrganizacion(idOrganizacion);
+        organizacionFacade.eliminarOrganizacion(new Long(idOrganizacion));
     }
     
     /**
@@ -94,5 +94,15 @@ public class GestionDeOrganizacion {
     @WebMethod(operationName = "listarOrganizacionByBorrado")
     public List<organizacion> listarOrganizacionByBorrado(@WebParam(name = "borrado") boolean borrado) {
         return organizacionFacade.listarOrganizacionByBorrado(borrado);
+    }
+    
+    /**
+     * Método que restaura la organizacion de manera lógica
+     * @param ID
+     */
+    @WebMethod(operationName = "restaurarOrganizacion")
+    public void restaurarOrganizacion(@WebParam(name = "idOrganizacion") String idOrganizacion) {
+ 
+        organizacionFacade.restaurarOrganizacion(new Long(idOrganizacion));
     }
 }

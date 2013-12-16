@@ -159,7 +159,7 @@ public class GestionDeGrupo {
     @WebMethod(operationName = "insertarGrupo")
     public void insertarGrupo(@WebParam(name = "registroGrupo") grupo registroGrupo) {
  
-      grupoFacade.insertarGrupo(registroGrupo);
+        grupoFacade.insertarGrupo(registroGrupo);
     }
     
     /**
@@ -169,7 +169,7 @@ public class GestionDeGrupo {
     @WebMethod(operationName = "editarGrupo")
     public void editarGrupo(@WebParam(name = "registroGrupo") grupo registroGrupo) {
  
-      grupoFacade.editarGrupo(registroGrupo);
+        grupoFacade.editarGrupo(registroGrupo);
     }
     
     /**
@@ -179,7 +179,7 @@ public class GestionDeGrupo {
     @WebMethod(operationName = "eliminarGrupo")
     public void eliminarGrupo(@WebParam(name = "idGrupo") String idGrupo) {
  
-      grupoFacade.eliminarGrupo(idGrupo);
+        grupoFacade.eliminarGrupo(new Long(idGrupo));
     }
     
     /**
@@ -205,5 +205,15 @@ public class GestionDeGrupo {
     @WebMethod(operationName = "listarGruposByBorrado")
     public List<grupo> listarGruposByBorrado(@WebParam(name = "borrado") boolean borrado) {
         return grupoFacade.listarGruposByBorrado(borrado);
+    }
+    
+    /**
+     * Método que restaura el grupo de manera lógica
+     * @param ID
+     */
+    @WebMethod(operationName = "restaurarGrupo")
+    public void restaurarGrupo(@WebParam(name = "idGrupo") String idGrupo){
+ 
+        grupoFacade.restaurarGrupo(new Long(idGrupo));
     }
 }
