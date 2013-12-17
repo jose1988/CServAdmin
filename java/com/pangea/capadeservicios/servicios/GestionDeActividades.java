@@ -21,6 +21,7 @@ import com.pangea.capadeservicios.entidades.*;
 import com.pangea.capadeservicios.envoltorios.WR_actividad;
 import com.pangea.capadeservicios.envoltorios.WR_documento;
 import com.pangea.capadeservicios.envoltorios.WR_resultado;
+import com.pangea.capadeservicios.envoltorios.WR_resultado_iniciar;
 import com.pangea.capadeservicios.validadores.GestionDeActividadesValidador;
 import java.util.*;
 import javax.ejb.EJB;
@@ -695,10 +696,13 @@ public class GestionDeActividades {
      * @see WR_resultado
      */
     @WebMethod(operationName = "IniciarActividad")
-    public WR_resultado IniciarActividad(@WebParam(name = "actividadActual") actividad actividadActual, @WebParam(name = "sesionActual") sesion sesionActual) {
-        WR_resultado Resultado;
-        Resultado = myValidador.validarIniciarActividad(actividadActual,sesionActual);
-        if (Resultado.getEstatus().compareTo("OK") != 0) {
+    public WR_resultado_iniciar IniciarActividad(@WebParam(name = "actividadActual") actividad actividadActual, @WebParam(name = "sesionActual") sesion sesionActual) {
+        WR_resultado Result;
+        WR_resultado_iniciar Resultado = null;
+        Result = myValidador.validarIniciarActividad(actividadActual,sesionActual);
+        if (Result.getEstatus().compareTo("OK") != 0) {
+            Resultado.setEstatus(Result.getEstatus());
+            Resultado.setObservacion(Result.getObservacion());
             return Resultado;
         }
         try {
@@ -784,6 +788,7 @@ public class GestionDeActividades {
             intermedio.setEstado("abierta");
             intermedio.setFechaApertura(new Date());
             myActividadFacade.edit(intermedio);
+            Resultado.setUrl(intermedio.getIdTarea().getImplementacion());
             Resultado.setEstatus("Ok");
 
         } catch (Exception e) {
