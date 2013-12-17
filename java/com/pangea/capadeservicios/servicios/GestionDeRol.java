@@ -66,4 +66,16 @@ public class GestionDeRol {
     public rol consultarRol(@WebParam(name = "idRol") String idRol) {
         return rolFacade.consultarRol(Long.parseLong(idRol));
     }
+
+    @WebMethod(operationName = "consultarRolXNombre")
+    public rol consultarRolXNombre(@WebParam(name = "nombreRol") String nombreRol) {
+        rol Resultado;
+        try {
+          Resultado= rolFacade.consultarRolXnombre(nombreRol);
+        } catch (Exception e) {
+            Resultado=null;
+        }
+        return Resultado;
+
+    }
 }

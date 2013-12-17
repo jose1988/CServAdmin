@@ -31,9 +31,9 @@ public class rolFacade extends AbstractFacade<rol> {
     }
 
     public List<rol> listarRol(boolean borrado) {
-        List<rol> c = null;
-        c = (List<rol>) em.createNamedQuery("rol.findByBorrado").setParameter("borrado", borrado).getResultList();
-        return c;
+        List<rol> listaRol = null;
+        listaRol = (List<rol>) em.createNamedQuery("rol.findByBorrado").setParameter("borrado", borrado).getResultList();
+        return listaRol;
     }
 
     public void insertar(rol registro) {
@@ -52,7 +52,13 @@ public class rolFacade extends AbstractFacade<rol> {
 
     public rol consultarRol(long idRol) {
         rol Registro;
-        Registro=this.find(idRol);
+        Registro = this.find(idRol);
+        return Registro;
+    }
+
+    public rol consultarRolXnombre(String nombreRol) {
+        rol Registro;
+        Registro = (rol) em.createNamedQuery("rol.findByNombre").setParameter("nombre", nombreRol).getSingleResult();
         return Registro;
     }
 }

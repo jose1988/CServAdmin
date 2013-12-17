@@ -6,7 +6,11 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.usuarioFacade;
 import com.pangea.capadeservicios.clienteweb.Usuario;
+import com.pangea.capadeservicios.entidades.clasificacion_usuario;
+import com.pangea.capadeservicios.entidades.organizacion;
+import com.pangea.capadeservicios.entidades.skin;
 import com.pangea.capadeservicios.entidades.usuario;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -57,8 +61,27 @@ public class GestionDeUsuarios {
     }
 
     @WebMethod(operationName = "insertarUsuario")
-    public void insertarUsuario(@WebParam(name = "registroUsuario") usuario registro) {
-        usuarioFacade.insertar(registro);
+    public void insertarUsuario(@WebParam(name = "registroUsuario") usuario registroUsuario) {
+        registroUsuario.setId("20");
+        registroUsuario.setFechaActualizacionClave(new Date());
+        registroUsuario.setFechaCreacion(new Date());
+        registroUsuario.setBorrado(false);
+        registroUsuario.setCedula("123");
+        registroUsuario.setClave("123");
+        registroUsuario.setPrimerNombre("luz");
+        registroUsuario.setPrimerApellido("arboleda");
+        clasificacion_usuario cla1 = new clasificacion_usuario();
+        cla1.setId(Long.parseLong("2"));
+        organizacion cla2 = new organizacion();
+        cla2.setId(Long.parseLong("2"));
+        skin cla3 = new skin();
+        cla3.setId(Long.parseLong("2"));
+        registroUsuario.setIdClasificacionUsuario(cla1);
+        registroUsuario.setIdOrganizacion(cla2);
+        registroUsuario.setIdSkin(cla3);
+
+
+        usuarioFacade.insertar(registroUsuario);
     }
 
     @WebMethod(operationName = "editarUsuario")
@@ -70,8 +93,9 @@ public class GestionDeUsuarios {
     public void eliminarUsuario(@WebParam(name = "idUsuario") String ID) {
         usuarioFacade.eliminar(ID);
     }
+
     @WebMethod(operationName = "consultarUsuario")
     public usuario consultarUsuario(@WebParam(name = "idUsuario") String idUsuario) {
-       return usuarioFacade.consultarUsuario(Long.parseLong(idUsuario));
+        return usuarioFacade.consultarUsuario(Long.parseLong(idUsuario));
     }
 }
