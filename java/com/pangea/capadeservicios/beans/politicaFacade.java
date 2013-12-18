@@ -30,30 +30,51 @@ public class politicaFacade extends AbstractFacade<politica> {
     }
     
     
-      public  List<politica> listarPolitica(){
-      List<politica> c=null;
-      
-     c=(List<politica>) em.createNamedQuery("politica.findAll").getResultList();
-      return c;
+    public  List<politica> listarPolitica(){
+        
+        List<politica> c=null;
+        c=(List<politica>) em.createNamedQuery("politica.findAll").getResultList();
+        return c;
    }
     
-     public void insertarPolitica(politica registro){
+     public void insertarPolitica(politica registroPolitica){
         
-    this.create(registro);
+        this.create(registroPolitica);
          
     } 
      
-     public void editarPolitica(politica registro){
+     public void editarPolitica(politica registroPolitica){
         
-    this.edit(registro);
+        this.edit(registroPolitica);
          
     }
      
-   public  void eliminarPolitica(String ID){
+    public  void eliminarPolitica(Long idPolitica){
     
-    Query q=em.createNativeQuery("UPDATE politica SET borrado='true' WHERE id=?");
-    q.setParameter(1, ID);
-    q.executeUpdate();
+        Query q=em.createNativeQuery("UPDATE politica SET borrado='1' WHERE id=?");
+        q.setParameter(1, idPolitica);
+        q.executeUpdate();
  
-   } 
+    }
+   
+    public List<politica> listarPoliticaByBorrado(boolean borrado){
+        
+        List<politica> c = null;
+        c = (List<politica>) em.createNamedQuery("politica.findByBorrado").setParameter("borrado", borrado).getResultList();
+        return c;
+    }
+    
+    public void restaurarPolitica(Long idPolitica){
+    
+        Query q=em.createNativeQuery("UPDATE politica SET borrado='0' WHERE id=?");
+        q.setParameter(1, idPolitica);
+        q.executeUpdate();
+   }
+  
+    public politica consultarPoliticaXNombre(String nombrePolitica) {
+        
+        politica Registro;
+        Registro = (politica) em.createNamedQuery("politica.findByNombre").setParameter("nombre", nombrePolitica).getSingleResult();
+        return Registro;
+    }
 }

@@ -29,46 +29,64 @@ politicaFacade politicaFacade;
     /**
      * This is a sample web service operation
      */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
     
-    
-     
-       @WebMethod(operationName = "listar")
-    public  List<politica> listar() {
+    @WebMethod(operationName = "listarPolitica")
+    public  List<politica> listarPolitica() {
+        
         return politicaFacade.listarPolitica();
     }
     
     @WebMethod(operationName = "insertarPolitica")
-    public void insertarPolitica(@WebParam(name = "registroPolitica") politica registro) {
+    public void insertarPolitica(@WebParam(name = "registroPolitica") politica registroPolitica) {
  
-      politicaFacade.insertarPolitica(registro);
+      politicaFacade.insertarPolitica(registroPolitica);
     }
     
-     @WebMethod(operationName = "editarPolitica")
-    public void editarPolitica(@WebParam(name = "registroPolitica") politica registro) {
+    @WebMethod(operationName = "editarPolitica")
+    public void editarPolitica(@WebParam(name = "registroPolitica") politica registroPolitica) {
  
-      politicaFacade.editarPolitica(registro);
-    }
-      @WebMethod(operationName = "eliminarPolitica")
-    public void eliminarPolitica(@WebParam(name = "idPolitica") String ID) {
- 
-      politicaFacade.eliminarPolitica(ID);
+      politicaFacade.editarPolitica(registroPolitica);
     }
     
+    @WebMethod(operationName = "eliminarPolitica")
+    public void eliminarPolitica(@WebParam(name = "idPolitica") String idPolitica) {
+ 
+      politicaFacade.eliminarPolitica(new Long(idPolitica));
+    }    
    
-       @WebMethod(operationName = "contarPolitica")
+    @WebMethod(operationName = "contarPolitica")
     public int contarPolitica() {
 
         return  politicaFacade.count();
     }
     
-          @WebMethod(operationName = "buscarPolitica")
-    public politica  buscarPolitica(@WebParam(name = "ID") String ID)  {
+    @WebMethod(operationName = "buscarPolitica")
+    public politica  buscarPolitica(@WebParam(name = "idPolitica") String idPolitica)  {
     
-        return  politicaFacade.find(new Long(ID));
+        return  politicaFacade.find(new Long(idPolitica));
+    }
+    
+    @WebMethod(operationName = "listarPoliticaByBorrado")
+    public List<politica> listarPoliticaByBorrado(@WebParam(name = "borrado") boolean borrado) {
+        return politicaFacade.listarPoliticaByBorrado(borrado);
+    }
+    
+    @WebMethod(operationName = "restaurarPolitica")
+    public void restaurarPolitica(@WebParam(name = "idPolitica") String idPolitica){
+ 
+        politicaFacade.restaurarPolitica(new Long(idPolitica));
+    }
+   
+    @WebMethod(operationName = "consultarPoliticaXNombre")
+    public politica consultarPoliticaXNombre(@WebParam(name = "nombrePolitica") String nombrePolitica) {
+        
+        politica Resultado;
+        try {
+          Resultado= politicaFacade.consultarPoliticaXNombre(nombrePolitica);
+        } catch (Exception e) {
+            Resultado=null;
+        }
+        return Resultado;
     }
         
 }
