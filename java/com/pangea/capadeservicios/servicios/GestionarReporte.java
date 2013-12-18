@@ -105,4 +105,21 @@ public class GestionarReporte {
  
         reporteFacade.restaurarReporte(new Long(idReporte));
     }
+    
+    /**
+     * Método que consulta el nombre del reporte para verificar si existe o no
+     * @param nombreReporte
+     * @return
+     */
+    @WebMethod(operationName = "consultarReporteXNombre")
+    public reporte consultarReporteXNombre(@WebParam(name = "nombreReporte") String nombreReporte) {
+        
+        reporte Resultado;
+        try {
+          Resultado= reporteFacade.consultarReporteXnombre(nombreReporte);
+        } catch (Exception e) {
+            Resultado=null;
+        }
+        return Resultado;
+    }
 }

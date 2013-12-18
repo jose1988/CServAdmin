@@ -216,4 +216,21 @@ public class GestionDeGrupo {
  
         grupoFacade.restaurarGrupo(new Long(idGrupo));
     }
+    
+    /**
+     * Método que consulta el nombre del grupo para verificar si existe o no
+     * @param nombreGrupo
+     * @return
+     */
+    @WebMethod(operationName = "consultarGrupoXNombre")
+    public grupo consultarGrupoXNombre(@WebParam(name = "nombreGrupo") String nombreGrupo) {
+        
+        grupo Resultado;
+        try {
+          Resultado= grupoFacade.consultarGrupoXnombre(nombreGrupo);
+        } catch (Exception e) {
+            Resultado=null;
+        }
+        return Resultado;
+    }
 }

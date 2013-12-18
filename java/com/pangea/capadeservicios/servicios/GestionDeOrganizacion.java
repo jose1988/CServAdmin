@@ -105,4 +105,21 @@ public class GestionDeOrganizacion {
  
         organizacionFacade.restaurarOrganizacion(new Long(idOrganizacion));
     }
+    
+    /**
+     * Método que consulta el nombre de la organización para verificar si existe o no
+     * @param nombreOrganizacion
+     * @return
+     */
+    @WebMethod(operationName = "consultarOrganizacionXNombre")
+    public organizacion consultarOrganizacionXNombre(@WebParam(name = "nombreOrganizacion") String nombreOrganizacion) {
+        
+        organizacion Resultado;
+        try {
+          Resultado= organizacionFacade.consultarOrganizacionXnombre(nombreOrganizacion);
+        } catch (Exception e) {
+            Resultado=null;
+        }
+        return Resultado;
+    }
 }

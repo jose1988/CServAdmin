@@ -90,4 +90,17 @@ public class grupoFacade extends AbstractFacade<grupo> {
         q.setParameter(1, idGrupo);
         q.executeUpdate();
    }
+    
+    
+    /**
+     * Método que consulta el nombre del grupo para verificar si existe o no
+     * @param nombreGrupo
+     * @return
+     */
+    public grupo consultarGrupoXnombre(String nombreGrupo) {
+        
+        grupo Registro;
+        Registro = (grupo) em.createNamedQuery("grupo.findByNombre").setParameter("nombre", nombreGrupo).getSingleResult();
+        return Registro;
+    }
 }

@@ -90,4 +90,16 @@ public class reporteFacade extends AbstractFacade<reporte> {
         q.setParameter(1, idReporte);
         q.executeUpdate();
    }
+    
+    /**
+     * Método que consulta el nombre del reporte para verificar si existe o no
+     * @param nombreReporte
+     * @return
+     */
+    public reporte consultarReporteXnombre(String nombreReporte) {
+        
+        reporte Registro;
+        Registro = (reporte) em.createNamedQuery("reporte.findByNombre").setParameter("nombre", nombreReporte).getSingleResult();
+        return Registro;
+    }
 }

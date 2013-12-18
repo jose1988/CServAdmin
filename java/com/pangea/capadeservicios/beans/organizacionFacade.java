@@ -90,4 +90,16 @@ public class organizacionFacade extends AbstractFacade<organizacion> {
         q.setParameter(1, idOrganizacion);
         q.executeUpdate();
    }
+    
+    /**
+     * Método que consulta el nombre de la organización para verificar si existe o no
+     * @param nombreOrganizacion
+     * @return
+     */
+    public organizacion consultarOrganizacionXnombre(String nombreOrganizacion) {
+        
+        organizacion Registro;
+        Registro = (organizacion) em.createNamedQuery("organizacion.findByNombre").setParameter("nombre", nombreOrganizacion).getSingleResult();
+        return Registro;
+    }
 }
