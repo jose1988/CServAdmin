@@ -46,7 +46,7 @@ public class clasificacion_rolFacade extends AbstractFacade<clasificacion_rol> {
 
     public void eliminar(String ID) {
         Query q = em.createNativeQuery("UPDATE clasificacion_rol SET borrado='true' WHERE id=?");
-        q.setParameter(1, ID);
+        q.setParameter(1,Long.parseLong(ID));
         q.executeUpdate();
     }
 

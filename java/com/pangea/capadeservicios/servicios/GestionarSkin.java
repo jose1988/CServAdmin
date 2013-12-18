@@ -4,7 +4,6 @@
  */
 package com.pangea.capadeservicios.servicios;
 
-
 import com.pangea.capadeservicios.beans.skinFacade;
 import com.pangea.capadeservicios.entidades.politica;
 import com.pangea.capadeservicios.entidades.skin;
@@ -25,48 +24,51 @@ public class GestionarSkin {
     /**
      * This is a sample web service operation
      */
-    
     @EJB
-skinFacade skinFacade;
+    skinFacade skinFacade;
+
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
     }
-        
     
-       @WebMethod(operationName = "contarSkin")
+    @WebMethod(operationName = "contarSkin")
     public int contarSkin() {
-
+        
         return skinFacade.count();
     }
-       
-       @WebMethod(operationName = "listar")
-    public  List<skin> listar() {
+    
+    @WebMethod(operationName = "listar")
+    public List<skin> listar() {
         return skinFacade.listarSkin();
     }
     
     @WebMethod(operationName = "insertarSkin")
     public void insertarSkin(@WebParam(name = "registroSkin") skin registro) {
- 
-      skinFacade.insertarSkin(registro);
+        
+        skinFacade.insertarSkin(registro);
     }
     
-     @WebMethod(operationName = "editarSkin")
+    @WebMethod(operationName = "editarSkin")
     public void editarSkin(@WebParam(name = "registroSkin") skin registro) {
- 
-      skinFacade.editarSkin(registro);
+        
+        skinFacade.editarSkin(registro);
     }
-      @WebMethod(operationName = "eliminarSkin")
+
+    @WebMethod(operationName = "eliminarSkin")
     public void eliminarSkin(@WebParam(name = "idSkin") String ID) {
- 
-     skinFacade.eliminarSkin(ID);
+        
+        skinFacade.eliminarSkin(ID);
     }
     
-           @WebMethod(operationName = "buscarSkin")
-    public skin  buscarSkin(@WebParam(name = "buscarSkin") Long ID)  {
-
-        return  skinFacade.find(ID);
+    @WebMethod(operationName = "buscarSkin")
+    public skin buscarSkin(@WebParam(name = "buscarSkin") Long ID) {
+        
+        return skinFacade.find(ID);
     }
-      
-  
+
+    @WebMethod(operationName = "listarXBorrado")
+    public List<skin> listarXBorrado(@WebParam(name = "borrado") boolean borrado) {
+        return skinFacade.listarSkinXBorrado(borrado);
+    }    
 }

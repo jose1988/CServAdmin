@@ -58,22 +58,28 @@ public class GestionDeRol {
     }
 
     @WebMethod(operationName = "eliminarRol")
-    public void eliminarRol(@WebParam(name = "idRol") String ID) {
-        rolFacade.eliminar(ID);
+    public void eliminarRol(@WebParam(name = "idRol") String idRol) {
+        rolFacade.eliminar(idRol);
     }
 
     @WebMethod(operationName = "consultarRol")
     public rol consultarRol(@WebParam(name = "idRol") String idRol) {
-        return rolFacade.consultarRol(Long.parseLong(idRol));
+        rol Resultado;
+        try {
+            Resultado = rolFacade.consultarRol(Long.parseLong(idRol));
+        } catch (Exception e) {
+            Resultado = null;
+        }
+        return Resultado;
     }
 
     @WebMethod(operationName = "consultarRolXNombre")
     public rol consultarRolXNombre(@WebParam(name = "nombreRol") String nombreRol) {
         rol Resultado;
         try {
-          Resultado= rolFacade.consultarRolXnombre(nombreRol);
+            Resultado = rolFacade.consultarRolXnombre(nombreRol);
         } catch (Exception e) {
-            Resultado=null;
+            Resultado = null;
         }
         return Resultado;
 

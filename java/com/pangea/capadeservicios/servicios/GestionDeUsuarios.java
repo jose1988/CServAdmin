@@ -5,14 +5,12 @@
 package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.usuarioFacade;
-import com.pangea.capadeservicios.clienteweb.Usuario;
 import com.pangea.capadeservicios.entidades.clasificacion_usuario;
 import com.pangea.capadeservicios.entidades.organizacion;
 import com.pangea.capadeservicios.entidades.skin;
 import com.pangea.capadeservicios.entidades.usuario;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -90,12 +88,18 @@ public class GestionDeUsuarios {
     }
 
     @WebMethod(operationName = "eliminarUsuario")
-    public void eliminarUsuario(@WebParam(name = "idUsuario") String ID) {
-        usuarioFacade.eliminar(ID);
+    public void eliminarUsuario(@WebParam(name = "idUsuario") String idUsuario) {
+        usuarioFacade.eliminar(idUsuario);
     }
 
     @WebMethod(operationName = "consultarUsuario")
     public usuario consultarUsuario(@WebParam(name = "idUsuario") String idUsuario) {
-        return usuarioFacade.consultarUsuario(Long.parseLong(idUsuario));
+        usuario Resultado;
+        try {
+            Resultado = usuarioFacade.consultarUsuario(idUsuario);
+        } catch (Exception e) {
+            Resultado = null;
+        }
+        return Resultado;
     }
 }

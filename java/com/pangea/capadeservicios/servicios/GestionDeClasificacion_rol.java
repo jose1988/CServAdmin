@@ -8,7 +8,6 @@ import com.pangea.capadeservicios.beans.clasificacion_rolFacade;
 import com.pangea.capadeservicios.entidades.clasificacion_rol;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -55,13 +54,19 @@ public class GestionDeClasificacion_rol {
     }
 
     @WebMethod(operationName = "eliminarClasificacionRol")
-    public void eliminarClasificacionRol(@WebParam(name = "idClaRol") String idClaRol) {
-        clasificacionRolFacade.eliminar(idClaRol);
+    public void eliminarClasificacionRol(@WebParam(name = "idClasifRol") String idClasifRol) {
+        clasificacionRolFacade.eliminar(idClasifRol);
     }
 
     @WebMethod(operationName = "consultarClasifRol")
     public clasificacion_rol consultarClasifRol(@WebParam(name = "idClasifRol") String idClasifRol) {
-        return clasificacionRolFacade.consultarClasifRol(Long.parseLong(idClasifRol));
+        clasificacion_rol Resultado;
+        try {
+            Resultado = clasificacionRolFacade.consultarClasifRol(Long.parseLong(idClasifRol));
+        } catch (Exception e) {
+            Resultado = null;
+        }
+        return Resultado;
     }
 
     @WebMethod(operationName = "consultarClasifRolXNombre")
