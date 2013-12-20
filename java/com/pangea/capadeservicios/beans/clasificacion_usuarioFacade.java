@@ -17,6 +17,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class clasificacion_usuarioFacade extends AbstractFacade<clasificacion_usuario> {
+
     @PersistenceContext(unitName = "WebApplication2PU")
     private EntityManager em;
 
@@ -28,39 +29,45 @@ public class clasificacion_usuarioFacade extends AbstractFacade<clasificacion_us
     public clasificacion_usuarioFacade() {
         super(clasificacion_usuario.class);
     }
-   
-      public  List<clasificacion_usuario> listaclasificacion_usuario(){
-      
-    List<clasificacion_usuario> c=null;
-    c= em.createNamedQuery("clasificacion_usuario.findAll").getResultList();
-    return c;
-    
-   }
-    
-     public void insertarclasificacion_usuario(clasificacion_usuario registro){
-        
-    this.create(registro);
-         
-    } 
-     
-     public void editarclasificacion_usuario(clasificacion_usuario registro){
-        
-    this.edit(registro);
-         
+
+    public List<clasificacion_usuario> listaclasificacion_usuario() {
+
+        List<clasificacion_usuario> c = null;
+        c = em.createNamedQuery("clasificacion_usuario.findAll").getResultList();
+        return c;
+
     }
-     
-   public  void eliminarclasificacion_usuario(String ID){
-    
-    Query q=em.createNativeQuery("UPDATE clasificacion_usuario SET borrado='true' WHERE id=?");
-    q.setParameter(1, ID);
-    q.executeUpdate();
- 
-   }  
-    
-   public List<clasificacion_usuario> listarClasificacion(boolean borrado) {
+
+    public void insertarclasificacion_usuario(clasificacion_usuario registro) {
+
+        this.create(registro);
+
+    }
+
+    public void editarclasificacion_usuario(clasificacion_usuario Registro) {
+        Query q = em.createNativeQuery("UPDATE clasificacion_usuario "
+                + "SET borrado=?,descripcion=?,nombre=? "
+                + "WHERE id=?");
+        q.setParameter(1, Registro.getBorrado());
+        q.setParameter(2, Registro.getDescripcion());
+        q.setParameter(3, Registro.getNombre());
+        q.setParameter(4, Registro.getId());
+        q.executeUpdate();
+        this.edit(Registro);
+
+    }
+
+    public void eliminarclasificacion_usuario(String ID) {
+
+        Query q = em.createNativeQuery("UPDATE clasificacion_usuario SET borrado='true' WHERE id=?");
+        q.setParameter(1, ID);
+        q.executeUpdate();
+
+    }
+
+    public List<clasificacion_usuario> listarClasificacion(boolean borrado) {
         List<clasificacion_usuario> lista;
         lista = em.createNamedQuery("clasificacion_usuario.findByBorrado").setParameter("borrado", borrado).getResultList();
         return lista;
-    }  
-    
+    }
 }

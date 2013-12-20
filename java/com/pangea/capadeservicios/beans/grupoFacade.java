@@ -53,9 +53,19 @@ public class grupoFacade extends AbstractFacade<grupo> {
      * Método que edita el grupo
      * @param registro
      */
-    public void editarGrupo(grupo registro){
-        
-        this.edit(registro);         
+    public void editarGrupo(grupo Registro) {
+        Query q = em.createNativeQuery("UPDATE grupo "
+                + "SET borrado=?,descripcion=?,documentacion=?,estado=?,id_organizacion=?,nombre=?,tipo=? "
+                + "WHERE id=?");
+        q.setParameter(1, Registro.getBorrado());
+        q.setParameter(2, Registro.getDescripcion());
+        q.setParameter(3, Registro.getDocumentacion());
+        q.setParameter(4, Registro.getEstado());
+        q.setParameter(5, Registro.getIdOrganizacion().getId());
+        q.setParameter(6, Registro.getNombre());
+        q.setParameter(7, Registro.getTipo());
+        q.setParameter(8, Registro.getId());
+        q.executeUpdate();
     }
      
     /**

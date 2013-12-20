@@ -49,10 +49,12 @@ public class skinFacade extends AbstractFacade<skin> {
 
     }
 
-    public void editarSkin(skin registro) {
-
-        this.edit(registro);
-
+    public void editarSkin(skin Registro) {
+        Query q = em.createNativeQuery("UPDATE skin SET borrado=?,nombre=? WHERE id=?");
+        q.setParameter(1, Registro.getBorrado());
+        q.setParameter(2, Registro.getNombre());
+        q.setParameter(3, Registro.getId());
+        q.executeUpdate();
     }
 
     public void eliminarSkin(String ID) {

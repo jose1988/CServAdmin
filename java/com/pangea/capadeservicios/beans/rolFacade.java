@@ -40,13 +40,21 @@ public class rolFacade extends AbstractFacade<rol> {
         this.create(registro);
     }
 
-    public void editar(rol registro) {
-        this.edit(registro);
+    public void editar(rol Registro) {
+        Query q = em.createNativeQuery("UPDATE rol SET borrado=?,descripcion=?,documentacion=?,estado=?,id_clasificacion_rol=?,nombre=? WHERE id=?");
+        q.setParameter(1, Registro.getBorrado());
+        q.setParameter(2, Registro.getDescripcion());
+        q.setParameter(3, Registro.getDocumentacion());
+        q.setParameter(4, Registro.getEstado());
+        q.setParameter(5, Registro.getIdClasificacionRol().getId());
+        q.setParameter(6, Registro.getNombre());
+        q.setParameter(7, Registro.getId());
+        q.executeUpdate();
     }
 
     public void eliminar(String ID) {
         Query q = em.createNativeQuery("UPDATE rol SET borrado='true' WHERE id=?");
-        q.setParameter(1,Long.parseLong(ID));
+        q.setParameter(1, Long.parseLong(ID));
         q.executeUpdate();
     }
 
