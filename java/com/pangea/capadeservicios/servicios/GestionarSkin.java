@@ -5,10 +5,8 @@
 package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.skinFacade;
-import com.pangea.capadeservicios.entidades.politica;
 import com.pangea.capadeservicios.entidades.skin;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -26,11 +24,6 @@ public class GestionarSkin {
      */
     @EJB
     skinFacade skinFacade;
-
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
     
     @WebMethod(operationName = "contarSkin")
     public int contarSkin() {
@@ -44,31 +37,54 @@ public class GestionarSkin {
     }
     
     @WebMethod(operationName = "insertarSkin")
-    public void insertarSkin(@WebParam(name = "registroSkin") skin registro) {
+    public void insertarSkin(@WebParam(name = "registroSkin") skin registroSkin) {
         
-        skinFacade.insertarSkin(registro);
+        skinFacade.insertarSkin(registroSkin);
     }
     
     @WebMethod(operationName = "editarSkin")
-    public void editarSkin(@WebParam(name = "registroSkin") skin registro) {
+    public void editarSkin(@WebParam(name = "registroSkin") skin registroSkin) {
         
-        skinFacade.editarSkin(registro);
+        skinFacade.editarSkin(registroSkin);
     }
 
     @WebMethod(operationName = "eliminarSkin")
-    public void eliminarSkin(@WebParam(name = "idSkin") String ID) {
+    public void eliminarSkin(@WebParam(name = "idSkin") String idSkin) {
         
-        skinFacade.eliminarSkin(ID);
+        skinFacade.eliminarSkin(new Long(idSkin));
     }
     
     @WebMethod(operationName = "buscarSkin")
-    public skin buscarSkin(@WebParam(name = "buscarSkin") Long ID) {
+    public skin buscarSkin(@WebParam(name = "idSkin") String idSkin) {
         
-        return skinFacade.find(ID);
+        try {
+            skin find = skinFacade.find(new Long(idSkin));
+            return find;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    
+    @WebMethod(operationName = "restaurarSkin")
+    public void restaurarSkin(@WebParam(name = "idSkin") String idSkin){
+ 
+        skinFacade.restaurarSkin(new Long(idSkin));
+    }
+   
+    @WebMethod(operationName = "consultarSkinXNombre")
+    public skin consultarSkinXNombre(@WebParam(name = "nombreSkin") String nombreSkin) {
+        
+        skin Resultado;
+        try {
+          Resultado= skinFacade.consultarSkinXNombre(nombreSkin);
+        } catch (Exception e) {
+            Resultado=null;
+        }
+        return Resultado;
     }
 
     @WebMethod(operationName = "listarXBorrado")
     public List<skin> listarXBorrado(@WebParam(name = "borrado") boolean borrado) {
         return skinFacade.listarSkinXBorrado(borrado);
-    }    
+    }  
 }

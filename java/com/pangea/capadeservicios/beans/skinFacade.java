@@ -31,13 +31,14 @@ public class skinFacade extends AbstractFacade<skin> {
     }
 
     public List<skin> listarSkin() {
+        
         List<skin> c = null;
-
         c = (List<skin>) em.createNamedQuery("skin.findAll").getResultList();
         return c;
     }
 
     public List<skin> listarSkinXBorrado(boolean borrado) {
+        
         List<skin> listaSkin = null;
         listaSkin = (List<skin>) em.createNamedQuery("skin.findByBorrado").setParameter("borrado", borrado).getResultList();
         return listaSkin;
@@ -46,7 +47,6 @@ public class skinFacade extends AbstractFacade<skin> {
     public void insertarSkin(skin registro) {
 
         this.create(registro);
-
     }
 
     public void editarSkin(skin Registro) {
@@ -57,11 +57,24 @@ public class skinFacade extends AbstractFacade<skin> {
         q.executeUpdate();
     }
 
-    public void eliminarSkin(String ID) {
+    public void eliminarSkin(Long idSkin) {
 
-        Query q = em.createNativeQuery("UPDATE skin SET borrado='true' WHERE id=?");
-        q.setParameter(1, ID);
+        Query q = em.createNativeQuery("UPDATE skin SET borrado='1' WHERE id=?");
+        q.setParameter(1, idSkin);
         q.executeUpdate();
+    }
+    
+    public void restaurarSkin(Long idSkin) {
 
+        Query q = em.createNativeQuery("UPDATE skin SET borrado='0' WHERE id=?");
+        q.setParameter(1, idSkin);
+        q.executeUpdate();
+    }
+
+    public skin consultarSkinXNombre(String nombreSkin) {
+
+        skin Registro;
+        Registro = (skin) em.createNamedQuery("skin.findByNombre").setParameter("nombre", nombreSkin).getSingleResult();
+        return Registro;
     }
 }
