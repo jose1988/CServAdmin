@@ -41,11 +41,13 @@ public class clasificacion_rolFacade extends AbstractFacade<clasificacion_rol> {
     }
 
     public void editar(clasificacion_rol Registro) {
-        Query q = em.createNativeQuery("UPDATE clasificacion_rol SET borrado=?,descripcion=?,fecha_modificacion=getdate(),nombre=? WHERE id=?");
+        Query q = em.createNativeQuery("UPDATE clasificacion_rol SET borrado=?,descripcion=?,fecha_modificacion=?,nombre=? WHERE id=?");
+        System.out.println("fecha..........."+Registro.getFechaModificacion().toString());
         q.setParameter(1, Registro.getBorrado());
         q.setParameter(2, Registro.getDescripcion());
-        q.setParameter(3, Registro.getNombre());
-        q.setParameter(4, Registro.getId());
+        q.setParameter(3, Registro.getFechaModificacion());
+        q.setParameter(4, Registro.getNombre());
+        q.setParameter(5, Registro.getId());
         q.executeUpdate();
     }
 
