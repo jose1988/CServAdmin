@@ -70,4 +70,9 @@ public class clasificacion_usuarioFacade extends AbstractFacade<clasificacion_us
         lista = em.createNamedQuery("clasificacion_usuario.findByBorrado").setParameter("borrado", borrado).getResultList();
         return lista;
     }
+    public clasificacion_usuario consultarClasifUsuarioXnombre(String Nombre) {
+        clasificacion_usuario Registro;
+        Registro = (clasificacion_usuario) em.createNamedQuery("clasificacion_usuario.findByNombre").setParameter("nombre", Nombre).getSingleResult();
+        return Registro;
+    }
 }
