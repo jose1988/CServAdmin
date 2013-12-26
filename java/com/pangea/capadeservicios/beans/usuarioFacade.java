@@ -83,6 +83,12 @@ public class usuarioFacade extends AbstractFacade<usuario> {
         q.executeUpdate();
     }
 
+    public void restaurar(String ID) {
+        Query q = em.createNativeQuery("UPDATE usuario SET borrado='false' WHERE id=?");
+        q.setParameter(1, ID);
+        q.executeUpdate();
+    }
+
     public usuario consultarUsuario(String idUsuario) {
         usuario Registro;
         Registro = this.find(idUsuario);

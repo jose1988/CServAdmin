@@ -57,6 +57,10 @@ public class GestionDeClasificacion_rol {
     public void eliminarClasificacionRol(@WebParam(name = "idClasifRol") String idClasifRol) {
         clasificacionRolFacade.eliminar(idClasifRol);
     }
+    @WebMethod(operationName = "restaurarClasificacionRol")
+    public void restaurarClasificacionRol(@WebParam(name = "idClasifRol") String idClasifRol) {
+        clasificacionRolFacade.restaurar(idClasifRol);
+    }
 
     @WebMethod(operationName = "consultarClasifRol")
     public clasificacion_rol consultarClasifRol(@WebParam(name = "idClasifRol") String idClasifRol) {

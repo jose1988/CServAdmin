@@ -91,6 +91,11 @@ public class GestionDeUsuarios {
     public void eliminarUsuario(@WebParam(name = "idUsuario") String idUsuario) {
         usuarioFacade.eliminar(idUsuario);
     }
+    
+     @WebMethod(operationName = "restaurarUsuario")
+    public void restaurarUsuario(@WebParam(name = "idUsuario") String idUsuario) {
+        usuarioFacade.restaurar(idUsuario);
+    }
 
     @WebMethod(operationName = "consultarUsuario")
     public usuario consultarUsuario(@WebParam(name = "idUsuario") String idUsuario) {

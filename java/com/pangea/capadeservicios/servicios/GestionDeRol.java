@@ -62,6 +62,11 @@ public class GestionDeRol {
         rolFacade.eliminar(idRol);
     }
 
+    @WebMethod(operationName = "restaurarRol")
+    public void restaurarRol(@WebParam(name = "idRol") String idRol) {
+        rolFacade.restaurar(idRol);
+    }
+
     @WebMethod(operationName = "consultarRol")
     public rol consultarRol(@WebParam(name = "idRol") String idRol) {
         rol Resultado;

@@ -57,6 +57,11 @@ public class rolFacade extends AbstractFacade<rol> {
         q.setParameter(1, Long.parseLong(ID));
         q.executeUpdate();
     }
+    public void restaurar(String ID) {
+        Query q = em.createNativeQuery("UPDATE rol SET borrado='false' WHERE id=?");
+        q.setParameter(1, Long.parseLong(ID));
+        q.executeUpdate();
+    }
 
     public rol consultarRol(long idRol) {
         rol Registro;
