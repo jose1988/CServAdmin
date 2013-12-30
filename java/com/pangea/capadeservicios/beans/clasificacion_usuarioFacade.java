@@ -60,7 +60,7 @@ public class clasificacion_usuarioFacade extends AbstractFacade<clasificacion_us
     public void eliminarclasificacion_usuario(String ID) {
 
         Query q = em.createNativeQuery("UPDATE clasificacion_usuario SET borrado='true' WHERE id=?");
-        q.setParameter(1, ID);
+        q.setParameter(1,Long.parseLong(ID));
         q.executeUpdate();
 
     }
@@ -74,5 +74,11 @@ public class clasificacion_usuarioFacade extends AbstractFacade<clasificacion_us
         clasificacion_usuario Registro;
         Registro = (clasificacion_usuario) em.createNamedQuery("clasificacion_usuario.findByNombre").setParameter("nombre", Nombre).getSingleResult();
         return Registro;
+    }
+    
+    public void restaurar(String ID) {
+        Query q = em.createNativeQuery("UPDATE clasificacion_usuario SET borrado='false' WHERE id=?");
+        q.setParameter(1, Long.parseLong(ID));
+        q.executeUpdate();
     }
 }

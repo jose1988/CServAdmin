@@ -8,7 +8,6 @@ import com.pangea.capadeservicios.beans.clasificacion_usuarioFacade;
 import com.pangea.capadeservicios.entidades.clasificacion_usuario;
 
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -42,9 +41,9 @@ public class GestionDeClasificacion_usuario {
     }
     
     @WebMethod(operationName = "eliminarClasificacionUsuario")
-    public void eliminarClasificacionUsuario(@WebParam(name = "idClaUsuario") String idClaUsuario) {
+    public void eliminarClasificacionUsuario(@WebParam(name = "idClaUsu") String idClaUsu) {
         
-        clasificacion_usuarioFacade.eliminarclasificacion_usuario(idClaUsuario);
+        clasificacion_usuarioFacade.eliminarclasificacion_usuario(idClaUsu);
     }
     
     @WebMethod(operationName = "consultarClasificacionUsuario")
@@ -62,6 +61,7 @@ public class GestionDeClasificacion_usuario {
     public List<clasificacion_usuario> listarClasificacionUsuario(@WebParam(name = "borrado") boolean borrado) {
         return clasificacion_usuarioFacade.listarClasificacion(borrado);
     }
+    
     @WebMethod(operationName = "consultarClasifUsuarioXNombre")
     public clasificacion_usuario consultarClasifUsuarioXNombre(@WebParam(name = "Nombre") String Nombre) {
         clasificacion_usuario Resultado;
@@ -72,5 +72,10 @@ public class GestionDeClasificacion_usuario {
         }
         return Resultado;
 
+    }
+    
+    @WebMethod(operationName = "restaurarClasificacionUsuario")
+    public void restaurarClasificacionUsuario(@WebParam(name = "idClaUsu") String idClaUsu) {
+        clasificacion_usuarioFacade.restaurar(idClaUsu);
     }
 }
