@@ -6,12 +6,8 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.rolFacade;
 import com.pangea.capadeservicios.beans.usuario_grupo_rolFacade;
-import com.pangea.capadeservicios.entidades.clasificacion_rol;
 import com.pangea.capadeservicios.entidades.rol;
-import com.pangea.capadeservicios.entidades.usuario_grupo_rol;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -88,5 +84,34 @@ public class GestionDeRol {
         }
         return Resultado;
 
+    }
+    
+    @WebMethod(operationName = "consultarDependenciasRol")
+    public int consultarDependenciasRol(@WebParam(name = "idRol") String idRol) {
+        int Resultado = 0;
+        rol registroRol;
+        try {
+            registroRol = rolFacade.consultarRol(Long.parseLong(idRol));
+            Resultado = registroRol.getDestinatarioCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = registroRol.getReporterolCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = registroRol.getTarearolCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = registroRol.getUsuariogruporolCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+
+        } catch (Exception e) {
+            Resultado = -1;
+        }
+        return Resultado;
     }
 }

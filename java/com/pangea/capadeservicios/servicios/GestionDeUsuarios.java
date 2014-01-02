@@ -91,8 +91,8 @@ public class GestionDeUsuarios {
     public void eliminarUsuario(@WebParam(name = "idUsuario") String idUsuario) {
         usuarioFacade.eliminar(idUsuario);
     }
-    
-     @WebMethod(operationName = "restaurarUsuario")
+
+    @WebMethod(operationName = "restaurarUsuario")
     public void restaurarUsuario(@WebParam(name = "idUsuario") String idUsuario) {
         usuarioFacade.restaurar(idUsuario);
     }
@@ -104,6 +104,67 @@ public class GestionDeUsuarios {
             Resultado = usuarioFacade.consultarUsuario(idUsuario);
         } catch (Exception e) {
             Resultado = null;
+        }
+        return Resultado;
+    }
+
+    @WebMethod(operationName = "consultarDependenciasUsuario")
+    public int consultarDependenciasUsuario(@WebParam(name = "idUsuario") String idUsuario) {
+        int Resultado = 0;
+        usuario Usuario;
+        try {
+            Usuario = usuarioFacade.consultarUsuario(idUsuario);
+            Resultado = Usuario.getActividadOrigenCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getActividadUsuarioCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getBandejaCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getDestinatarioCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getHorarioCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getInstanciaCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getMensajeCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getPoliticaroundrobinCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getPostCollection().size();
+            if (Resultado > 0) {
+                Resultado = 1;
+                return Resultado;
+            }
+            Resultado = Usuario.getPostenbandejaCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getSesionCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            Resultado = Usuario.getUsuariogruporolCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+        } catch (Exception e) {
+            Resultado = -1;
         }
         return Resultado;
     }

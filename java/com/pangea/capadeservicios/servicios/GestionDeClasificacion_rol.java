@@ -57,6 +57,7 @@ public class GestionDeClasificacion_rol {
     public void eliminarClasificacionRol(@WebParam(name = "idClasifRol") String idClasifRol) {
         clasificacionRolFacade.eliminar(idClasifRol);
     }
+
     @WebMethod(operationName = "restaurarClasificacionRol")
     public void restaurarClasificacionRol(@WebParam(name = "idClasifRol") String idClasifRol) {
         clasificacionRolFacade.restaurar(idClasifRol);
@@ -70,6 +71,7 @@ public class GestionDeClasificacion_rol {
         } catch (Exception e) {
             Resultado = null;
         }
+
         return Resultado;
     }
 
@@ -83,5 +85,18 @@ public class GestionDeClasificacion_rol {
         }
         return Resultado;
 
+    }
+
+    @WebMethod(operationName = "consultarDependenciasClasRol")
+    public int consultarDependenciasClasRol(@WebParam(name = "idClasifRol") String idClasifRol) {
+        int Resultado = 0;
+        clasificacion_rol clasificacionRol;
+        try {
+            clasificacionRol = clasificacionRolFacade.consultarClasifRol(Long.parseLong(idClasifRol));
+            Resultado=clasificacionRol.getRolCollection().size();
+        } catch (Exception e) {
+            Resultado = -1;
+        }
+        return Resultado;
     }
 }

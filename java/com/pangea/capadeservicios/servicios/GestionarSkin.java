@@ -87,4 +87,17 @@ public class GestionarSkin {
     public List<skin> listarXBorrado(@WebParam(name = "borrado") boolean borrado) {
         return skinFacade.listarSkinXBorrado(borrado);
     }  
+    
+    @WebMethod(operationName = "consultarDependenciasSkin")
+    public int consultarDependenciasSkin(@WebParam(name = "idSkin") String idSkin) {
+        int Resultado = 0;
+        skin Skin;
+        try {
+            Skin = skinFacade.find(Long.parseLong(idSkin));
+            Resultado = Skin.getUsuarioCollection().size();
+        } catch (Exception e) {
+            Resultado = -1;
+        }
+        return Resultado;
+    }
 }
