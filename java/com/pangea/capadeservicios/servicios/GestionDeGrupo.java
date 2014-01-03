@@ -233,4 +233,48 @@ public class GestionDeGrupo {
         }
         return Resultado;
     }
+    
+    @WebMethod(operationName = "consultarDependenciasGrupo")
+    public int consultarDependenciasGrupo(@WebParam(name = "idGrupo") String idGrupo) {
+        int Resultado = 0;
+        grupo registroGrupo;
+        
+        try {
+            registroGrupo = grupoFacade.find(Long.parseLong(idGrupo));
+            
+            Resultado = registroGrupo.getColadetareaCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+            Resultado = registroGrupo.getContadorroundrobinCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+            Resultado = registroGrupo.getDestinatarioCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+            Resultado = registroGrupo.getGrupopoliticatareaCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+            Resultado = registroGrupo.getPeriodogrupoprocesoCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+            Resultado = registroGrupo.getUsuariogruporolCollection().size();
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+        } catch (Exception e) {
+            Resultado = -1;
+        }
+        return Resultado;
+    }
 }

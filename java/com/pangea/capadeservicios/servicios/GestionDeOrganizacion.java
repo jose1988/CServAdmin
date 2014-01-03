@@ -136,4 +136,34 @@ public class GestionDeOrganizacion {
         }
         return Resultado;
     }
+    
+    
+    @WebMethod(operationName = "consultarDependenciasOrganizacion")
+    public int consultarDependenciasOrganizacion(@WebParam(name = "idOrganizacion") String idOrganizacion) {
+        int Resultado = 0;
+        organizacion registroOrganizacion;
+        
+        try {
+            registroOrganizacion = organizacionFacade.find(Long.parseLong(idOrganizacion));
+            
+            Resultado = registroOrganizacion.getGrupoCollection().size();            
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+            Resultado = registroOrganizacion.getOrganizacionCollection().size();            
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+            Resultado = registroOrganizacion.getUsuarioCollection().size();            
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+        } catch (Exception e) {
+            Resultado = -1;
+        }
+        return Resultado;
+    }
 }

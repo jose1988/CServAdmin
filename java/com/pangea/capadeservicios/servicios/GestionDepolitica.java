@@ -8,9 +8,7 @@ package com.pangea.capadeservicios.servicios;
 
 import com.pangea.capadeservicios.beans.politicaFacade;
 import com.pangea.capadeservicios.entidades.politica;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -85,6 +83,30 @@ politicaFacade politicaFacade;
           Resultado= politicaFacade.consultarPoliticaXNombre(nombrePolitica);
         } catch (Exception e) {
             Resultado=null;
+        }
+        return Resultado;
+    }
+    
+    @WebMethod(operationName = "consultarDependenciasPolitica")
+    public int consultarDependenciasPolitica(@WebParam(name = "idPolitica") String idPolitica) {
+        int Resultado = 0;
+        politica registroPolitica;
+        
+        try {
+            registroPolitica = politicaFacade.find(Long.parseLong(idPolitica));
+            
+            Resultado = registroPolitica.getGrupopoliticatareaCollection().size();            
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+            Resultado = registroPolitica.getTareaCollection().size();            
+            if (Resultado > 0) {
+                return Resultado;
+            }
+            
+        } catch (Exception e) {
+            Resultado = -1;
         }
         return Resultado;
     }

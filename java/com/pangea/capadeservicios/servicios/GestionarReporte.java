@@ -122,4 +122,20 @@ public class GestionarReporte {
         }
         return Resultado;
     }
+    
+    
+    @WebMethod(operationName = "consultarDependenciasReporte")
+    public int consultarDependenciasReporte(@WebParam(name = "idReporte") String idReporte) {
+        int Resultado = 0;
+        reporte registroReporte;
+        
+        try {
+            registroReporte = reporteFacade.find(Long.parseLong(idReporte));            
+            Resultado = registroReporte.getReporterolCollection().size();
+            
+        } catch (Exception e) {
+            Resultado = -1;
+        }
+        return Resultado;
+    }
 }
