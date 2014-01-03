@@ -60,25 +60,6 @@ public class GestionDeUsuarios {
 
     @WebMethod(operationName = "insertarUsuario")
     public void insertarUsuario(@WebParam(name = "registroUsuario") usuario registroUsuario) {
-        registroUsuario.setId("20");
-        registroUsuario.setFechaActualizacionClave(new Date());
-        registroUsuario.setFechaCreacion(new Date());
-        registroUsuario.setBorrado(false);
-        registroUsuario.setCedula("123");
-        registroUsuario.setClave("123");
-        registroUsuario.setPrimerNombre("luz");
-        registroUsuario.setPrimerApellido("arboleda");
-        clasificacion_usuario cla1 = new clasificacion_usuario();
-        cla1.setId(Long.parseLong("2"));
-        organizacion cla2 = new organizacion();
-        cla2.setId(Long.parseLong("2"));
-        skin cla3 = new skin();
-        cla3.setId(Long.parseLong("2"));
-        registroUsuario.setIdClasificacionUsuario(cla1);
-        registroUsuario.setIdOrganizacion(cla2);
-        registroUsuario.setIdSkin(cla3);
-
-
         usuarioFacade.insertar(registroUsuario);
     }
 
@@ -140,7 +121,7 @@ public class GestionDeUsuarios {
             }
             Resultado = Usuario.getMensajeCollection().size();
             if (Resultado > 0) {
-                return Resultado;
+               return Resultado;
             }
             Resultado = Usuario.getPoliticaroundrobinCollection().size();
             if (Resultado > 0) {
@@ -148,7 +129,6 @@ public class GestionDeUsuarios {
             }
             Resultado = Usuario.getPostCollection().size();
             if (Resultado > 0) {
-                Resultado = 1;
                 return Resultado;
             }
             Resultado = Usuario.getPostenbandejaCollection().size();

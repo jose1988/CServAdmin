@@ -28,8 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "horario_usuario.findAll", query = "SELECT g FROM horario_usuario g"),
-    @NamedQuery(name = "horario_usuario.findById", query = "SELECT g FROM horario_usuario g WHERE g.id = :id"),
-    @NamedQuery(name = "horario_usuario.findByBorrado", query = "SELECT g FROM horario_usuario g WHERE g.borrado = :borrado")})
+    @NamedQuery(name = "horario_usuario.findById", query = "SELECT g FROM horario_usuario g WHERE g.id = :id")
+   // @NamedQuery(name = "horario_usuario.findByBorrado", query = "SELECT g FROM horario_usuario g WHERE g.borrado = :borrado")
+})
 public class horario_usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,10 +38,10 @@ public class horario_usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "borrado")
-    private boolean borrado;
+//    @Basic(optional = false)
+//    @NotNull
+//    @Column(name = "borrado")
+//    private boolean borrado;
     @JoinColumn(name = "id_horario", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private horario idHorario;
@@ -73,7 +74,7 @@ public class horario_usuario implements Serializable {
 
     public horario_usuario(Long id, boolean borrado) {
         this.id = id;
-        this.borrado = borrado;
+      //  this.borrado = borrado;
     }
 
     public Long getId() {
@@ -84,13 +85,13 @@ public class horario_usuario implements Serializable {
         this.id = id;
     }
 
-    public boolean getBorrado() {
-        return borrado;
-    }
-
-    public void setBorrado(boolean borrado) {
-        this.borrado = borrado;
-    }
+//    public boolean getBorrado() {
+//        return borrado;
+//    }
+//
+//    public void setBorrado(boolean borrado) {
+//        this.borrado = borrado;
+//    }
 
     @Override
     public int hashCode() {
