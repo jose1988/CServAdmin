@@ -276,6 +276,7 @@ public class GestionDeActividadesValidador {
         }
         return Resultado;
     }
+   
 
     public WR_resultado validarFinalizarActividad(actividad actividadActual, sesion sesionActual,condicion condicionActual) {
         WR_resultado Resultado = new WR_resultado();

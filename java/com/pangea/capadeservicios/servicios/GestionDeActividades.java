@@ -56,9 +56,9 @@ import javax.xml.ws.WebServiceRef;
 @EJB(name = "GestionDeActividades", beanInterface = Local.class)
 @WebService(serviceName = "GestionDeActividades")
 public class GestionDeActividades {
+    
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_15362/Gestordepoliticas/AplicarPolitica.wsdl")
     private AplicarPolitica_Service service_1;
-
     /**
      * Declaracion del objeto validador y los facade necesarios. El validador
      * declarado debera verificar que fueron introducidos los parametros
@@ -72,7 +72,6 @@ public class GestionDeActividades {
      * operaciones asociadas a la persistencia que puedan necesitarse para
      * lograr el objetivo de las operaciones aqui expuestas.
      */
-    
     @EJB
     actividadFacade actividadFacade;
     GestionDeActividadesValidador myValidador = new GestionDeActividadesValidador();
@@ -94,6 +93,7 @@ public class GestionDeActividades {
     transicionFacade myTransicionFacade = new transicionFacade();
     private actividad activi;
     private WR_actividad actividad;
+
     /**
      * Agrega un enlace a un documento externo y lo asocia a una actividad
      * determinada. el documento sera registrado de manera de que se puedan
@@ -111,7 +111,7 @@ public class GestionDeActividades {
     @WebMethod(operationName = "AgregarDocumento")
     public WR_resultado AgregarDocumento(@WebParam(name = "documentoActual") documento documentoActual, @WebParam(name = "actividadActual") actividad actividadActual) {
         WR_resultado Resultado = new WR_resultado();
-        Resultado = myValidador.validarAgregarDocumento(documentoActual,actividadActual);
+        Resultado = myValidador.validarAgregarDocumento(documentoActual, actividadActual);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
             return Resultado;
         }
@@ -125,7 +125,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Actividad no encontrada");
                 return Resultado;
             }
-            if(actividadActual.getBorrado()){
+            if (actividadActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Actividad no encontrada");
                 return Resultado;
@@ -142,14 +142,14 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-
-
+        
+        
     }
 
     /**
      * Obtiene informacion detallada sobre una actividad registrada. La
-     * informacion podra ser obtenida accediendo al primer objeto de la
-     * lista de actividades del objeto de la clase WR_actividad retornado.
+     * informacion podra ser obtenida accediendo al primer objeto de la lista de
+     * actividades del objeto de la clase WR_actividad retornado.
      *
      * @param actividadActual un objeto de la clase actividad cuyo atributo id
      * corresponda con el de alguna actividad registrada en el sistema
@@ -165,7 +165,7 @@ public class GestionDeActividades {
             return Resultado;
         }
         try {
-
+            
             actividad intermedio = myActividadFacade.find(actividadActual.getId());
             if (intermedio == null) {
                 Resultado.setEstatus("FAIL");
@@ -177,7 +177,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-
+            
             Resultado.ingresarActividad(intermedio);
 
             /*
@@ -187,42 +187,42 @@ public class GestionDeActividades {
             Resultado.getActividads().get(0).setColaDeTarea(null);
             Resultado.getActividads().get(0).setDocumentoCollection(null);
             
-
+            
             tarea nuevaTarea = new tarea();
             nuevaTarea.setId(Resultado.getActividads().get(0).getIdTarea().getId());
             nuevaTarea.setNombre(Resultado.getActividads().get(0).getIdTarea().getNombre());
             Resultado.getActividads().get(0).setIdTarea(nuevaTarea);
-
+            
             usuario nuevoUsuario = new usuario();
             nuevoUsuario.setId(Resultado.getActividads().get(0).getIdUsuario().getId());
             nuevoUsuario.setPrimerNombre(Resultado.getActividads().get(0).getIdUsuario().getPrimerNombre());
             nuevoUsuario.setPrimerApellido(Resultado.getActividads().get(0).getIdUsuario().getPrimerApellido());
             Resultado.getActividads().get(0).setIdUsuario(nuevoUsuario);
-
+            
             usuario nuevoUsuarioOrigen = new usuario();
             nuevoUsuarioOrigen.setId(Resultado.getActividads().get(0).getIdUsuarioOrigen().getId());
             nuevoUsuarioOrigen.setPrimerNombre(Resultado.getActividads().get(0).getIdUsuarioOrigen().getPrimerNombre());
             nuevoUsuarioOrigen.setPrimerApellido(Resultado.getActividads().get(0).getIdUsuarioOrigen().getPrimerApellido());
             Resultado.getActividads().get(0).setIdUsuarioOrigen(nuevoUsuarioOrigen);
-
+            
             instancia nuevaInstancia = new instancia();
             nuevaInstancia.setId(Resultado.getActividads().get(0).getIdInstancia().getId());
             Resultado.getActividads().get(0).setIdInstancia(nuevaInstancia);
             Resultado.getActividads().get(0).setIdInstancia(nuevaInstancia);
-
+            
             equivalencia_tiempo nuevaEquivalencia = new equivalencia_tiempo();
             nuevaEquivalencia.setId(Resultado.getActividads().get(0).getIdEquivalenciasTiempo().getId());
             nuevaEquivalencia.setNombre(Resultado.getActividads().get(0).getIdEquivalenciasTiempo().getNombre());
             Resultado.getActividads().get(0).setIdEquivalenciasTiempo(nuevaEquivalencia);
-
+            
             prioridad nuevaPrioridad = new prioridad();
             nuevaPrioridad.setId(Resultado.getActividads().get(0).getIdPrioridad().getId());
             nuevaPrioridad.setNombre(Resultado.getActividads().get(0).getIdPrioridad().getNombre());
             Resultado.getActividads().get(0).setIdPrioridad(nuevaPrioridad);
             
             
-
-
+            
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -231,7 +231,7 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-
+        
     }
 
     /**
@@ -254,7 +254,7 @@ public class GestionDeActividades {
         if (Resultado.getEstatus().compareTo("OK") != 0) {
             return Resultado;
         }
-
+        
         try {
             usuarioActual = myUsuarioFacade.find(usuarioActual.getId());
             if (usuarioActual == null) {
@@ -262,7 +262,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-
+            
             Collection<actividad> intermedio = usuarioActual.getActividadUsuarioCollection();
             String estado = actividadActual.getEstado();
             Iterator iterador = intermedio.iterator();
@@ -274,29 +274,29 @@ public class GestionDeActividades {
                 actividadActual = (actividad) iterador.next();
                 if (actividadActual.getEstado().compareTo(estado) == 0 && !actividadActual.getBorrado()) {
                     actividadActual.setAuditoriaCollection(null);
-
+                    
                     actividadActual.setDuracion(actividadActual.getDuracion());
-
-
+                    
+                    
                     actividadActual.setFechaAsignacion(actividadActual.getFechaAsignacion());
                     actividadActual.setFechaAlerta(actividadActual.getFechaAlerta());
                     actividadActual.setIdEquivalenciasTiempo(null);
-
-                    instanciaAuxiliar=myInstanciaFacade.find(actividadActual.getIdInstancia().getId());
+                    
+                    instanciaAuxiliar = myInstanciaFacade.find(actividadActual.getIdInstancia().getId());
                     actividadActual.setIdInstancia(instanciaAuxiliar);
-
+                    
                     usuarioAuxiliar.setId(actividadActual.getIdUsuario().getId());
                     usuarioAuxiliar.setPrimerApellido(actividadActual.getIdUsuario().getPrimerApellido());
                     usuarioAuxiliar.setPrimerNombre(actividadActual.getIdUsuario().getPrimerNombre());
                     actividadActual.setIdUsuario(usuarioAuxiliar);
-
+                    
                     usuarioOrigenAuxiliar.setId(actividadActual.getIdUsuarioOrigen().getId());
                     usuarioOrigenAuxiliar.setPrimerApellido(actividadActual.getIdUsuarioOrigen().getPrimerApellido());
                     usuarioOrigenAuxiliar.setPrimerNombre(actividadActual.getIdUsuario().getPrimerNombre());
                     actividadActual.setIdUsuarioOrigen(usuarioOrigenAuxiliar);
-
+                    
                     actividadActual.setIdPrioridad(null);
-
+                    
                     tareaAuxiliar.setId(actividadActual.getIdTarea().getId());
                     tareaAuxiliar.setNombre(actividadActual.getIdTarea().getNombre());
                     actividadActual.setIdTarea(tareaAuxiliar);
@@ -304,7 +304,7 @@ public class GestionDeActividades {
                     actividadActual.setParametrosEntrada(null);
                     actividadActual.setParametrosSalida(null);
                     actividadActual.getIdInstancia().setIdPeriodoGrupoProceso(actividadActual.getIdInstancia().getIdPeriodoGrupoProceso());
-
+                    
                     Resultado.ingresarActividad(actividadActual);
                 }
             }
@@ -318,8 +318,8 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-
-
+        
+        
     }
 
     /**
@@ -362,9 +362,9 @@ public class GestionDeActividades {
              */
             Resultado.setEstatus("OK");
             Resultado.ingresarDocumento(documentoActual);
-
-
-
+            
+            
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -373,7 +373,7 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-
+        
     }
 
     /**
@@ -401,7 +401,7 @@ public class GestionDeActividades {
             /*
              * Verificamos que se encontraron registros
              */
-
+            
             if (intermedios == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("No se encontraron registros");
@@ -427,13 +427,13 @@ public class GestionDeActividades {
                     //ingresamos el documento al envoltorio
                     Resultado.ingresarDocumento(documentoAuxiliar);
                 }
-
-
-
+                
+                
+                
             }
             Resultado.setEstatus("OK");
             Resultado.setObservacion(Resultado.getDocumentos().size() + " documentos encontrados");
-
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -442,40 +442,38 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-
+        
     }
 
     /**
-     * Finaliza una actividad y prepara las siguientes para su 
-     * ejecucion. finaliza la actividad y en caso de ser la ultima 
-     * actividad no informativa esta operacion tambien finalizara la 
-     * instancia
-     * <p>Las actividades informativas no pueden ser finalizadas y 
-     * seran cerradas cuando la instancia sea cerrada
+     * Finaliza una actividad y prepara las siguientes para su ejecucion.
+     * finaliza la actividad y en caso de ser la ultima actividad no informativa
+     * esta operacion tambien finalizara la instancia
+     * <p>Las actividades informativas no pueden ser finalizadas y seran
+     * cerradas cuando la instancia sea cerrada
      *
-     * @param actividadActual un objeto de la clase actividad cuyo 
-     * atributo id contenga el valor del identificador de la actividad 
-     * que sera finalizada y que debera haber sido asignada e iniciada
-     * previamente
+     * @param actividadActual un objeto de la clase actividad cuyo atributo id
+     * contenga el valor del identificador de la actividad que sera finalizada y
+     * que debera haber sido asignada e iniciada previamente
      * @param sesionActual un objeto de la clase sesion cuyo atributo id se
-     * corresponda al de una sesion abierta por el usuario asignado a 
-     * la actividad
-     * @param condicionActual un objeto de la clase condicion cuyo 
-     * atributo id corresponda al de una condicion registrada y asociada
-     * a un grupo de transiciones que tengan como tarea de inicio la 
-     * tarea asociada a la activida ingresada
-     * @return un objeto de la clase WR_resultado que informara del 
-     * resultado de la operacion
+     * corresponda al de una sesion abierta por el usuario asignado a la
+     * actividad
+     * @param condicionActual un objeto de la clase condicion cuyo atributo id
+     * corresponda al de una condicion registrada y asociada a un grupo de
+     * transiciones que tengan como tarea de inicio la tarea asociada a la
+     * activida ingresada
+     * @return un objeto de la clase WR_resultado que informara del resultado de
+     * la operacion
      * @see WR_resultado
      */
     @WebMethod(operationName = "FinalizarActividad")
     public WR_resultado FinalizarActividad(@WebParam(name = "actividadActual") actividad actividadActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "condicionActual") condicion condicionActual) {
-        WR_resultado Resultado =  new WR_resultado();
-       Resultado = myValidador.validarFinalizarActividad(actividadActual, sesionActual,condicionActual);
+        WR_resultado Resultado = new WR_resultado();
+        Resultado = myValidador.validarFinalizarActividad(actividadActual, sesionActual, condicionActual);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
-             return Resultado;
+            return Resultado;
         }
-
+        
         try {
             sesionActual = mySesionFacade.find(sesionActual.getId());
             if (sesionActual == null) {
@@ -488,14 +486,14 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Sesion no encontrada");
                 return Resultado;
             }
-            if(sesionActual.getEstado().compareTo("abierta")!=0){
+            if (sesionActual.getEstado().compareTo("abierta") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Sesion invalida");
                 return Resultado;
             }
-            usuario usuarioActual =  myUsuarioFacade.find(sesionActual.getIdUsuario().getId());
+            usuario usuarioActual = myUsuarioFacade.find(sesionActual.getIdUsuario().getId());
             actividadActual = myActividadFacade.find(actividadActual.getId());
-            if(actividadActual.getIdTarea().getTareaInformativa()){
+            if (actividadActual.getIdTarea().getTareaInformativa()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Las actividades informativas no pueden ser finalizadas");
                 return Resultado;
@@ -523,10 +521,10 @@ public class GestionDeActividades {
             EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("WebApplication2PU");
             EntityManager em = emf.createEntityManager();
             ArrayList Transiciones = new ArrayList();
-            List<Long> TransicionesPreliminares = (List<Long>) em.createNativeQuery("SELECT transicion.id FROM public.tarea, public.transicion, public.actividad WHERE tarea.id = transicion.id_tarea AND actividad.id_tarea = tarea.id AND actividad.id='"+actividadActual.getId()+"';").getResultList();
+            List<Long> TransicionesPreliminares = (List<Long>) em.createNativeQuery("SELECT transicion.id FROM public.tarea, public.transicion, public.actividad WHERE tarea.id = transicion.id_tarea AND actividad.id_tarea = tarea.id AND actividad.id='" + actividadActual.getId() + "';").getResultList();
             Iterator iteradorAuxiliar = TransicionesPreliminares.iterator();
-            while(iteradorAuxiliar.hasNext()){
-                Transiciones.add(myTransicionFacade.find((Long)iteradorAuxiliar.next()));
+            while (iteradorAuxiliar.hasNext()) {
+                Transiciones.add(myTransicionFacade.find((Long) iteradorAuxiliar.next()));
             }
             if (Transiciones.isEmpty()) {
                 /**
@@ -538,29 +536,29 @@ public class GestionDeActividades {
                 instancia instanciaActual = myInstanciaFacade.find(actividadActual.getIdInstancia().getId());
                 
                 
-                    Iterator IT = instanciaActual.getActividadCollection().iterator();
-                    actividad actividadCerrada;
-                    int contadorActividadesAbiertas =0;
-                    while(IT.hasNext()){
-                        actividadCerrada =(actividad)IT.next();
-                        if(actividadCerrada.getEstado().compareTo("cerrada")!=0 && !actividadCerrada.getIdTarea().getTareaInformativa())
-                        {
-                            contadorActividadesAbiertas++;
-                        }
+                Iterator IT = instanciaActual.getActividadCollection().iterator();
+                actividad actividadCerrada;
+                int contadorActividadesAbiertas = 0;
+                while (IT.hasNext()) {
+                    actividadCerrada = (actividad) IT.next();
+                    if (actividadCerrada.getEstado().compareTo("cerrada") != 0 && !actividadCerrada.getIdTarea().getTareaInformativa()) {
+                        contadorActividadesAbiertas++;
                     }
-                if(contadorActividadesAbiertas==0){    
-                instanciaActual.setEstado("cerrada");
-                instanciaActual.setFechaCierre(new Date());
-                    /**
-                     * cerramos las actividades para evitar el ingreso a las actividades informativas
-                     */
-                Iterator iterador4 = instanciaActual.getActividadCollection().iterator();
-                while(iterador4.hasNext()){
-                    actividadCerrada = (actividad)iterador4.next();
-                    actividadCerrada.setEstado("cerrada");
-                    myActividadFacade.edit(actividadActual);
                 }
-                myInstanciaFacade.edit(instanciaActual);
+                if (contadorActividadesAbiertas == 0) {
+                    instanciaActual.setEstado("cerrada");
+                    instanciaActual.setFechaCierre(new Date());
+                    /**
+                     * cerramos las actividades para evitar el ingreso a las
+                     * actividades informativas
+                     */
+                    Iterator iterador4 = instanciaActual.getActividadCollection().iterator();
+                    while (iterador4.hasNext()) {
+                        actividadCerrada = (actividad) iterador4.next();
+                        actividadCerrada.setEstado("cerrada");
+                        myActividadFacade.edit(actividadActual);
+                    }
+                    myInstanciaFacade.edit(instanciaActual);
                 }
                 
                 auditoria nuevaAuditoria = new auditoria();
@@ -572,16 +570,16 @@ public class GestionDeActividades {
                 Resultado.setEstatus("OK");
                 return Resultado;
             }
-
-
+            
+            
             transicion transicionActual;
-            int i =0;
-            while (i<Transiciones.size()) {
-                    transicionActual = (transicion)Transiciones.get(i);
+            int i = 0;
+            while (i < Transiciones.size()) {
+                transicionActual = (transicion) Transiciones.get(i);
                 if (transicionActual.getIdCondicion().getId() != condicionActual.getId()) {
                     Transiciones.remove(transicionActual);
-                   
-                }else{
+                    
+                } else {
                     i++;
                 }
             }
@@ -600,13 +598,13 @@ public class GestionDeActividades {
                     while (iterador3.hasNext()) {
                         transicionAuxiliar = (transicion) iterador3.next();
                         if (!transicionAuxiliar.equals(transicionActual) && transicionAuxiliar.getCodigo().compareTo(transicionActual.getCodigo()) == 0) {
-                            try{
-                            actividadAuxiliarid = (Long) em.createNativeQuery("Select actividad.id from actividad where actividad.id_tarea ='" + transicionAuxiliar.getIdTarea().getId() + "' AND actividad.id_instancia= '" + actividadActual.getIdInstancia().getId() + "' ").getSingleResult();
-                            if (myActividadFacade.find(actividadAuxiliarid).getEstado().compareTo("cerrada")!=0) {
+                            try {
+                                actividadAuxiliarid = (Long) em.createNativeQuery("Select actividad.id from actividad where actividad.id_tarea ='" + transicionAuxiliar.getIdTarea().getId() + "' AND actividad.id_instancia= '" + actividadActual.getIdInstancia().getId() + "' ").getSingleResult();
+                                if (myActividadFacade.find(actividadAuxiliarid).getEstado().compareTo("cerrada") != 0) {
                                     Transiciones.remove(transicionActual);
                                     iterador2 = Transiciones.iterator();
                                 }
-                            }catch(javax.persistence.NoResultException e){
+                            } catch (javax.persistence.NoResultException e) {
                                 Transiciones.remove(transicionActual);
                                 iterador2 = Transiciones.iterator();
                             }
@@ -623,23 +621,23 @@ public class GestionDeActividades {
                     while (iterador4.hasNext()) {
                         transicionAuxiliar = (transicion) iterador4.next();
                         if (!transicionAuxiliar.equals(transicionActual) && transicionAuxiliar.getCodigo().compareTo(transicionActual.getCodigo()) == 0) {
-                            try{
-                            actividadAuxiliarid = (Long) em.createNativeQuery("Select actividad.id from actividad where actividad.id_tarea='" + transicionAuxiliar.getIdTareaDestino().getId() + "' AND actividad.id_instancia='" + actividadActual.getIdInstancia().getId() + "'").getSingleResult();
-                            Transiciones.remove(transicionActual);
-                            }catch(javax.persistence.NoResultException e){
+                            try {
+                                actividadAuxiliarid = (Long) em.createNativeQuery("Select actividad.id from actividad where actividad.id_tarea='" + transicionAuxiliar.getIdTareaDestino().getId() + "' AND actividad.id_instancia='" + actividadActual.getIdInstancia().getId() + "'").getSingleResult();
+                                Transiciones.remove(transicionActual);
+                            } catch (javax.persistence.NoResultException e) {
                                 System.out.println("No se consiguio la actividad por lo que no se eliminara la transicion");
                             }
                         }
                     }
                 }
-
-
+                
+                
             }
-
-
+            
+            
             Iterator iterador5 = Transiciones.iterator();
             while (iterador5.hasNext()) {
-                transicionAuxiliar = (transicion)iterador5.next();
+                transicionAuxiliar = (transicion) iterador5.next();
                 actividad nuevaActividad = new actividad();
                 nuevaActividad.setDuracion(transicionAuxiliar.getIdTareaDestino().getDuracion());
                 nuevaActividad.setEstado("pendiente");
@@ -657,11 +655,11 @@ public class GestionDeActividades {
                 ActividadActual.setId(nuevaActividad.getId());
                 Politica nuevaPolitica = new Politica();
                 nuevaPolitica.setNombre(nuevaActividad.getIdTarea().getIdPolitica().getNombre());
-               WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadActual,nuevaPolitica);
-               if(ResultadoPreliminar.getEstatus().compareTo("FAIL")==0){
-                   Resultado.setObservacion("Una o varias de las nuevas actividades no pudieron ser asignadas");
-               }
-               
+                WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadActual, nuevaPolitica);
+                if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
+                    Resultado.setObservacion("Una o varias de las nuevas actividades no pudieron ser asignadas");
+                }
+                
             }
             
             actividadActual.setEstado("cerrada");
@@ -676,21 +674,19 @@ public class GestionDeActividades {
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
-        } finally { 
+        } finally {
             return Resultado;
         }
     }
 
     /**
-     * Inicia una actividad. una actividad solo podra ser iniciada por
-     * el usuario que ha sido asignado para su ejecucion
-     * 
+     * Inicia una actividad. una actividad solo podra ser iniciada por el
+     * usuario que ha sido asignado para su ejecucion
+     *
      * @param actividadActual un objeto de la clase actividad cuyo atributo id
-     * contenga el valor del identificador de la actividad que se desea
-     * iniciar
-     * @param sesionActual un objeto de la clase sesion abierta cuyo 
-     * atributo id se corresponda al del usuario registrado que desea 
-     * iniciar la actividad
+     * contenga el valor del identificador de la actividad que se desea iniciar
+     * @param sesionActual un objeto de la clase sesion abierta cuyo atributo id
+     * se corresponda al del usuario registrado que desea iniciar la actividad
      * @return un objeto de la clase WR_resultado que informara del resultado de
      * la operacion
      * @see WR_resultado
@@ -699,7 +695,7 @@ public class GestionDeActividades {
     public WR_resultado_iniciar IniciarActividad(@WebParam(name = "actividadActual") actividad actividadActual, @WebParam(name = "sesionActual") sesion sesionActual) {
         WR_resultado Result;
         WR_resultado_iniciar Resultado = null;
-        Result = myValidador.validarIniciarActividad(actividadActual,sesionActual);
+        Result = myValidador.validarIniciarActividad(actividadActual, sesionActual);
         if (Result.getEstatus().compareTo("OK") != 0) {
             Resultado.setEstatus(Result.getEstatus());
             Resultado.setObservacion(Result.getObservacion());
@@ -707,7 +703,7 @@ public class GestionDeActividades {
         }
         try {
             actividad intermedio = myActividadFacade.find(actividadActual.getId());
-            
+
 
             /*
              * verificamos que se encontro el registro
@@ -718,55 +714,55 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-            sesionActual= mySesionFacade.find(sesionActual.getId());
-            if(sesionActual==null){
+            sesionActual = mySesionFacade.find(sesionActual.getId());
+            if (sesionActual == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Sesion no encontrada");
                 return Resultado;
             }
-            if(sesionActual.getBorrado()){
+            if (sesionActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Sesion no encontrada");
                 return Resultado;
             }
-            if(sesionActual.getEstado().compareTo("Abierta")!=0){
+            if (sesionActual.getEstado().compareTo("Abierta") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("La sesion no es valida");
                 return Resultado;
             }
             usuario usuarioActual = myUsuarioFacade.find(sesionActual.getIdUsuario().getId());
-            if(usuarioActual==null){
+            if (usuarioActual == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getBorrado()){
+            if (usuarioActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getEstado().compareTo("activo")!=0){
+            if (usuarioActual.getEstado().compareTo("activo") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("El usuario ha sido desactivado");
                 return Resultado;
             }
-            if(!intermedio.getIdUsuario().equals(usuarioActual)){
+            if (!intermedio.getIdUsuario().equals(usuarioActual)) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Solo el usuario asignado puede iniciar la actividad");
             }
             /**
              * La instancia fue borrada
              */
-            if(intermedio.getIdInstancia().getBorrado()){
+            if (intermedio.getIdInstancia().getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-            
+
             /**
              * La instancia fue cerrada de manera manual
              */
-            if(intermedio.getIdInstancia().getEstado().compareTo("cerrada")==0){
+            if (intermedio.getIdInstancia().getEstado().compareTo("cerrada") == 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Instancia cerrada");
                 return Resultado;
@@ -790,7 +786,7 @@ public class GestionDeActividades {
             myActividadFacade.edit(intermedio);
             Resultado.setUrl(intermedio.getIdTarea().getImplementacion());
             Resultado.setEstatus("Ok");
-
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -800,7 +796,6 @@ public class GestionDeActividades {
             return Resultado;
         }
     }
-
 
     /**
      * Asigna de manera manual una actividad a un usuario.
@@ -844,14 +839,14 @@ public class GestionDeActividades {
                 Resultado.setEstatus("Usuario no encontrado");
                 return Resultado;
             }
-
+            
             actividadIntermedia.setIdUsuario(usuarioIntermedio);
-           myActividadFacade.edit(actividadIntermedia);
-       
-                 Resultado.setEstatus("OK");
-           
-           
-
+            myActividadFacade.edit(actividadIntermedia);
+            
+            Resultado.setEstatus("OK");
+            
+            
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -861,10 +856,8 @@ public class GestionDeActividades {
             return Resultado;
         }
     }
-    
-    
-    
-     /**
+
+    /**
      * libera una actividad pendiente o abierta de un usuario.
      *
      * @param actividadActual un objeto de la clase actividad cuyo atributo id
@@ -875,9 +868,7 @@ public class GestionDeActividades {
      * la operacion
      * @see WR_resultado
      */
-    
-    
-     @WebMethod(operationName = "liberarActividad")
+    @WebMethod(operationName = "liberarActividad")
     public WR_resultado liberarActividad(@WebParam(name = "actividadLiberar") actividad actividadLiberar, @WebParam(name = "usuarioLiberar") usuario usuarioLiberar) {
         WR_resultado Resultado;
         Resultado = myValidador.validarAsignarActividad(actividadLiberar, usuarioLiberar);
@@ -886,7 +877,7 @@ public class GestionDeActividades {
         }
         try {
             actividad intermedio = myActividadFacade.find(actividadLiberar.getId());
-            
+
 
             /*
              * verificamos que se encontro el registro
@@ -897,37 +888,37 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-           
-             usuario usuarioActual = myUsuarioFacade.find(actividadLiberar.getId());
-            if(usuarioActual==null){
+            
+            usuario usuarioActual = myUsuarioFacade.find(actividadLiberar.getId());
+            if (usuarioActual == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getBorrado()){
+            if (usuarioActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getEstado().compareTo("activo")!=0){
+            if (usuarioActual.getEstado().compareTo("activo") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("El usuario ha sido desactivado");
                 return Resultado;
             }
-            
+
             /**
              * La instancia fue borrada
              */
-            if(intermedio.getIdInstancia().getBorrado()){
+            if (intermedio.getIdInstancia().getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-            
+
             /**
              * La instancia fue cerrada de manera manual
              */
-            if(intermedio.getIdInstancia().getEstado().compareTo("cerrada")==0){
+            if (intermedio.getIdInstancia().getEstado().compareTo("cerrada") == 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Instancia cerrada");
                 return Resultado;
@@ -956,17 +947,17 @@ public class GestionDeActividades {
             intermedio.setFechaAsignacion(null);
             intermedio.setIdUsuario(null);
             myActividadFacade.edit(intermedio);
-            cola_de_tarea cola=new cola_de_tarea();
+            cola_de_tarea cola = new cola_de_tarea();
             cola.setIdGrupo(intermedio.getIdInstancia().getIdPeriodoGrupoProceso().getIdGrupo());
             cola.setIdTarea(intermedio.getIdTarea());
             cola.setIdActividad(intermedio);
             myColaDeTareaFacade.create(cola);
             
             Resultado.setEstatus("OK");
-            
-           // em.createQuery("UPDATE actividad SET  estado='pendiente', id_usuario=null, fecha_apertura=null WHERE id='"+intermedio.getId()+"'");
-             
 
+            // em.createQuery("UPDATE actividad SET  estado='pendiente', id_usuario=null, fecha_apertura=null WHERE id='"+intermedio.getId()+"'");
+
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -977,20 +968,20 @@ public class GestionDeActividades {
         }
     }
 
-     
-      /**
+    /**
      * Libera todas las actividades pendientes y abiertas de un usuario.
      *
      * @param usuarioActual un objeto de la clase usuario cuyo atributo id se
-     * corresponda al del usuario registrado que se desea liberar todas la actividas abiertas y pendientes
+     * corresponda al del usuario registrado que se desea liberar todas la
+     * actividas abiertas y pendientes
      * @return un objeto de la clase WR_resultado que informara del resultado de
      * la operacion
      * @see WR_resultado
      */
-      @WebMethod(operationName = "liberarActividades")
+    @WebMethod(operationName = "liberarActividades")
     public WR_resultado liberarActividades(@WebParam(name = "usuarioLiberar") usuario usuarioLiberar) {
         WR_actividad Resultad;
-        WR_resultado Resultado=new WR_resultado();
+        WR_resultado Resultado = new WR_resultado();
         Resultad = myValidador.validarConsultarActividadesCola(usuarioLiberar);
         if (Resultad.getEstatus().compareTo("OK") != 0) {
             Resultado.setEstatus(Resultad.getEstatus());
@@ -999,74 +990,74 @@ public class GestionDeActividades {
         }
         
         try {
-             usuario usuarioActual = myUsuarioFacade.find(usuarioLiberar.getId());
-             if(usuarioActual==null){
+            usuario usuarioActual = myUsuarioFacade.find(usuarioLiberar.getId());
+            if (usuarioActual == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getBorrado()){
+            if (usuarioActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getEstado().compareTo("activo")!=0){
+            if (usuarioActual.getEstado().compareTo("activo") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("El usuario ha sido desactivado");
                 return Resultado;
             }
-         int j=0;  
-        activi = new actividad();
-        activi.setEstado("abierta");
-        actividad = ConsultarActividades(usuarioActual, activi);
-         
-        if (!actividad.getActividads().isEmpty()) {
+            int j = 0;
+            activi = new actividad();
+            activi.setEstado("abierta");
+            actividad = ConsultarActividades(usuarioActual, activi);
             
-      
-        while (actividad.getActividads().size() > j) {
-           
-            actividad intermedio = myActividadFacade.find(actividad.getActividads().get(j).getId());
-            intermedio.setFechaApertura(null);
-            intermedio.setFechaAsignacion(null);
-            intermedio.setIdUsuario(null);
-            intermedio.setEstado("pendiente");
-            myActividadFacade.edit(intermedio);
-            cola_de_tarea cola=new cola_de_tarea();
-            cola.setIdGrupo(actividad.getActividads().get(j).getIdInstancia().getIdPeriodoGrupoProceso().getIdGrupo());
-            cola.setIdTarea(actividad.getActividads().get(j).getIdTarea());
-            cola.setIdActividad(actividad.getActividads().get(j));
-            myColaDeTareaFacade.create(cola);
-
-            j++;
-        }
-          }
-        j=0;
-        activi.setEstado("pendiente");
-        actividad = ConsultarActividades(usuarioActual, activi);
-        if (!actividad.getActividads().isEmpty()) {
+            if (!actividad.getActividads().isEmpty()) {
+                
+                
+                while (actividad.getActividads().size() > j) {
+                    
+                    actividad intermedio = myActividadFacade.find(actividad.getActividads().get(j).getId());
+                    intermedio.setFechaApertura(null);
+                    intermedio.setFechaAsignacion(null);
+                    intermedio.setIdUsuario(null);
+                    intermedio.setEstado("pendiente");
+                    myActividadFacade.edit(intermedio);
+                    cola_de_tarea cola = new cola_de_tarea();
+                    cola.setIdGrupo(actividad.getActividads().get(j).getIdInstancia().getIdPeriodoGrupoProceso().getIdGrupo());
+                    cola.setIdTarea(actividad.getActividads().get(j).getIdTarea());
+                    cola.setIdActividad(actividad.getActividads().get(j));
+                    myColaDeTareaFacade.create(cola);
+                    
+                    j++;
+                }
+            }
+            j = 0;
+            activi.setEstado("pendiente");
+            actividad = ConsultarActividades(usuarioActual, activi);
+            if (!actividad.getActividads().isEmpty()) {
+                
+                
+                while (actividad.getActividads().size() > j) {
+                    
+                    
+                    actividad intermedio = myActividadFacade.find(actividad.getActividads().get(j).getId());
+                    intermedio.setFechaApertura(null);
+                    intermedio.setFechaAsignacion(null);
+                    intermedio.setIdUsuario(null);
+                    intermedio.setEstado("pendiente");
+                    myActividadFacade.edit(intermedio);
+                    cola_de_tarea cola = new cola_de_tarea();
+                    cola.setIdGrupo(actividad.getActividads().get(j).getIdInstancia().getIdPeriodoGrupoProceso().getIdGrupo());
+                    cola.setIdTarea(actividad.getActividads().get(j).getIdTarea());
+                    cola.setIdActividad(actividad.getActividads().get(j));
+                    myColaDeTareaFacade.create(cola);
+                    j++;
+                }
+            }
             
-        
-        while (actividad.getActividads().size() > j) {
             
-           
-            actividad intermedio = myActividadFacade.find(actividad.getActividads().get(j).getId());
-            intermedio.setFechaApertura(null);
-            intermedio.setFechaAsignacion(null);
-            intermedio.setIdUsuario(null);
-            intermedio.setEstado("pendiente");
-            myActividadFacade.edit(intermedio);
-            cola_de_tarea cola=new cola_de_tarea();
-             cola.setIdGrupo(actividad.getActividads().get(j).getIdInstancia().getIdPeriodoGrupoProceso().getIdGrupo());
-            cola.setIdTarea(actividad.getActividads().get(j).getIdTarea());
-            cola.setIdActividad(actividad.getActividads().get(j));
-            myColaDeTareaFacade.create(cola);
-            j++;
-        }
-       }
-             
-               
             Resultado.setEstatus("OK");
-
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -1076,9 +1067,7 @@ public class GestionDeActividades {
             return Resultado;
         }
     }
-     
-     
-     
+
     /**
      * Registra el comportamiento del usuario dentro del sistema.
      *
@@ -1131,9 +1120,9 @@ public class GestionDeActividades {
             nuevaAuditoria.setIdActividad(actividadActual);
             nuevaAuditoria.setIdSesion(sesionActual);
             myAuditoriaFacade.create(nuevaAuditoria);
-            Resultado.setEstatus("Ok");
-
-
+            Resultado.setEstatus("OK");
+            
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -1143,39 +1132,37 @@ public class GestionDeActividades {
             return Resultado;
         }
     }
-    
 
     /**
-     * Retorna la lista de las actividades en cola que pueden ser consumidas
-     * por un usuario determinado.
-     * 
+     * Retorna la lista de las actividades en cola que pueden ser consumidas por
+     * un usuario determinado.
+     *
      * @param usuarioActual un objeto de la clase usuario cuyo atributo id se
      * corresponda al de un usuario regitrado
-     * @return un objeto de la clase WR_actividad que informara del
-     * resultado de la operacion y que contendra la lista de actividades
-     * encontradas
+     * @return un objeto de la clase WR_actividad que informara del resultado de
+     * la operacion y que contendra la lista de actividades encontradas
      * @see WR_actividad
      */
     @WebMethod(operationName = "ConsultarActividadesCola")
     public WR_actividad ConsultarActividadesCola(@WebParam(name = "usuarioActual") usuario usuarioActual) {
-         WR_actividad Resultado;
+        WR_actividad Resultado;
         Resultado = myValidador.validarConsultarActividadesCola(usuarioActual);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
             return Resultado;
         }
         try {
             usuarioActual = myUsuarioFacade.find(usuarioActual.getId());
-            if(usuarioActual == null){
+            if (usuarioActual == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getBorrado()){
+            if (usuarioActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getEstado().compareTo("activo")!=0){
+            if (usuarioActual.getEstado().compareTo("activo") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("El usuario ha sido desactivado");
                 return Resultado;
@@ -1183,8 +1170,8 @@ public class GestionDeActividades {
             EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("WebApplication2PU");
             EntityManager em = emf.createEntityManager();
             
-            List<Long> resultadosPreliminares = (List<Long>)em.createNativeQuery("select distinct actividad.id from actividad, cola_de_tarea, grupo, usuario_grupo_rol where actividad.id = cola_de_tarea.id_actividad and cola_de_tarea.id_grupo = grupo.id and usuario_grupo_rol.id_grupo = grupo.id and usuario_grupo_rol.id_usuario = '"+usuarioActual.getId()+"'").getResultList();
-            if(resultadosPreliminares.isEmpty()){
+            List<Long> resultadosPreliminares = (List<Long>) em.createNativeQuery("select distinct actividad.id from actividad, cola_de_tarea, grupo, usuario_grupo_rol where actividad.id = cola_de_tarea.id_actividad and cola_de_tarea.id_grupo = grupo.id and usuario_grupo_rol.id_grupo = grupo.id and usuario_grupo_rol.id_usuario = '" + usuarioActual.getId() + "'").getResultList();
+            if (resultadosPreliminares.isEmpty()) {
                 Resultado.setEstatus("OK");
                 Resultado.setObservacion("No se encontraron actividades");
                 return Resultado;
@@ -1192,19 +1179,19 @@ public class GestionDeActividades {
             Iterator iterador = resultadosPreliminares.iterator();
             actividad actividadAuxiliar;
             actividad nuevaActividad;
-            while(iterador.hasNext()){
+            while (iterador.hasNext()) {
                 nuevaActividad = new actividad();
-                actividadAuxiliar = myActividadFacade.find((Long)iterador.next());
+                actividadAuxiliar = myActividadFacade.find((Long) iterador.next());
                 nuevaActividad.setId(actividadAuxiliar.getId());
-                nuevaActividad.setIdTarea(new tarea(actividadAuxiliar.getIdTarea().getId(), actividadAuxiliar.getIdTarea().getNombre(), null, null, null, null, Double.MIN_VALUE, null, true,actividadAuxiliar.getIdTarea().getTareaInicial(), actividadAuxiliar.getIdTarea().getTareaInformativa()));
-                nuevaActividad.setIdUsuarioOrigen(new usuario(actividadAuxiliar.getIdUsuarioOrigen().getId(), null,actividadAuxiliar.getIdUsuarioOrigen().getPrimerNombre(), actividadAuxiliar.getIdUsuarioOrigen().getPrimerApellido(), null, null, null, null, null, null, Integer.MIN_VALUE, false));
+                nuevaActividad.setIdTarea(new tarea(actividadAuxiliar.getIdTarea().getId(), actividadAuxiliar.getIdTarea().getNombre(), null, null, null, null, Double.MIN_VALUE, null, true, actividadAuxiliar.getIdTarea().getTareaInicial(), actividadAuxiliar.getIdTarea().getTareaInformativa()));
+                nuevaActividad.setIdUsuarioOrigen(new usuario(actividadAuxiliar.getIdUsuarioOrigen().getId(), null, actividadAuxiliar.getIdUsuarioOrigen().getPrimerNombre(), actividadAuxiliar.getIdUsuarioOrigen().getPrimerApellido(), null, null, null, null, null, null, Integer.MIN_VALUE, false));
                 nuevaActividad.setIdInstancia(new instancia(actividadAuxiliar.getIdInstancia().getId()));
                 Resultado.ingresarActividad(nuevaActividad);
             }
             Resultado.setEstatus("Ok");
-            Resultado.setObservacion(Resultado.getActividads().size()+" actividades encontradas");
-
-
+            Resultado.setObservacion(Resultado.getActividads().size() + " actividades encontradas");
+            
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -1216,39 +1203,38 @@ public class GestionDeActividades {
     }
 
     /**
-     * Saca una actividad de la cola y la asigna al usuario ingresado.
-     * una actividad solo puede sacarse de la cola y asignarse a un
-     * usuario que pertenesca al grupo de trabajo propietario de la 
-     * cola
-     * 
-     * @param actividadActual objeto de la clase actividad cuyo 
-     * identificador debe corresponder al de una actividad en cola
-     * @param usuarioActual objeto de la clase usuario cuyo id debe 
-     * corresponder a un registro
-     * @return un objeto de la clase WR_resultado que informara del
-     * resultado de la operacion
+     * Saca una actividad de la cola y la asigna al usuario ingresado. una
+     * actividad solo puede sacarse de la cola y asignarse a un usuario que
+     * pertenesca al grupo de trabajo propietario de la cola
+     *
+     * @param actividadActual objeto de la clase actividad cuyo identificador
+     * debe corresponder al de una actividad en cola
+     * @param usuarioActual objeto de la clase usuario cuyo id debe corresponder
+     * a un registro
+     * @return un objeto de la clase WR_resultado que informara del resultado de
+     * la operacion
      * @see WR_resultado
      */
     @WebMethod(operationName = "ConsumirCola")
     public WR_resultado ConsumirCola(@WebParam(name = "actividadActual") actividad actividadActual, @WebParam(name = "usuarioActual") usuario usuarioActual) {
         WR_resultado Resultado;
-        Resultado = myValidador.validarConsumirCola(actividadActual,usuarioActual);
+        Resultado = myValidador.validarConsumirCola(actividadActual, usuarioActual);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
             return Resultado;
         }
         try {
             usuarioActual = myUsuarioFacade.find(usuarioActual.getId());
-            if(usuarioActual == null){
+            if (usuarioActual == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getBorrado()){
+            if (usuarioActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getEstado().compareTo("activo")!=0){
+            if (usuarioActual.getEstado().compareTo("activo") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("El usuario ha sido desactivado");
                 return Resultado;
@@ -1256,9 +1242,9 @@ public class GestionDeActividades {
             EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("WebApplication2PU");
             EntityManager em = emf.createEntityManager();
             Long colaDeTareaActual;
-            try{
-                colaDeTareaActual = (Long)em.createNativeQuery("select distinct cola_de_tarea.id from actividad, cola_de_tarea, grupo, usuario_grupo_rol where actividad.id = cola_de_tarea.id_actividad and cola_de_tarea.id_grupo = grupo.id and usuario_grupo_rol.id_grupo = grupo.id and usuario_grupo_rol.id_usuario = '"+usuarioActual.getId()+"' and actividad.id = '"+actividadActual.getId()+"'").getSingleResult();
-            }catch(javax.persistence.NoResultException e){
+            try {
+                colaDeTareaActual = (Long) em.createNativeQuery("select distinct cola_de_tarea.id from actividad, cola_de_tarea, grupo, usuario_grupo_rol where actividad.id = cola_de_tarea.id_actividad and cola_de_tarea.id_grupo = grupo.id and usuario_grupo_rol.id_grupo = grupo.id and usuario_grupo_rol.id_usuario = '" + usuarioActual.getId() + "' and actividad.id = '" + actividadActual.getId() + "'").getSingleResult();
+            } catch (javax.persistence.NoResultException e) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("La actividad no existe o no pertenece a una cola de tareas asociada al usuario");
                 return Resultado;
@@ -1268,8 +1254,8 @@ public class GestionDeActividades {
             myActividadFacade.edit(actividadActual);
             myColaDeTareaFacade.remove(myColaDeTareaFacade.find(colaDeTareaActual));
             Resultado.setEstatus("Ok");
-
-
+            
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -1280,57 +1266,57 @@ public class GestionDeActividades {
         }
     }
 
-     /**
+    /**
      * busca los estados de todas las actividades.
      *
      * @return una lista de los estados de las actividades
      *
      */
-    
     @WebMethod(operationName = "buscarEstados")
     public List<String> buscarEstados() {
         
         return actividadFacade.buscarestados();
-       
+        
     }
     
-     @WebMethod(operationName = "condicionesTransiciones")
+    @WebMethod(operationName = "condicionesTransiciones")
     public Collection<condicion> condicionesTransiciones(@WebParam(name = "actividadn") actividad act) {
-         
-         actividad acti= actividadFacade.find(act.getId());
-         Collection<transicion> listatras;
-         Collection<condicion> listacon =new ArrayList<condicion>();
-         listatras= acti.getIdTarea().getTransicionCollection1();
+        
+        actividad acti = actividadFacade.find(act.getId());
+        Collection<transicion> listatras;
+        Collection<condicion> listacon = new ArrayList<condicion>();
+        listatras = acti.getIdTarea().getTransicionCollection1();
         for (transicion tr : listatras) {
             listacon.add(tr.getIdCondicion());
-        } 
+        }
         
         return listacon;
-       
+        
     }
-    
-    /** 
+
+    /**
      * Método cambia de abierta a pendiente
-     * 
+     *
      * @param actividadActual un objeto de la clase actividad cuyo atributo id
      * contenga el valor del identificador de la actividad que sera liberada
      * @param sesionActual un objeto de la clase sesion cuyo atributo id se
-     * corresponda a la sesesion actual y el id_usuario que corresponde al id del 
-     * usuario registrado que se desea pasar la actividad de abierta a pendiente
+     * corresponda a la sesesion actual y el id_usuario que corresponde al id
+     * del usuario registrado que se desea pasar la actividad de abierta a
+     * pendiente
      * @return un objeto de la clase WR_resultado que informara del resultado de
      * la operacion
      * @see WR_resultado
-     */ 
-     @WebMethod(operationName = "pendienteActividad")
+     */
+    @WebMethod(operationName = "pendienteActividad")
     public WR_resultado pendienteActividad(@WebParam(name = "actividadActual") actividad actividadActual, @WebParam(name = "sesionActual") sesion sesionActual) {
         WR_resultado Resultado;
-        Resultado = myValidador.validarIniciarActividad(actividadActual,sesionActual);
+        Resultado = myValidador.validarIniciarActividad(actividadActual, sesionActual);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
             return Resultado;
         }
         try {
             actividad intermedio = myActividadFacade.find(actividadActual.getId());
-            
+
 
             /*
              * verificamos que se encontro el registro
@@ -1341,55 +1327,55 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-            sesionActual= mySesionFacade.find(sesionActual.getId());
-            if(sesionActual==null){
+            sesionActual = mySesionFacade.find(sesionActual.getId());
+            if (sesionActual == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Sesion no encontrada");
                 return Resultado;
             }
-            if(sesionActual.getBorrado()){
+            if (sesionActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Sesion no encontrada");
                 return Resultado;
             }
-            if(sesionActual.getEstado().compareTo("Abierta")!=0){
+            if (sesionActual.getEstado().compareTo("Abierta") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("La sesion no es valida");
                 return Resultado;
             }
             usuario usuarioActual = myUsuarioFacade.find(sesionActual.getIdUsuario().getId());
-            if(usuarioActual==null){
+            if (usuarioActual == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getBorrado()){
+            if (usuarioActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            if(usuarioActual.getEstado().compareTo("activo")!=0){
+            if (usuarioActual.getEstado().compareTo("activo") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("El usuario ha sido desactivado");
                 return Resultado;
             }
-            if(!intermedio.getIdUsuario().equals(usuarioActual)){
+            if (!intermedio.getIdUsuario().equals(usuarioActual)) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Solo el usuario asignado puede iniciar la actividad");
             }
             /**
              * La instancia fue borrada
              */
-            if(intermedio.getIdInstancia().getBorrado()){
+            if (intermedio.getIdInstancia().getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-            
+
             /**
              * La instancia fue cerrada de manera manual
              */
-            if(intermedio.getIdInstancia().getEstado().compareTo("cerrada")==0){
+            if (intermedio.getIdInstancia().getEstado().compareTo("cerrada") == 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Instancia cerrada");
                 return Resultado;
@@ -1412,7 +1398,7 @@ public class GestionDeActividades {
             intermedio.setFechaApertura(new Date());
             myActividadFacade.edit(intermedio);
             Resultado.setEstatus("OK");
-
+            
         } catch (Exception e) {
             Resultado.setEstatus("Fail");
             Resultado.setObservacion(e.getMessage());
@@ -1423,23 +1409,32 @@ public class GestionDeActividades {
         }
     }
 
-
-     
-     
-     
-    /** 
-     * Método que lista las actividades que estan con estado pendiente y que no hayan sido borradas
+    /**
+     * Método que lista las actividades que estan con estado pendiente y que no
+     * hayan sido borradas
      */
     @WebMethod(operationName = "listarActividades")
     public List<actividad> listarActividades(@WebParam(name = "estado") String estado, @WebParam(name = "borrado") boolean borradoo) {
         
         return actividadFacade.listarActividades(estado, borradoo);
-       
+        
+    }
+    
+    @WebMethod(operationName = "consultarActividadesXInstanciaYTarea")
+    public WR_actividad consultarActividadXInstanciaYTarea(@WebParam(name = "idInstancia") instancia idInstancia, @WebParam(name = "idTarea") tarea idTarea) {
+        WR_actividad Resultado = new WR_actividad();
+        try {
+            Resultado.ingresarActividad(actividadFacade.buscarActividadXTareaEInstancia(idInstancia, idTarea));
+            Resultado.setEstatus("OK");
+        } catch (Exception e) {
+            Resultado.setEstatus("FAIL");
+            Resultado.setObservacion("No se encontro la actividad ");
+        }
+        return Resultado;
     }
     
     private WrResultado aplicarPolitica(com.pangea.capadeservicios.clienteweb.Actividad actividadActual, com.pangea.capadeservicios.clienteweb.Politica politicaActual) {
         com.pangea.capadeservicios.clienteweb.AplicarPolitica port = service_1.getAplicarPoliticaPort();
         return port.aplicarPolitica(actividadActual, politicaActual);
     }
-    
 }

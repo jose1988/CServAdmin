@@ -38,6 +38,8 @@ import com.pangea.capadeservicios.envoltorios.WR_proceso;
 import com.pangea.capadeservicios.envoltorios.WR_resultado;
 import com.pangea.capadeservicios.envoltorios.WR_tarea;
 import com.pangea.capadeservicios.validadores.GestionDeInstanciasValidador;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -536,7 +538,7 @@ public class GestionDeInstancias {
      * @see WR_resultado
      */
     @WebMethod(operationName = "CrearInstancia")
-    public WR_resultado CrearInstancia(@WebParam(name = "instanciaActual") instancia instanciaActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "periodoActual") periodo periodoActual, @WebParam(name = "grupoActual") grupo grupoActual, @WebParam(name = "procesoActual") proceso procesoActual, @WebParam(name = "tareaInicial") tarea tareaInicial) {
+    public WR_resultado CrearInstancia(@WebParam(name = "instanciaActual") instancia instanciaActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "periodoActual") periodo periodoActual, @WebParam(name = "grupoActual") grupo grupoActual, @WebParam(name = "procesoActual") proceso procesoActual, @WebParam(name = "tareaInicialtareaInicial") tarea tareaInicial) {
         WR_resultado Resultado = new WR_resultado();
         Resultado = myValidador.validarCrearInstancia(sesionActual, periodoActual, grupoActual, procesoActual, tareaInicial);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
@@ -554,7 +556,7 @@ public class GestionDeInstancias {
                 Resultado.setObservacion("Sesion invalida");
                 return Resultado;
             }
-            if (sesionActual.getEstado().compareTo("abierta") != 0) {
+            if (sesionActual.getEstado().compareTo("Abierta") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Sesion invalida");
                 return Resultado;
@@ -618,6 +620,22 @@ public class GestionDeInstancias {
             nuevaActividad.setIdPrioridad(tareaInicial.getIdPrioridad());
             nuevaActividad.setIdTarea(tareaInicial);
             nuevaActividad.setIdUsuarioOrigen(instanciaActual.getIdUsuario());
+
+            ArrayList<tarea> Tareas = (ArrayList<tarea>) myTareaFacade.listarTareasXProceso(procesoActual);
+            ArrayList<actividad> nuevasActividades = null;
+            for (int i = 0; i < Tareas.size(); i++) {
+                if (Tareas.get(i).getId() != tareaInicial.getId()) {
+                    nuevasActividades.get(i).setBorrado(false);
+                    nuevasActividades.get(i).setDuracion(Tareas.get(i).getDuracion());
+                    nuevasActividades.get(i).setEstado("pendiente");
+                    nuevasActividades.get(i).setFechaAsignacion(new Date());
+                    nuevasActividades.get(i).setIdEquivalenciasTiempo(Tareas.get(i).getIdEquivalenciaTiempo());
+                    nuevasActividades.get(i).setIdPrioridad(Tareas.get(i).getIdPrioridad());
+                    nuevasActividades.get(i).setIdTarea(Tareas.get(i));
+                    nuevasActividades.get(i).setIdUsuarioOrigen(instanciaActual.getIdUsuario());
+                }
+            }
+
             EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("WebApplication2PU");
             Long idPeriodoGrupoProcesoActual = null;
             periodo_grupo_proceso nuevoPeriodoGrupoProceso = new periodo_grupo_proceso();
@@ -644,17 +662,34 @@ public class GestionDeInstancias {
             myInstanciaFacade.create(instanciaActual);
             nuevaActividad.setIdInstancia(instanciaActual);
             myActividadFacade.create(nuevaActividad);
+            for (int i = 0; i < Tareas.size(); i++) {
+                if (Tareas.get(i).getId() != tareaInicial.getId()) {
+                    nuevasActividades.get(i).setIdInstancia(instanciaActual);
+                    myActividadFacade.create(nuevasActividades.get(i));
+                    Actividad ActividadAuxiliar = new Actividad();
+                    ActividadAuxiliar.setId(nuevasActividades.get(i).getId());
+                    Politica politicaAuxiliar = new Politica();
+                    politicaAuxiliar.setId(Tareas.get(i).getIdPolitica().getId());
+                    politicaAuxiliar.setNombre(Tareas.get(i).getIdPolitica().getNombre());
 
-            Actividad ActividadAuxiliar = new Actividad();
-            ActividadAuxiliar.setId(nuevaActividad.getId());
-            Politica politicaAuxiliar = new Politica();
-            politicaAuxiliar.setId(tareaInicial.getIdPolitica().getId());
-            politicaAuxiliar.setNombre(tareaInicial.getIdPolitica().getNombre());
-
-            WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadAuxiliar, politicaAuxiliar);
-            if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
-                Resultado.setObservacion("La tarea inicial no pudo ser asociada a un usuario");
+                    WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadAuxiliar, politicaAuxiliar);
+                    if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
+                       //??
+                        // Resultado.setObservacion("La tarea no pudo ser asociada a un usuario");
+                    }
+                }
             }
+
+//            Actividad ActividadAuxiliar = new Actividad();
+//            ActividadAuxiliar.setId(nuevaActividad.getId());
+//            Politica politicaAuxiliar = new Politica();
+//            politicaAuxiliar.setId(tareaInicial.getIdPolitica().getId());
+//            politicaAuxiliar.setNombre(tareaInicial.getIdPolitica().getNombre());
+//
+//            WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadAuxiliar, politicaAuxiliar);
+//            if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
+//                Resultado.setObservacion("La tarea inicial no pudo ser asociada a un usuario");
+//            }
 
             Resultado.setEstatus("OK");
         } catch (Exception e) {
@@ -826,6 +861,19 @@ public class GestionDeInstancias {
 
         return myInstanciaFacade.buscarestados();
 
+    }
+
+    @WebMethod(operationName = "consultarInstanciaXMaxId")
+    public WR_instancia consultarInstanciaXMaxId(@WebParam(name = "idUsuario") usuario idUsuario) {
+        WR_instancia Resultado = new WR_instancia();
+        try {
+            Resultado.ingresarInstancia(myInstanciaFacade.buscarInstanciaXMaxId());
+            Resultado.setEstatus("OK");
+        } catch (Exception e) {
+            Resultado.setEstatus("FAIL");
+            Resultado.setObservacion("No existe una instancia con ese usuario");
+        }
+        return Resultado;
     }
 
     /**

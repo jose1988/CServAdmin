@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "instancia.findByFechaCierre", query = "SELECT i FROM instancia i WHERE i.fechaCierre = :fechaCierre"),
     @NamedQuery(name = "instancia.findById", query = "SELECT i FROM instancia i WHERE i.id = :id"),
     @NamedQuery(name = "instancia.findEstados", query = "SELECT distinct(i.estado) FROM instancia i"),
+    @NamedQuery(name = "instancia.findByMaxId", query = "SELECT MAX(i.id) FROM instancia i WHERE i.borrado =false AND i.idPeriodoGrupoProceso.borrado=false AND i.idPeriodoGrupoProceso.idGrupo.borrado=false AND i.idPeriodoGrupoProceso.idPeriodo.borrado=false AND i.idPeriodoGrupoProceso.idProceso.borrado=false"),
     @NamedQuery(name = "instancia.findByBorrado", query = "SELECT i FROM instancia i WHERE i.borrado = :borrado")})
 public class instancia implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -5,6 +5,7 @@
 package com.pangea.capadeservicios.beans;
 
 import com.pangea.capadeservicios.entidades.instancia;
+import com.pangea.capadeservicios.entidades.usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,6 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class instanciaFacade extends AbstractFacade<instancia> {
+
     @PersistenceContext(unitName = "WebApplication2PU")
     private EntityManager em;
 
@@ -28,15 +30,21 @@ public class instanciaFacade extends AbstractFacade<instancia> {
     public instanciaFacade() {
         super(instancia.class);
     }
-    
+
+    public instancia buscarInstanciaXMaxId() {
+        instancia Registro;
+        Query Resultado = em.createNamedQuery("instancia.findByMaxId");
+        Registro = (instancia) Resultado.getSingleResult();
+        return Registro;
+    }
+
     /**
      * Método que lista el estado de la instancia
      */
-    public  List<String> buscarestados(){
+    public List<String> buscarestados() {
         List<String> c;
-        Query q=em.createNamedQuery("instancia.findEstados");
-        c= q.getResultList();
-        return c; 
+        Query q = em.createNamedQuery("instancia.findEstados");
+        c = q.getResultList();
+        return c;
     }
-    
 }

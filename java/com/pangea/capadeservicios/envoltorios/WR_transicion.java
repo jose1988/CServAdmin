@@ -105,4 +105,8 @@ public class WR_transicion {
     public void setTransicions(ArrayList<transicion> transicions) {
         this.transicions = transicions;
     }
+
+    public void ingresarTransicion(transicion nuevaTransicion) {
+        transicions.add(nuevaTransicion);
+    }
 }

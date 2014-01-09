@@ -35,8 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "transicion.findByDocumentacion", query = "SELECT t FROM transicion t WHERE t.documentacion = :documentacion"),
     @NamedQuery(name = "transicion.findByEnvioPorInterfaz", query = "SELECT t FROM transicion t WHERE t.envioPorInterfaz = :envioPorInterfaz"),
     @NamedQuery(name = "transicion.findById", query = "SELECT t FROM transicion t WHERE t.id = :id"),
+    @NamedQuery(name = "transicion.findByIdTarea", query = "SELECT t FROM transicion t WHERE t.idTarea = :idTarea"),
     @NamedQuery(name = "transicion.findByBorrado", query = "SELECT t FROM transicion t WHERE t.borrado = :borrado")})
 public class transicion implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
@@ -207,5 +209,4 @@ public class transicion implements Serializable {
     public String toString() {
         return "com.pangea.capadeservicios.entidades.transicion[ id=" + id + " ]";
     }
-    
 }
