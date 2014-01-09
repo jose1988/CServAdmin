@@ -53,24 +53,46 @@ public class organizacionFacade extends AbstractFacade<organizacion> {
      * Método que edita la organizacion
      * @param registro
      */
-     public void editarOrganizacion(organizacion Registro) {
-        Query q = em.createNativeQuery("UPDATE organizacion "
+     public void editarOrganizacion(organizacion Registro) {        
+        
+        if(Registro.getIdOrganizacionPadre()!=null){
+            Query q = em.createNativeQuery("UPDATE organizacion "
                 + "SET borrado=?,ciudad=?,descripcion=?,direccion=?,estado=?,fax=?,id_organizacion_padre=?,mail=?,nombre=?,telefono=?,tipo=?"
                 + " WHERE id=?");
-        q.setParameter(1, Registro.getBorrado());
-        q.setParameter(2, Registro.getCiudad());
-        q.setParameter(3, Registro.getDescripcion());
-        q.setParameter(4, Registro.getDireccion());
-        q.setParameter(5, Registro.getEstado());
-        q.setParameter(6, Registro.getFax());
-        q.setParameter(7, Registro.getIdOrganizacionPadre().getId());
-        q.setParameter(8, Registro.getMail());
-        q.setParameter(9, Registro.getNombre());
-        q.setParameter(10, Registro.getTelefono());
-        q.setParameter(11, Registro.getTipo());
-        q.setParameter(12, Registro.getId());
-
-        q.executeUpdate();
+            q.setParameter(1, Registro.getBorrado());
+            q.setParameter(2, Registro.getCiudad());
+            q.setParameter(3, Registro.getDescripcion());
+            q.setParameter(4, Registro.getDireccion());
+            q.setParameter(5, Registro.getEstado());
+            q.setParameter(6, Registro.getFax());
+            q.setParameter(7, Registro.getIdOrganizacionPadre().getId());
+            q.setParameter(8, Registro.getMail());
+            q.setParameter(9, Registro.getNombre());
+            q.setParameter(10, Registro.getTelefono());
+            q.setParameter(11, Registro.getTipo());
+            q.setParameter(12, Registro.getId());
+            
+            q.executeUpdate();
+        }
+        
+        else{
+            Query q = em.createNativeQuery("UPDATE organizacion "
+                + "SET borrado=?,ciudad=?,descripcion=?,direccion=?,estado=?,fax=?,mail=?,nombre=?,telefono=?,tipo=?"
+                + " WHERE id=?");
+            q.setParameter(1, Registro.getBorrado());
+            q.setParameter(2, Registro.getCiudad());
+            q.setParameter(3, Registro.getDescripcion());
+            q.setParameter(4, Registro.getDireccion());
+            q.setParameter(5, Registro.getEstado());
+            q.setParameter(6, Registro.getFax());
+            q.setParameter(7, Registro.getMail());
+            q.setParameter(8, Registro.getNombre());
+            q.setParameter(9, Registro.getTelefono());
+            q.setParameter(10, Registro.getTipo());
+            q.setParameter(11, Registro.getId());
+            
+            q.executeUpdate();
+        }        
 }
      
     /**
