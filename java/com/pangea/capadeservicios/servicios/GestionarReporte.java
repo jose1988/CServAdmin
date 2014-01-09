@@ -123,7 +123,12 @@ public class GestionarReporte {
         return Resultado;
     }
     
-    
+    /**
+     * Método que consulta las dependencias de la entidad reporte, es decir si
+     * dicho dato es usado en alguna otra entidad
+     * @param idReporte dato que se desea eliminar
+     * @return valor entero en el caso que no sea usado por otra entidad
+     */
     @WebMethod(operationName = "consultarDependenciasReporte")
     public int consultarDependenciasReporte(@WebParam(name = "idReporte") String idReporte) {
         int Resultado = 0;

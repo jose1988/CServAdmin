@@ -135,9 +135,14 @@ public class GestionDeOrganizacion {
             Resultado=null;
         }
         return Resultado;
-    }
+    }    
     
-    
+    /**
+     * Método que consulta las dependencias de la entidad organización, es decir si
+     * dicho dato es usado en alguna otra entidad
+     * @param idOrganizacion dato que se desea eliminar
+     * @return valor entero en el caso que no sea usado por otra entidad
+     */
     @WebMethod(operationName = "consultarDependenciasOrganizacion")
     public int consultarDependenciasOrganizacion(@WebParam(name = "idOrganizacion") String idOrganizacion) {
         int Resultado = 0;
