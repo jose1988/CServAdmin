@@ -135,7 +135,7 @@ public class GestionDeActividades {
             myDocumentoFacade.create(documentoActual);
             Resultado.setEstatus("OK");
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -224,7 +224,7 @@ public class GestionDeActividades {
             
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -311,7 +311,7 @@ public class GestionDeActividades {
             Resultado.setEstatus("OK");
             Resultado.setObservacion(Resultado.getActividads().size() + " Actividades encontradas");
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -366,7 +366,7 @@ public class GestionDeActividades {
             
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -435,7 +435,7 @@ public class GestionDeActividades {
             Resultado.setObservacion(Resultado.getDocumentos().size() + " documentos encontrados");
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -483,12 +483,12 @@ public class GestionDeActividades {
             }
             if (sesionActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
-                Resultado.setObservacion("Sesion no encontrada");
+                Resultado.setObservacion("Sesión no encontrada");
                 return Resultado;
             }
             if (sesionActual.getEstado().compareTo("abierta") != 0) {
                 Resultado.setEstatus("FAIL");
-                Resultado.setObservacion("Sesion invalida");
+                Resultado.setObservacion("Sesión invalida");
                 return Resultado;
             }
             usuario usuarioActual = myUsuarioFacade.find(sesionActual.getIdUsuario().getId());
@@ -670,7 +670,7 @@ public class GestionDeActividades {
              * AQUI VAS!!
              */
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -694,7 +694,7 @@ public class GestionDeActividades {
     @WebMethod(operationName = "IniciarActividad")
     public WR_resultado_iniciar IniciarActividad(@WebParam(name = "actividadActual") actividad actividadActual, @WebParam(name = "sesionActual") sesion sesionActual) {
         WR_resultado Result;
-        WR_resultado_iniciar Resultado = null;
+        WR_resultado_iniciar Resultado = new WR_resultado_iniciar();
         Result = myValidador.validarIniciarActividad(actividadActual, sesionActual);
         if (Result.getEstatus().compareTo("OK") != 0) {
             Resultado.setEstatus(Result.getEstatus());
@@ -725,7 +725,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Sesion no encontrada");
                 return Resultado;
             }
-            if (sesionActual.getEstado().compareTo("Abierta") != 0) {
+            if (sesionActual.getEstado().compareTo("abierta") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("La sesion no es valida");
                 return Resultado;
@@ -785,10 +785,10 @@ public class GestionDeActividades {
             intermedio.setFechaApertura(new Date());
             myActividadFacade.edit(intermedio);
             Resultado.setUrl(intermedio.getIdTarea().getImplementacion());
-            Resultado.setEstatus("Ok");
+            Resultado.setEstatus("OK");
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -848,7 +848,7 @@ public class GestionDeActividades {
             
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -959,7 +959,7 @@ public class GestionDeActividades {
 
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -1059,7 +1059,7 @@ public class GestionDeActividades {
             Resultado.setEstatus("OK");
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -1124,7 +1124,7 @@ public class GestionDeActividades {
             
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -1188,12 +1188,12 @@ public class GestionDeActividades {
                 nuevaActividad.setIdInstancia(new instancia(actividadAuxiliar.getIdInstancia().getId()));
                 Resultado.ingresarActividad(nuevaActividad);
             }
-            Resultado.setEstatus("Ok");
+            Resultado.setEstatus("OK");
             Resultado.setObservacion(Resultado.getActividads().size() + " actividades encontradas");
             
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -1253,11 +1253,11 @@ public class GestionDeActividades {
             actividadActual.setIdUsuario(usuarioActual);
             myActividadFacade.edit(actividadActual);
             myColaDeTareaFacade.remove(myColaDeTareaFacade.find(colaDeTareaActual));
-            Resultado.setEstatus("Ok");
+            Resultado.setEstatus("OK");
             
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -1338,7 +1338,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Sesion no encontrada");
                 return Resultado;
             }
-            if (sesionActual.getEstado().compareTo("Abierta") != 0) {
+            if (sesionActual.getEstado().compareTo("abierta") != 0) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("La sesion no es valida");
                 return Resultado;
@@ -1400,7 +1400,7 @@ public class GestionDeActividades {
             Resultado.setEstatus("OK");
             
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -1420,7 +1420,7 @@ public class GestionDeActividades {
         
     }
     
-    @WebMethod(operationName = "consultarActividadesXInstanciaYTarea")
+    @WebMethod(operationName = "consultarActividadXInstanciaYTarea")
     public WR_actividad consultarActividadXInstanciaYTarea(@WebParam(name = "idInstancia") instancia idInstancia, @WebParam(name = "idTarea") tarea idTarea) {
         WR_actividad Resultado = new WR_actividad();
         try {

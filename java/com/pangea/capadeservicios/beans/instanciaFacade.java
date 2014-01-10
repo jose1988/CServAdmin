@@ -31,11 +31,11 @@ public class instanciaFacade extends AbstractFacade<instancia> {
         super(instancia.class);
     }
 
-    public instancia buscarInstanciaXMaxId() {
-        instancia Registro;
+    public long buscarInstanciaXMaxId() {
+        long Id;
         Query Resultado = em.createNamedQuery("instancia.findByMaxId");
-        Registro = (instancia) Resultado.getSingleResult();
-        return Registro;
+        Id = (Long) Resultado.getSingleResult();
+        return Id;
     }
 
     /**

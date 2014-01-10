@@ -92,7 +92,7 @@ public class GestionDeControlDeUsuarios {
 
             if (intermedio.getClave().compareTo(sesionActual.getIdUsuario().getClave()) == 0) {
                 Resultado.setEstatus("OK");
-                sesionActual.setEstado("Abierta");
+                sesionActual.setEstado("abierta");
                 sesionActual.setFechaCreacion(new Date());
                 sesionActual.setIdUsuario(intermedio);
                 mySesionFacade.create(sesionActual);
@@ -137,8 +137,8 @@ public class GestionDeControlDeUsuarios {
         }
         try {
             sesionActual = mySesionFacade.find(sesionActual.getId());
-            if (sesionActual.getEstado().compareTo("Abierta") == 0) {
-                sesionActual.setEstado("Cerrada");
+            if (sesionActual.getEstado().compareTo("abierta") == 0) {
+                sesionActual.setEstado("cerrada");
                 sesionActual.setFechaFinalizacion(new Date());
                 mySesionFacade.edit(sesionActual);
                 Resultado.setEstatus("OK");
@@ -175,7 +175,7 @@ public class GestionDeControlDeUsuarios {
         boolean bandera = false;
         try {
             sesion intermedio = mySesionFacade.find(sesionActual.getId());
-            if (intermedio.getEstado().compareTo("Abierta") == 0) {
+            if (intermedio.getEstado().compareTo("abierta") == 0) {
                 bandera = true;
             }
         } catch (Exception e) {
