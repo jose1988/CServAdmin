@@ -16,7 +16,6 @@ import com.pangea.capadeservicios.beans.usuarioFacade;
 import com.pangea.capadeservicios.clienteweb.Actividad;
 import com.pangea.capadeservicios.clienteweb.AplicarPolitica_Service;
 import com.pangea.capadeservicios.clienteweb.Politica;
-import com.pangea.capadeservicios.clienteweb.Usuario;
 import com.pangea.capadeservicios.clienteweb.WrResultado;
 import com.pangea.capadeservicios.clienteweb.WrUsuario;
 import com.pangea.capadeservicios.entidades.actividad;
@@ -38,7 +37,6 @@ import com.pangea.capadeservicios.envoltorios.WR_proceso;
 import com.pangea.capadeservicios.envoltorios.WR_resultado;
 import com.pangea.capadeservicios.envoltorios.WR_tarea;
 import com.pangea.capadeservicios.validadores.GestionDeInstanciasValidador;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -523,22 +521,21 @@ public class GestionDeInstancias {
      * de algun proceso el objeto.
      * <p>los objetos introducidos solo necesitan poseer un identificador valido
      *
+     * @param instanciaActual 
      * @param sesionActual objeto de la clase sesion asociado al usuario que
      * desea crear la instancia
      * @param periodoActual objeto de la clase periodo que define el lapso de
      * tiempo en el que se desea ejecutar la instancia
      * @param grupoActual grupo de usuarios que sera asignado al proceso para la
      * ejecucion
-     * @param proceso objeto de la clase que describe la funcionalidad de la
-     * instancia
-     * @param objeto de la clase tarea que define por cual tarea del proceso se
-     * procedera a comensar la ejecucion de la instancia
+     * @param procesoActual 
+     * @param tareaInicial 
      * @return objeto de la clase WR_resultado que informa del resultado de la
      * operacion
      * @see WR_resultado
      */
     @WebMethod(operationName = "CrearInstancia")
-    public WR_resultado CrearInstancia(@WebParam(name = "instanciaActual") instancia instanciaActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "periodoActual") periodo periodoActual, @WebParam(name = "grupoActual") grupo grupoActual, @WebParam(name = "procesoActual") proceso procesoActual, @WebParam(name = "tareaInicialtareaInicial") tarea tareaInicial) {
+    public WR_resultado CrearInstancia(@WebParam(name = "instanciaActual") instancia instanciaActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "periodoActual") periodo periodoActual, @WebParam(name = "grupoActual") grupo grupoActual, @WebParam(name = "procesoActual") proceso procesoActual, @WebParam(name = "tareaInicial") tarea tareaInicial) {
         WR_resultado Resultado = new WR_resultado();
         Resultado = myValidador.validarCrearInstancia(sesionActual, periodoActual, grupoActual, procesoActual, tareaInicial);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
@@ -867,6 +864,7 @@ public class GestionDeInstancias {
 
     /**
      * Método que lista el estado de las instancias
+     * @return 
      */
     @WebMethod(operationName = "buscarEstados")
     public List<String> buscarEstados() {
@@ -875,6 +873,10 @@ public class GestionDeInstancias {
 
     }
 
+    /**
+     *Método que consulta la ultima instancia registrada
+     * @returna WR_instancia con el resultado 
+     */
     @WebMethod(operationName = "consultarInstanciaXMaxId")
     public WR_instancia consultarInstanciaXMaxId() {
         WR_instancia Resultado = new WR_instancia();
