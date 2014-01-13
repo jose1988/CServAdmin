@@ -7,6 +7,7 @@ package com.pangea.capadeservicios.servicios;
 import com.pangea.capadeservicios.beans.transicionFacade;
 import com.pangea.capadeservicios.entidades.tarea;
 import com.pangea.capadeservicios.envoltorios.WR_transicion;
+import com.pangea.capadeservicios.validadores.GestionDeTransicionValidador;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -21,10 +22,16 @@ public class GestionDeTransicion {
 
     @EJB
     transicionFacade myTransicionFacade = new transicionFacade();
+    GestionDeTransicionValidador myValidador = new GestionDeTransicionValidador();
 
-    @WebMethod(operationName = "ConsultaTransicion")
-    public WR_transicion ConsultaTransicion(@WebParam(name = "idTarea") tarea idTarea) {
+    
+    @WebMethod(operationName = "consultaTransicionXTarea")
+    public WR_transicion consultaTransicionXTarea(@WebParam(name = "idTarea") tarea idTarea) {
         WR_transicion Resultado = new WR_transicion();
+        Resultado=myValidador.validarConsultaTransicionXTarea(idTarea);
+        if (Resultado.getEstatus().compareTo("OK") != 0) {
+            return Resultado;
+        }
         try {
             Resultado.ingresarTransicion(myTransicionFacade.ConsultarTransicion(idTarea));
             Resultado.setEstatus("OK");
