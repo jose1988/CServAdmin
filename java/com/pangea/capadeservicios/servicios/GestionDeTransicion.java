@@ -23,7 +23,7 @@ public class GestionDeTransicion {
     transicionFacade myTransicionFacade = new transicionFacade();
 
     @WebMethod(operationName = "ConsultaTransicion")
-    public WR_transicion ConsultaTransicion(@WebParam(name = "idTransicion") tarea idTarea) {
+    public WR_transicion ConsultaTransicion(@WebParam(name = "idTarea") tarea idTarea) {
         WR_transicion Resultado = new WR_transicion();
         try {
             Resultado.ingresarTransicion(myTransicionFacade.ConsultarTransicion(idTarea));
