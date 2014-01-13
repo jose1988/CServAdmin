@@ -7,7 +7,9 @@ package com.pangea.capadeservicios.validadores;
 import com.pangea.capadeservicios.entidades.actividad;
 import com.pangea.capadeservicios.entidades.condicion;
 import com.pangea.capadeservicios.entidades.documento;
+import com.pangea.capadeservicios.entidades.instancia;
 import com.pangea.capadeservicios.entidades.sesion;
+import com.pangea.capadeservicios.entidades.tarea;
 import com.pangea.capadeservicios.entidades.usuario;
 import com.pangea.capadeservicios.envoltorios.WR_actividad;
 import com.pangea.capadeservicios.envoltorios.WR_documento;
@@ -336,6 +338,22 @@ public class GestionDeActividadesValidador {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion("Los identificadores de la actividad y el usuario introducidos son invalidos");            
             }else{
+                Resultado.setEstatus("OK");
+            }
+        }
+        return Resultado;
+    }
+    
+    public WR_actividad validarConsultarActividadXInstanciaYTarea(instancia instanciaActual,tarea tareaActual) {
+        WR_actividad Resultado = new WR_actividad();
+        if (instanciaActual.getId() == null || tareaActual.getId() ==null) {
+            Resultado.setEstatus("FAIL");
+            Resultado.setObservacion("El atributo 'id' de la instancia o de la tarea introducido es invalido");
+        } else {
+            if (instanciaActual.getId() < 0 || tareaActual.getId()<0) {
+                Resultado.setEstatus("FAIL");
+                Resultado.setObservacion("El atributo 'id' de la instancia o de la tarea introducido es invalido");
+            } else {
                 Resultado.setEstatus("OK");
             }
         }

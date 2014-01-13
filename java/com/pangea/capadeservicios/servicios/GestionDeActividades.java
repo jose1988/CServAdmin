@@ -56,7 +56,7 @@ import javax.xml.ws.WebServiceRef;
 @EJB(name = "GestionDeActividades", beanInterface = Local.class)
 @WebService(serviceName = "GestionDeActividades")
 public class GestionDeActividades {
-    
+
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_15362/Gestordepoliticas/AplicarPolitica.wsdl")
     private AplicarPolitica_Service service_1;
     /**
@@ -142,8 +142,8 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-        
-        
+
+
     }
 
     /**
@@ -165,7 +165,7 @@ public class GestionDeActividades {
             return Resultado;
         }
         try {
-            
+
             actividad intermedio = myActividadFacade.find(actividadActual.getId());
             if (intermedio == null) {
                 Resultado.setEstatus("FAIL");
@@ -177,7 +177,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-            
+
             Resultado.ingresarActividad(intermedio);
 
             /*
@@ -186,43 +186,43 @@ public class GestionDeActividades {
             Resultado.getActividads().get(0).setAuditoriaCollection(null);
             Resultado.getActividads().get(0).setColaDeTarea(null);
             Resultado.getActividads().get(0).setDocumentoCollection(null);
-            
-            
+
+
             tarea nuevaTarea = new tarea();
             nuevaTarea.setId(Resultado.getActividads().get(0).getIdTarea().getId());
             nuevaTarea.setNombre(Resultado.getActividads().get(0).getIdTarea().getNombre());
             Resultado.getActividads().get(0).setIdTarea(nuevaTarea);
-            
+
             usuario nuevoUsuario = new usuario();
             nuevoUsuario.setId(Resultado.getActividads().get(0).getIdUsuario().getId());
             nuevoUsuario.setPrimerNombre(Resultado.getActividads().get(0).getIdUsuario().getPrimerNombre());
             nuevoUsuario.setPrimerApellido(Resultado.getActividads().get(0).getIdUsuario().getPrimerApellido());
             Resultado.getActividads().get(0).setIdUsuario(nuevoUsuario);
-            
+
             usuario nuevoUsuarioOrigen = new usuario();
             nuevoUsuarioOrigen.setId(Resultado.getActividads().get(0).getIdUsuarioOrigen().getId());
             nuevoUsuarioOrigen.setPrimerNombre(Resultado.getActividads().get(0).getIdUsuarioOrigen().getPrimerNombre());
             nuevoUsuarioOrigen.setPrimerApellido(Resultado.getActividads().get(0).getIdUsuarioOrigen().getPrimerApellido());
             Resultado.getActividads().get(0).setIdUsuarioOrigen(nuevoUsuarioOrigen);
-            
+
             instancia nuevaInstancia = new instancia();
             nuevaInstancia.setId(Resultado.getActividads().get(0).getIdInstancia().getId());
             Resultado.getActividads().get(0).setIdInstancia(nuevaInstancia);
             Resultado.getActividads().get(0).setIdInstancia(nuevaInstancia);
-            
+
             equivalencia_tiempo nuevaEquivalencia = new equivalencia_tiempo();
             nuevaEquivalencia.setId(Resultado.getActividads().get(0).getIdEquivalenciasTiempo().getId());
             nuevaEquivalencia.setNombre(Resultado.getActividads().get(0).getIdEquivalenciasTiempo().getNombre());
             Resultado.getActividads().get(0).setIdEquivalenciasTiempo(nuevaEquivalencia);
-            
+
             prioridad nuevaPrioridad = new prioridad();
             nuevaPrioridad.setId(Resultado.getActividads().get(0).getIdPrioridad().getId());
             nuevaPrioridad.setNombre(Resultado.getActividads().get(0).getIdPrioridad().getNombre());
             Resultado.getActividads().get(0).setIdPrioridad(nuevaPrioridad);
-            
-            
-            
-            
+
+
+
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -231,7 +231,7 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-        
+
     }
 
     /**
@@ -254,7 +254,7 @@ public class GestionDeActividades {
         if (Resultado.getEstatus().compareTo("OK") != 0) {
             return Resultado;
         }
-        
+
         try {
             usuarioActual = myUsuarioFacade.find(usuarioActual.getId());
             if (usuarioActual == null) {
@@ -262,7 +262,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Usuario no encontrado");
                 return Resultado;
             }
-            
+
             Collection<actividad> intermedio = usuarioActual.getActividadUsuarioCollection();
             String estado = actividadActual.getEstado();
             Iterator iterador = intermedio.iterator();
@@ -274,29 +274,29 @@ public class GestionDeActividades {
                 actividadActual = (actividad) iterador.next();
                 if (actividadActual.getEstado().compareTo(estado) == 0 && !actividadActual.getBorrado()) {
                     actividadActual.setAuditoriaCollection(null);
-                    
+
                     actividadActual.setDuracion(actividadActual.getDuracion());
-                    
-                    
+
+
                     actividadActual.setFechaAsignacion(actividadActual.getFechaAsignacion());
                     actividadActual.setFechaAlerta(actividadActual.getFechaAlerta());
                     actividadActual.setIdEquivalenciasTiempo(null);
-                    
+
                     instanciaAuxiliar = myInstanciaFacade.find(actividadActual.getIdInstancia().getId());
                     actividadActual.setIdInstancia(instanciaAuxiliar);
-                    
+
                     usuarioAuxiliar.setId(actividadActual.getIdUsuario().getId());
                     usuarioAuxiliar.setPrimerApellido(actividadActual.getIdUsuario().getPrimerApellido());
                     usuarioAuxiliar.setPrimerNombre(actividadActual.getIdUsuario().getPrimerNombre());
                     actividadActual.setIdUsuario(usuarioAuxiliar);
-                    
+
                     usuarioOrigenAuxiliar.setId(actividadActual.getIdUsuarioOrigen().getId());
                     usuarioOrigenAuxiliar.setPrimerApellido(actividadActual.getIdUsuarioOrigen().getPrimerApellido());
                     usuarioOrigenAuxiliar.setPrimerNombre(actividadActual.getIdUsuario().getPrimerNombre());
                     actividadActual.setIdUsuarioOrigen(usuarioOrigenAuxiliar);
-                    
+
                     actividadActual.setIdPrioridad(null);
-                    
+
                     tareaAuxiliar.setId(actividadActual.getIdTarea().getId());
                     tareaAuxiliar.setNombre(actividadActual.getIdTarea().getNombre());
                     actividadActual.setIdTarea(tareaAuxiliar);
@@ -304,7 +304,7 @@ public class GestionDeActividades {
                     actividadActual.setParametrosEntrada(null);
                     actividadActual.setParametrosSalida(null);
                     actividadActual.getIdInstancia().setIdPeriodoGrupoProceso(actividadActual.getIdInstancia().getIdPeriodoGrupoProceso());
-                    
+
                     Resultado.ingresarActividad(actividadActual);
                 }
             }
@@ -318,8 +318,8 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-        
-        
+
+
     }
 
     /**
@@ -362,9 +362,9 @@ public class GestionDeActividades {
              */
             Resultado.setEstatus("OK");
             Resultado.ingresarDocumento(documentoActual);
-            
-            
-            
+
+
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -373,7 +373,7 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-        
+
     }
 
     /**
@@ -401,7 +401,7 @@ public class GestionDeActividades {
             /*
              * Verificamos que se encontraron registros
              */
-            
+
             if (intermedios == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("No se encontraron registros");
@@ -427,13 +427,13 @@ public class GestionDeActividades {
                     //ingresamos el documento al envoltorio
                     Resultado.ingresarDocumento(documentoAuxiliar);
                 }
-                
-                
-                
+
+
+
             }
             Resultado.setEstatus("OK");
             Resultado.setObservacion(Resultado.getDocumentos().size() + " documentos encontrados");
-            
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -442,7 +442,7 @@ public class GestionDeActividades {
         } finally {
             return Resultado;
         }
-        
+
     }
 
     /**
@@ -473,7 +473,7 @@ public class GestionDeActividades {
         if (Resultado.getEstatus().compareTo("OK") != 0) {
             return Resultado;
         }
-        
+
         try {
             sesionActual = mySesionFacade.find(sesionActual.getId());
             if (sesionActual == null) {
@@ -534,8 +534,8 @@ public class GestionDeActividades {
                 actividadActual.setFechaCierre(new Date());
                 myActividadFacade.edit(actividadActual);
                 instancia instanciaActual = myInstanciaFacade.find(actividadActual.getIdInstancia().getId());
-                
-                
+
+
                 Iterator IT = instanciaActual.getActividadCollection().iterator();
                 actividad actividadCerrada;
                 int contadorActividadesAbiertas = 0;
@@ -560,7 +560,7 @@ public class GestionDeActividades {
                     }
                     myInstanciaFacade.edit(instanciaActual);
                 }
-                
+
                 auditoria nuevaAuditoria = new auditoria();
                 nuevaAuditoria.setBorrado(false);
                 nuevaAuditoria.setFechaAcceso(new Date());
@@ -570,15 +570,15 @@ public class GestionDeActividades {
                 Resultado.setEstatus("OK");
                 return Resultado;
             }
-            
-            
+
+
             transicion transicionActual;
             int i = 0;
             while (i < Transiciones.size()) {
                 transicionActual = (transicion) Transiciones.get(i);
                 if (transicionActual.getIdCondicion().getId() != condicionActual.getId()) {
                     Transiciones.remove(transicionActual);
-                    
+
                 } else {
                     i++;
                 }
@@ -630,11 +630,11 @@ public class GestionDeActividades {
                         }
                     }
                 }
-                
-                
+
+
             }
-            
-            
+
+
             Iterator iterador5 = Transiciones.iterator();
             while (iterador5.hasNext()) {
                 transicionAuxiliar = (transicion) iterador5.next();
@@ -659,9 +659,9 @@ public class GestionDeActividades {
                 if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
                     Resultado.setObservacion("Una o varias de las nuevas actividades no pudieron ser asignadas");
                 }
-                
+
             }
-            
+
             actividadActual.setEstado("cerrada");
             actividadActual.setFechaCierre(new Date());
             myActividadFacade.edit(actividadActual);
@@ -708,7 +708,7 @@ public class GestionDeActividades {
             /*
              * verificamos que se encontro el registro
              */
-            
+
             if (intermedio == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
@@ -767,7 +767,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Instancia cerrada");
                 return Resultado;
             }
-            
+
             if (intermedio.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
@@ -786,7 +786,7 @@ public class GestionDeActividades {
             myActividadFacade.edit(intermedio);
             Resultado.setUrl(intermedio.getIdTarea().getImplementacion());
             Resultado.setEstatus("OK");
-            
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -839,14 +839,14 @@ public class GestionDeActividades {
                 Resultado.setEstatus("Usuario no encontrado");
                 return Resultado;
             }
-            
+
             actividadIntermedia.setIdUsuario(usuarioIntermedio);
             myActividadFacade.edit(actividadIntermedia);
-            
+
             Resultado.setEstatus("OK");
-            
-            
-            
+
+
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -882,13 +882,13 @@ public class GestionDeActividades {
             /*
              * verificamos que se encontro el registro
              */
-            
+
             if (intermedio == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
                 return Resultado;
             }
-            
+
             usuario usuarioActual = myUsuarioFacade.find(actividadLiberar.getId());
             if (usuarioActual == null) {
                 Resultado.setEstatus("FAIL");
@@ -923,7 +923,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Instancia cerrada");
                 return Resultado;
             }
-            
+
             if (intermedio.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
@@ -939,9 +939,9 @@ public class GestionDeActividades {
             }
             EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("WebApplication2PU");
             EntityManager em = emf.createEntityManager();
-            
-            
-            
+
+
+
             intermedio.setEstado("pendiente");
             intermedio.setFechaApertura(null);
             intermedio.setFechaAsignacion(null);
@@ -952,12 +952,12 @@ public class GestionDeActividades {
             cola.setIdTarea(intermedio.getIdTarea());
             cola.setIdActividad(intermedio);
             myColaDeTareaFacade.create(cola);
-            
+
             Resultado.setEstatus("OK");
 
             // em.createQuery("UPDATE actividad SET  estado='pendiente', id_usuario=null, fecha_apertura=null WHERE id='"+intermedio.getId()+"'");
 
-            
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -988,7 +988,7 @@ public class GestionDeActividades {
             Resultado.setObservacion(Resultad.getObservacion());
             return Resultado;
         }
-        
+
         try {
             usuario usuarioActual = myUsuarioFacade.find(usuarioLiberar.getId());
             if (usuarioActual == null) {
@@ -1010,12 +1010,12 @@ public class GestionDeActividades {
             activi = new actividad();
             activi.setEstado("abierta");
             actividad = ConsultarActividades(usuarioActual, activi);
-            
+
             if (!actividad.getActividads().isEmpty()) {
-                
-                
+
+
                 while (actividad.getActividads().size() > j) {
-                    
+
                     actividad intermedio = myActividadFacade.find(actividad.getActividads().get(j).getId());
                     intermedio.setFechaApertura(null);
                     intermedio.setFechaAsignacion(null);
@@ -1027,7 +1027,7 @@ public class GestionDeActividades {
                     cola.setIdTarea(actividad.getActividads().get(j).getIdTarea());
                     cola.setIdActividad(actividad.getActividads().get(j));
                     myColaDeTareaFacade.create(cola);
-                    
+
                     j++;
                 }
             }
@@ -1035,11 +1035,11 @@ public class GestionDeActividades {
             activi.setEstado("pendiente");
             actividad = ConsultarActividades(usuarioActual, activi);
             if (!actividad.getActividads().isEmpty()) {
-                
-                
+
+
                 while (actividad.getActividads().size() > j) {
-                    
-                    
+
+
                     actividad intermedio = myActividadFacade.find(actividad.getActividads().get(j).getId());
                     intermedio.setFechaApertura(null);
                     intermedio.setFechaAsignacion(null);
@@ -1054,10 +1054,10 @@ public class GestionDeActividades {
                     j++;
                 }
             }
-            
-            
+
+
             Resultado.setEstatus("OK");
-            
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -1121,8 +1121,8 @@ public class GestionDeActividades {
             nuevaAuditoria.setIdSesion(sesionActual);
             myAuditoriaFacade.create(nuevaAuditoria);
             Resultado.setEstatus("OK");
-            
-            
+
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -1169,7 +1169,7 @@ public class GestionDeActividades {
             }
             EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("WebApplication2PU");
             EntityManager em = emf.createEntityManager();
-            
+
             List<Long> resultadosPreliminares = (List<Long>) em.createNativeQuery("select distinct actividad.id from actividad, cola_de_tarea, grupo, usuario_grupo_rol where actividad.id = cola_de_tarea.id_actividad and cola_de_tarea.id_grupo = grupo.id and usuario_grupo_rol.id_grupo = grupo.id and usuario_grupo_rol.id_usuario = '" + usuarioActual.getId() + "'").getResultList();
             if (resultadosPreliminares.isEmpty()) {
                 Resultado.setEstatus("OK");
@@ -1190,8 +1190,8 @@ public class GestionDeActividades {
             }
             Resultado.setEstatus("OK");
             Resultado.setObservacion(Resultado.getActividads().size() + " actividades encontradas");
-            
-            
+
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -1254,8 +1254,8 @@ public class GestionDeActividades {
             myActividadFacade.edit(actividadActual);
             myColaDeTareaFacade.remove(myColaDeTareaFacade.find(colaDeTareaActual));
             Resultado.setEstatus("OK");
-            
-            
+
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -1274,14 +1274,14 @@ public class GestionDeActividades {
      */
     @WebMethod(operationName = "buscarEstados")
     public List<String> buscarEstados() {
-        
+
         return actividadFacade.buscarestados();
-        
+
     }
-    
+
     @WebMethod(operationName = "condicionesTransiciones")
     public Collection<condicion> condicionesTransiciones(@WebParam(name = "actividadn") actividad act) {
-        
+
         actividad acti = actividadFacade.find(act.getId());
         Collection<transicion> listatras;
         Collection<condicion> listacon = new ArrayList<condicion>();
@@ -1289,9 +1289,9 @@ public class GestionDeActividades {
         for (transicion tr : listatras) {
             listacon.add(tr.getIdCondicion());
         }
-        
+
         return listacon;
-        
+
     }
 
     /**
@@ -1321,7 +1321,7 @@ public class GestionDeActividades {
             /*
              * verificamos que se encontro el registro
              */
-            
+
             if (intermedio == null) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
@@ -1380,7 +1380,7 @@ public class GestionDeActividades {
                 Resultado.setObservacion("Instancia cerrada");
                 return Resultado;
             }
-            
+
             if (intermedio.getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("Registro no encontrado");
@@ -1398,7 +1398,7 @@ public class GestionDeActividades {
             intermedio.setFechaApertura(new Date());
             myActividadFacade.edit(intermedio);
             Resultado.setEstatus("OK");
-            
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
@@ -1415,14 +1415,18 @@ public class GestionDeActividades {
      */
     @WebMethod(operationName = "listarActividades")
     public List<actividad> listarActividades(@WebParam(name = "estado") String estado, @WebParam(name = "borrado") boolean borradoo) {
-        
+
         return actividadFacade.listarActividades(estado, borradoo);
-        
+
     }
-    
+
     @WebMethod(operationName = "consultarActividadXInstanciaYTarea")
     public WR_actividad consultarActividadXInstanciaYTarea(@WebParam(name = "idInstancia") instancia idInstancia, @WebParam(name = "idTarea") tarea idTarea) {
         WR_actividad Resultado = new WR_actividad();
+        Resultado = myValidador.validarConsultarActividadXInstanciaYTarea(idInstancia,idTarea);
+        if (Resultado.getEstatus().compareTo("OK") != 0) {
+            return Resultado;
+        }
         try {
             Resultado.ingresarActividad(actividadFacade.buscarActividadXTareaEInstancia(idInstancia, idTarea));
             Resultado.setEstatus("OK");
@@ -1432,7 +1436,7 @@ public class GestionDeActividades {
         }
         return Resultado;
     }
-    
+
     private WrResultado aplicarPolitica(com.pangea.capadeservicios.clienteweb.Actividad actividadActual, com.pangea.capadeservicios.clienteweb.Politica politicaActual) {
         com.pangea.capadeservicios.clienteweb.AplicarPolitica port = service_1.getAplicarPoliticaPort();
         return port.aplicarPolitica(actividadActual, politicaActual);

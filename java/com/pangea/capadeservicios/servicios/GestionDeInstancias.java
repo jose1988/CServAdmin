@@ -174,7 +174,7 @@ public class GestionDeInstancias {
             Resultado.setEstatus("OK");
 
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -241,7 +241,7 @@ public class GestionDeInstancias {
             Resultado.ingresarInstancia(instanciaActual);
 
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -304,7 +304,7 @@ public class GestionDeInstancias {
             Resultado.setObservacion(Resultado.getInstancias().size() + " instancias encontradas");
 
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -351,7 +351,7 @@ public class GestionDeInstancias {
             Resultado.ingresarPeriodo(periodoActual);
 
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -407,7 +407,7 @@ public class GestionDeInstancias {
 
 
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -465,7 +465,7 @@ public class GestionDeInstancias {
             Resultado.ingresarProceso(procesoActual);
 
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -509,7 +509,7 @@ public class GestionDeInstancias {
             Resultado.setEstatus("OK");
             Resultado.setObservacion(Resultado.getProcesos().size() + " procesos encontrados");
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -684,8 +684,8 @@ public class GestionDeInstancias {
 
                         WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadAuxiliar, politicaAuxiliar);
                         if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
-                            //??
-                            // Resultado.setObservacion("La tarea no pudo ser asociada a un usuario");
+                            
+                             Resultado.setObservacion("Una o más actividades no pudo ser asociada a un usuario o a la cola");
                         }
                     }
                 }
@@ -705,7 +705,7 @@ public class GestionDeInstancias {
 
             Resultado.setEstatus("OK");
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -736,7 +736,7 @@ public class GestionDeInstancias {
             Resultado.setEstatus("OK");
 
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -807,7 +807,7 @@ public class GestionDeInstancias {
             Resultado.setEstatus("OK");
             Resultado.setObservacion(Resultado.getActividads().size() + " actividades encontradas");
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
@@ -856,7 +856,7 @@ public class GestionDeInstancias {
 
 
         } catch (Exception e) {
-            Resultado.setEstatus("Fail");
+            Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
             System.out.print("*******************************************************************************");
             e.printStackTrace();
