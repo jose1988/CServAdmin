@@ -35,6 +35,7 @@ public class GestionDeGrupo {
 
     /**
      * Método que cuenta la cantidad de grupos que estan almacenados
+     *
      * @return número entero con la cantidad de grupos
      */
     @WebMethod(operationName = "contarGrupo")
@@ -42,7 +43,7 @@ public class GestionDeGrupo {
 
         return grupoFacade.count();
     }
-    
+
     /**
      * Método que lista la información de la tabla usuario_grupo_rol
      * especificamente por el usuario ingresado cuando se inicia sesión,
@@ -52,9 +53,12 @@ public class GestionDeGrupo {
      * @return
      */
     @WebMethod(operationName = "gruposUsuario")
-    public Collection<grupo> gruposUsuario(@WebParam(name = "user") usuario usr) {
-
-        return ugrFacade.gruposUsuario(usr);
+    public Collection<grupo> gruposUsuario(@WebParam(name = "user") usuario user) {
+        try {
+            return ugrFacade.gruposUsuario(user);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -150,45 +154,48 @@ public class GestionDeGrupo {
         }
         return Resultado;
     }
-    
-    
+
     /**
      * Método que inserta el grupo
+     *
      * @param registro
      */
     @WebMethod(operationName = "insertarGrupo")
     public void insertarGrupo(@WebParam(name = "registroGrupo") grupo registroGrupo) {
- 
+
         grupoFacade.insertarGrupo(registroGrupo);
     }
-    
+
     /**
      * Método que edita el grupo
+     *
      * @param registro
      */
     @WebMethod(operationName = "editarGrupo")
     public void editarGrupo(@WebParam(name = "registroGrupo") grupo registroGrupo) {
- 
+
         grupoFacade.editarGrupo(registroGrupo);
     }
-    
+
     /**
      * Método que elimina el grupo de manera lógica
+     *
      * @param ID
      */
     @WebMethod(operationName = "eliminarGrupo")
     public void eliminarGrupo(@WebParam(name = "idGrupo") String idGrupo) {
- 
+
         grupoFacade.eliminarGrupo(new Long(idGrupo));
     }
-    
+
     /**
      * Método que busca el grupo
+     *
      * @param ID
      */
     @WebMethod(operationName = "buscarGrupo")
-    public grupo buscarGrupo(@WebParam(name = "idGrupo") String idGrupo)  {
-        
+    public grupo buscarGrupo(@WebParam(name = "idGrupo") String idGrupo) {
+
         try {
             grupo find = grupoFacade.find(new Long(idGrupo));
             return find;
@@ -196,9 +203,10 @@ public class GestionDeGrupo {
             return null;
         }
     }
-    
+
     /**
      * Método que lista los grupos dependiendo del estado
+     *
      * @param borrado 1 si el borrado es FALSE y 1 si es TRUE
      * @return lista de tipo grupo
      */
@@ -206,37 +214,40 @@ public class GestionDeGrupo {
     public List<grupo> listarGruposByBorrado(@WebParam(name = "borrado") boolean borrado) {
         return grupoFacade.listarGruposByBorrado(borrado);
     }
-    
+
     /**
      * Método que restaura el grupo de manera lógica
+     *
      * @param ID
      */
     @WebMethod(operationName = "restaurarGrupo")
-    public void restaurarGrupo(@WebParam(name = "idGrupo") String idGrupo){
- 
+    public void restaurarGrupo(@WebParam(name = "idGrupo") String idGrupo) {
+
         grupoFacade.restaurarGrupo(new Long(idGrupo));
     }
-    
+
     /**
      * Método que consulta el nombre del grupo para verificar si existe o no
+     *
      * @param nombreGrupo
      * @return
      */
     @WebMethod(operationName = "consultarGrupoXNombre")
     public grupo consultarGrupoXNombre(@WebParam(name = "nombreGrupo") String nombreGrupo) {
-        
+
         grupo Resultado;
         try {
-          Resultado= grupoFacade.consultarGrupoXnombre(nombreGrupo);
+            Resultado = grupoFacade.consultarGrupoXnombre(nombreGrupo);
         } catch (Exception e) {
-            Resultado=null;
+            Resultado = null;
         }
         return Resultado;
     }
-    
+
     /**
      * Método que consulta las dependencias de la entidad grupo, es decir si
      * dicho dato es usado en alguna otra entidad
+     *
      * @param idGrupo dato que se desea eliminar
      * @return valor entero en el caso que no sea usado por otra entidad
      */
@@ -244,40 +255,40 @@ public class GestionDeGrupo {
     public int consultarDependenciasGrupo(@WebParam(name = "idGrupo") String idGrupo) {
         int Resultado = 0;
         grupo registroGrupo;
-        
+
         try {
             registroGrupo = grupoFacade.find(Long.parseLong(idGrupo));
-            
+
             Resultado = registroGrupo.getColadetareaCollection().size();
             if (Resultado > 0) {
                 return Resultado;
             }
-            
+
             Resultado = registroGrupo.getContadorroundrobinCollection().size();
             if (Resultado > 0) {
                 return Resultado;
             }
-            
+
             Resultado = registroGrupo.getDestinatarioCollection().size();
             if (Resultado > 0) {
                 return Resultado;
             }
-            
+
             Resultado = registroGrupo.getGrupopoliticatareaCollection().size();
             if (Resultado > 0) {
                 return Resultado;
             }
-            
+
             Resultado = registroGrupo.getPeriodogrupoprocesoCollection().size();
             if (Resultado > 0) {
                 return Resultado;
             }
-            
+
             Resultado = registroGrupo.getUsuariogruporolCollection().size();
             if (Resultado > 0) {
                 return Resultado;
             }
-            
+
         } catch (Exception e) {
             Resultado = -1;
         }
