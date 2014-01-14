@@ -522,7 +522,9 @@ public class GestionDeInstancias {
      * <p>los objetos introducidos solo necesitan poseer un identificador
      * valido.NOTA IMPORTANTE: SERVICIO MODIFICADO DEBIDO A QUE FALTABAN DATOS
      * DE LA INSTANCIA COMO LA DESCRIPCIÓN,REFERENCIA Y ESTADO QUE ERAN
-     * OBLIGATORIOS PARA CREAR LA INSTANCIA DEBIDO A ESTO NO FUNCIONABA FECHA:
+     * OBLIGATORIOS PARA CREAR LA INSTANCIA DEBIDO A ESTO NO FUNCIONABA 
+     * OTRO DETALLE : SE CREAN UNA TAREA 
+     * FECHA:
      * 10-01-2014
      *
      * @param instanciaActual
