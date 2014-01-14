@@ -519,23 +519,27 @@ public class GestionDeInstancias {
     /**
      * Crea una nueva instancia de algun proceso. para crear una nueva instancia
      * de algun proceso el objeto.
-     * <p>los objetos introducidos solo necesitan poseer un identificador valido
+     * <p>los objetos introducidos solo necesitan poseer un identificador
+     * valido.NOTA IMPORTANTE: SERVICIO MODIFICADO DEBIDO A QUE FALTABAN DATOS
+     * DE LA INSTANCIA COMO LA DESCRIPCIÓN,REFERENCIA Y ESTADO QUE ERAN
+     * OBLIGATORIOS PARA CREAR LA INSTANCIA DEBIDO A ESTO NO FUNCIONABA FECHA:
+     * 10-01-2014
      *
-     * @param instanciaActual 
+     * @param instanciaActual
      * @param sesionActual objeto de la clase sesion asociado al usuario que
      * desea crear la instancia
      * @param periodoActual objeto de la clase periodo que define el lapso de
      * tiempo en el que se desea ejecutar la instancia
      * @param grupoActual grupo de usuarios que sera asignado al proceso para la
      * ejecucion
-     * @param procesoActual 
-     * @param tareaInicial 
+     * @param procesoActual
+     * @param tareaInicial
      * @return objeto de la clase WR_resultado que informa del resultado de la
      * operacion
      * @see WR_resultado
      */
     @WebMethod(operationName = "CrearInstancia")
-    public WR_resultado CrearInstancia(@WebParam(name = "instanciaActual") instancia instanciaActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "periodoActual") periodo periodoActual, @WebParam(name = "grupoActual") grupo grupoActual, @WebParam(name = "procesoActual") proceso procesoActual, @WebParam(name = "tareaInicial") tarea tareaInicial) {
+    public WR_resultado CrearInstancia(@WebParam(name = "instanciaActual") instancia instanciaActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "periodoActual") periodo periodoActual, @WebParam(name = "grupoActual") grupo grupoActual, @WebParam(name = "procesoActual") proceso procesoActual, @WebParam(name = "tareaInicial") tarea tareaInicial, @WebParam(name = "descripcionInstancia") String descripcionInstancia, @WebParam(name = "referenciaInstancia") String referenciaInstancia, @WebParam(name = "estadoInstancia") String estadoInstancia) {
         WR_resultado Resultado = new WR_resultado();
         Resultado = myValidador.validarCrearInstancia(sesionActual, periodoActual, grupoActual, procesoActual, tareaInicial);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
@@ -660,9 +664,9 @@ public class GestionDeInstancias {
 
             instanciaActual.setEstado("abierta");
             instanciaActual.setFechaApertura(new Date());
-            instanciaActual.setDescripcion("Instancia" + new Date().toString());
-            instanciaActual.setReferencia("refe");
-            instanciaActual.setEstado("estado");
+            instanciaActual.setDescripcion(descripcionInstancia);
+            instanciaActual.setReferencia(referenciaInstancia);
+            instanciaActual.setEstado(estadoInstancia);
 
             myInstanciaFacade.create(instanciaActual);
             nuevaActividad.setIdInstancia(instanciaActual);
@@ -681,8 +685,8 @@ public class GestionDeInstancias {
 
                         WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadAuxiliar, politicaAuxiliar);
                         if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
-                            
-                             Resultado.setObservacion("Una o más actividades no pudo ser asociada a un usuario o a la cola");
+
+                            Resultado.setObservacion("Una o más actividades no pudo ser asociada a un usuario o a la cola");
                         }
                     }
                 }
@@ -864,7 +868,8 @@ public class GestionDeInstancias {
 
     /**
      * Método que lista el estado de las instancias
-     * @return 
+     *
+     * @return
      */
     @WebMethod(operationName = "buscarEstados")
     public List<String> buscarEstados() {
@@ -874,8 +879,9 @@ public class GestionDeInstancias {
     }
 
     /**
-     *Método que consulta la ultima instancia registrada
-     * @returna WR_instancia con el resultado 
+     * Método que consulta la ultima instancia registrada
+     *
+     * @returna WR_instancia con el resultado
      */
     @WebMethod(operationName = "consultarInstanciaXMaxId")
     public WR_instancia consultarInstanciaXMaxId() {

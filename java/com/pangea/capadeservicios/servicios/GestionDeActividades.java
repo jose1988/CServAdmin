@@ -325,7 +325,7 @@ public class GestionDeActividades {
     /**
      * Obtiene informacion detallada sobre un documento en especifico.
      *
-     * @param documentoActual 
+     * @param documentoActual
      * @return un objeto del tipo WR_documento cuya primera posicion en su lista
      * de documentos correspondera con el documento solicitado y que ademas
      * posea el resultado de la operacion
@@ -680,7 +680,10 @@ public class GestionDeActividades {
 
     /**
      * Inicia una actividad. una actividad solo podra ser iniciada por el
-     * usuario que ha sido asignado para su ejecucion
+     * usuario que ha sido asignado para su ejecucion. NOTA IMPORTANTE: SERVICIO
+     * MODIFICADO DEBIDO A QUE NO DABA MEMORIA AL OBJETO WR_resultado_iniciar
+     * PARA PODER GUARDAR LOS DATOS QUE SE RETORNAN DEBIDO A ESTO NO FUNCIONABA
+     * FECHA: 10-01-2014
      *
      * @param actividadActual un objeto de la clase actividad cuyo atributo id
      * contenga el valor del identificador de la actividad que se desea iniciar
@@ -859,8 +862,8 @@ public class GestionDeActividades {
     /**
      * libera una actividad pendiente o abierta de un usuario.
      *
-     * @param actividadLiberar 
-     * @param usuarioLiberar 
+     * @param actividadLiberar
+     * @param usuarioLiberar
      * @return un objeto de la clase WR_resultado que informara del resultado de
      * la operacion
      * @see WR_resultado
@@ -968,7 +971,7 @@ public class GestionDeActividades {
     /**
      * Libera todas las actividades pendientes y abiertas de un usuario.
      *
-     * @param usuarioLiberar 
+     * @param usuarioLiberar
      * @return un objeto de la clase WR_resultado que informara del resultado de
      * la operacion
      * @see WR_resultado
@@ -1412,9 +1415,10 @@ public class GestionDeActividades {
     /**
      * Método que lista las actividades que estan con estado pendiente y que no
      * hayan sido borradas
-     * @param estado 
+     *
+     * @param estado
      * @param borradoo
-     * @return  
+     * @return
      */
     @WebMethod(operationName = "listarActividades")
     public List<actividad> listarActividades(@WebParam(name = "estado") String estado, @WebParam(name = "borrado") boolean borradoo) {
@@ -1424,15 +1428,17 @@ public class GestionDeActividades {
     }
 
     /**
-     *Método que consulta una actividad por una instancia y tarea especifica
+     * Método que consulta una actividad por una instancia y tarea especifica
+     *
      * @param idInstancia objeto de la clase instancia con el id de la instancia
      * @param idTarea objeto de la clase tarea con el id de la tarea
-     * @return WR_actividad Envoltorio que contiene el resultado de la busque ya sea exitoso o fallido
+     * @return WR_actividad Envoltorio que contiene el resultado de la busque ya
+     * sea exitoso o fallido
      */
     @WebMethod(operationName = "consultarActividadXInstanciaYTarea")
     public WR_actividad consultarActividadXInstanciaYTarea(@WebParam(name = "idInstancia") instancia idInstancia, @WebParam(name = "idTarea") tarea idTarea) {
         WR_actividad Resultado = new WR_actividad();
-        Resultado = myValidador.validarConsultarActividadXInstanciaYTarea(idInstancia,idTarea);
+        Resultado = myValidador.validarConsultarActividadXInstanciaYTarea(idInstancia, idTarea);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
             return Resultado;
         }
