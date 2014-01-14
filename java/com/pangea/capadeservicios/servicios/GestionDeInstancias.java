@@ -522,10 +522,10 @@ public class GestionDeInstancias {
      * <p>los objetos introducidos solo necesitan poseer un identificador
      * valido.NOTA IMPORTANTE: SERVICIO MODIFICADO DEBIDO A QUE FALTABAN DATOS
      * DE LA INSTANCIA COMO LA DESCRIPCIÓN,REFERENCIA Y ESTADO QUE ERAN
-     * OBLIGATORIOS PARA CREAR LA INSTANCIA DEBIDO A ESTO NO FUNCIONABA 
-     * OTRO DETALLE : SE CREAN UNA TAREA 
-     * FECHA:
-     * 10-01-2014
+     * OBLIGATORIOS PARA CREAR LA INSTANCIA DEBIDO A ESTO NO FUNCIONABA OTRO
+     * DETALLE : SE CREA UNA ACTIVIDAD POR CADA TAREA Y SE LES APLICA LA 
+     * POLITICA QUE LE CORRESPONDA Y NO SE APLICA POLITICA A LA TAREA INICIAL.
+     * FECHA: 10-01-2014
      *
      * @param instanciaActual
      * @param sesionActual objeto de la clase sesion asociado al usuario que
