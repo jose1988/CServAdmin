@@ -522,8 +522,8 @@ public class GestionDeInstancias {
      * <p>los objetos introducidos solo necesitan poseer un identificador
      * valido.NOTA IMPORTANTE: SERVICIO MODIFICADO DEBIDO A QUE FALTABAN DATOS
      * DE LA INSTANCIA COMO LA DESCRIPCIÓN,REFERENCIA Y ESTADO QUE ERAN
-     * OBLIGATORIOS PARA CREAR LA INSTANCIA DEBIDO A ESTO NO FUNCIONABA OTRO
-     * DETALLE : SE CREA UNA ACTIVIDAD POR CADA TAREA Y SE LES APLICA LA 
+     * OBLIGATORIOS PARA CREAR LA INSTANCIA DEBIDO A ESTO NO CREABA LA INSTANCIA
+     * OTRO DETALLE : SE CREA UNA ACTIVIDAD POR CADA TAREA Y SE LES APLICA LA
      * POLITICA QUE LE CORRESPONDA Y NO SE APLICA POLITICA A LA TAREA INICIAL.
      * FECHA: 10-01-2014
      *
@@ -551,17 +551,17 @@ public class GestionDeInstancias {
             sesionActual = mySesionFacade.find(sesionActual.getId());
             if (sesionActual == null) {
                 Resultado.setEstatus("FAIL");
-                Resultado.setObservacion("Sesion invalida");
+                Resultado.setObservacion("Sesión invalida");
                 return Resultado;
             }
             if (sesionActual.getBorrado()) {
                 Resultado.setEstatus("FAIL");
-                Resultado.setObservacion("Sesion invalida");
+                Resultado.setObservacion("Sesión invalida");
                 return Resultado;
             }
             if (sesionActual.getEstado().compareTo("abierta") != 0) {
                 Resultado.setEstatus("FAIL");
-                Resultado.setObservacion("Sesion invalida");
+                Resultado.setObservacion("Sesión invalida");
                 return Resultado;
             }
             instanciaActual.setIdUsuario(myUsuarioFacade.find(sesionActual.getIdUsuario().getId()));
@@ -895,7 +895,7 @@ public class GestionDeInstancias {
             Resultado.setEstatus("OK");
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
-            Resultado.setObservacion("No existe una instancia con ese usuario");
+            Resultado.setObservacion("Instancia no encontrada");
         }
         return Resultado;
     }

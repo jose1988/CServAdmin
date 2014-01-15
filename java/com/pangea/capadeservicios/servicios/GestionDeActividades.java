@@ -682,8 +682,8 @@ public class GestionDeActividades {
      * Inicia una actividad. una actividad solo podra ser iniciada por el
      * usuario que ha sido asignado para su ejecucion. NOTA IMPORTANTE: SERVICIO
      * MODIFICADO DEBIDO A QUE NO DABA MEMORIA AL OBJETO WR_resultado_iniciar
-     * PARA PODER GUARDAR LOS DATOS QUE SE RETORNAN DEBIDO A ESTO NO FUNCIONABA
-     * FECHA: 10-01-2014
+     * PARA PODER GUARDAR LOS DATOS QUE SE RETORNAN DEBIDO A ESTO NO GUARDABA EL
+     * RESULTADO FECHA: 10-01-2014
      *
      * @param actividadActual un objeto de la clase actividad cuyo atributo id
      * contenga el valor del identificador de la actividad que se desea iniciar
