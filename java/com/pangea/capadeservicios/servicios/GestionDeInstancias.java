@@ -536,6 +536,9 @@ public class GestionDeInstancias {
      * ejecucion
      * @param procesoActual
      * @param tareaInicial
+     * @param descripcionInstancia 
+     * @param referenciaInstancia 
+     * @param estadoInstancia 
      * @return objeto de la clase WR_resultado que informa del resultado de la
      * operacion
      * @see WR_resultado
@@ -623,26 +626,7 @@ public class GestionDeInstancias {
             nuevaActividad.setIdPrioridad(tareaInicial.getIdPrioridad());
             nuevaActividad.setIdTarea(tareaInicial);
             nuevaActividad.setIdUsuarioOrigen(instanciaActual.getIdUsuario());
-            ArrayList<tarea> Tareas = null;
-            ArrayList<actividad> nuevasActividades = null;
-
-            try {
-                Tareas = (ArrayList<tarea>) myTareaFacade.listarTareasXProceso(procesoActual);
-                for (int i = 0; i < Tareas.size(); i++) {
-                    if (Tareas.get(i).getId() != tareaInicial.getId()) {
-                        nuevasActividades.get(i).setBorrado(false);
-                        nuevasActividades.get(i).setDuracion(Tareas.get(i).getDuracion());
-                        nuevasActividades.get(i).setEstado("pendiente");
-                        nuevasActividades.get(i).setFechaAsignacion(new Date());
-                        nuevasActividades.get(i).setIdEquivalenciasTiempo(Tareas.get(i).getIdEquivalenciaTiempo());
-                        nuevasActividades.get(i).setIdPrioridad(Tareas.get(i).getIdPrioridad());
-                        nuevasActividades.get(i).setIdTarea(Tareas.get(i));
-                        nuevasActividades.get(i).setIdUsuarioOrigen(instanciaActual.getIdUsuario());
-                    }
-                }
-            } catch (Exception e) {
-            }
-
+          
 
             EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("WebApplication2PU");
             Long idPeriodoGrupoProcesoActual = null;
@@ -661,9 +645,6 @@ public class GestionDeInstancias {
                 myperiodoGrupoProcesoFacade.create(nuevoPeriodoGrupoProceso);
             }
             instanciaActual.setIdPeriodoGrupoProceso(nuevoPeriodoGrupoProceso);
-
-
-
             instanciaActual.setEstado("abierta");
             instanciaActual.setFechaApertura(new Date());
             instanciaActual.setDescripcion(descripcionInstancia);
@@ -673,38 +654,18 @@ public class GestionDeInstancias {
             myInstanciaFacade.create(instanciaActual);
             nuevaActividad.setIdInstancia(instanciaActual);
             myActividadFacade.create(nuevaActividad);
-            if (Tareas != null) {
 
-                for (int i = 0; i < Tareas.size(); i++) {
-                    if (Tareas.get(i).getId() != tareaInicial.getId()) {
-                        nuevasActividades.get(i).setIdInstancia(instanciaActual);
-                        myActividadFacade.create(nuevasActividades.get(i));
-                        Actividad ActividadAuxiliar = new Actividad();
-                        ActividadAuxiliar.setId(nuevasActividades.get(i).getId());
-                        Politica politicaAuxiliar = new Politica();
-                        politicaAuxiliar.setId(Tareas.get(i).getIdPolitica().getId());
-                        politicaAuxiliar.setNombre(Tareas.get(i).getIdPolitica().getNombre());
 
-                        WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadAuxiliar, politicaAuxiliar);
-                        if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
+            Actividad ActividadAuxiliar = new Actividad();
+            ActividadAuxiliar.setId(nuevaActividad.getId());
+            Politica politicaAuxiliar = new Politica();
+            politicaAuxiliar.setId(tareaInicial.getIdPolitica().getId());
+            politicaAuxiliar.setNombre(tareaInicial.getIdPolitica().getNombre());
 
-                            Resultado.setObservacion("Una o más actividades no pudo ser asociada a un usuario o a la cola");
-                        }
-                    }
-                }
+            WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadAuxiliar, politicaAuxiliar);
+            if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
+                Resultado.setObservacion("La tarea inicial no pudo ser asociada a un usuario");
             }
-
-
-//            Actividad ActividadAuxiliar = new Actividad();
-//            ActividadAuxiliar.setId(nuevaActividad.getId());
-//            Politica politicaAuxiliar = new Politica();
-//            politicaAuxiliar.setId(tareaInicial.getIdPolitica().getId());
-//            politicaAuxiliar.setNombre(tareaInicial.getIdPolitica().getNombre());
-//
-//            WrResultado ResultadoPreliminar = this.aplicarPolitica(ActividadAuxiliar, politicaAuxiliar);
-//            if (ResultadoPreliminar.getEstatus().compareTo("FAIL") == 0) {
-//                Resultado.setObservacion("La tarea inicial no pudo ser asociada a un usuario");
-//            }
 
             Resultado.setEstatus("OK");
         } catch (Exception e) {
@@ -883,6 +844,7 @@ public class GestionDeInstancias {
     /**
      * Método que consulta la ultima instancia registrada
      *
+     * @return 
      * @returna WR_instancia con el resultado
      */
     @WebMethod(operationName = "consultarInstanciaXMaxId")
