@@ -62,11 +62,11 @@ public class GestionDeControlDeUsuarios {
      * Crea una nueva sesion que se mantiene hasta que sea cerrada y que le
      * permitira al usuario realizar algunas actividades
      *
-     * @param usuarioActual objeto de la clase usuario que debera poseer valores
+     * @param sesionActual objeto de la clase sesión que debera poseer valores
      * validos en sus atributos id y clave
-     * @return objeto del tipo WR_resultado que informara del resultado de la
-     * operacion
-     * @see WR_resultado
+     * @return objeto del tipo WR_sesion que informara del resultado de la
+     * operacion , de ser buena se devolvera el id de la sesion creada
+     * @see WR_sesion
      */
     @WebMethod(operationName = "LogIn")
     public WR_sesion LogIn(@WebParam(name = "sesionActual") sesion sesionActual) {

@@ -37,7 +37,6 @@ import com.pangea.capadeservicios.envoltorios.WR_proceso;
 import com.pangea.capadeservicios.envoltorios.WR_resultado;
 import com.pangea.capadeservicios.envoltorios.WR_tarea;
 import com.pangea.capadeservicios.validadores.GestionDeInstanciasValidador;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -520,31 +519,26 @@ public class GestionDeInstancias {
      * Crea una nueva instancia de algun proceso. para crear una nueva instancia
      * de algun proceso el objeto.
      * <p>los objetos introducidos solo necesitan poseer un identificador
-     * valido.NOTA IMPORTANTE: SERVICIO MODIFICADO DEBIDO A QUE FALTABAN DATOS
-     * DE LA INSTANCIA COMO LA DESCRIPCIÓN,REFERENCIA Y ESTADO QUE ERAN
-     * OBLIGATORIOS PARA CREAR LA INSTANCIA DEBIDO A ESTO NO CREABA LA INSTANCIA
-     * OTRO DETALLE : SE CREA UNA ACTIVIDAD POR CADA TAREA Y SE LES APLICA LA
-     * POLITICA QUE LE CORRESPONDA Y NO SE APLICA POLITICA A LA TAREA INICIAL.
-     * FECHA: 10-01-2014
+     * valido.NOTA IMPORTANTE: SERVICIO MODIFICADO VALIDACIÓN DE QUE LOS CAMPOS
+     * LA DESCRIPCIÓN,REFERENCIA Y ESTADO SEAN OBLIGATORIOS PARA CREAR LA
+     * INSTANCIA  FECHA: 10-01-2014
      *
-     * @param instanciaActual
-     * @param sesionActual objeto de la clase sesion asociado al usuario que
+     * @param instanciaActual objeto de la entidad instancia la cual debe tener
+     * el idUsuario, la referencia,descripción y estado de la instancia
+     * @param sesionActual objeto de la entidad sesion asociado al usuario que
      * desea crear la instancia
-     * @param periodoActual objeto de la clase periodo que define el lapso de
+     * @param periodoActual objeto de la entidad periodo que define el lapso de
      * tiempo en el que se desea ejecutar la instancia
      * @param grupoActual grupo de usuarios que sera asignado al proceso para la
      * ejecucion
      * @param procesoActual
      * @param tareaInicial
-     * @param descripcionInstancia 
-     * @param referenciaInstancia 
-     * @param estadoInstancia 
      * @return objeto de la clase WR_resultado que informa del resultado de la
      * operacion
      * @see WR_resultado
      */
     @WebMethod(operationName = "CrearInstancia")
-    public WR_resultado CrearInstancia(@WebParam(name = "instanciaActual") instancia instanciaActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "periodoActual") periodo periodoActual, @WebParam(name = "grupoActual") grupo grupoActual, @WebParam(name = "procesoActual") proceso procesoActual, @WebParam(name = "tareaInicial") tarea tareaInicial, @WebParam(name = "descripcionInstancia") String descripcionInstancia, @WebParam(name = "referenciaInstancia") String referenciaInstancia, @WebParam(name = "estadoInstancia") String estadoInstancia) {
+    public WR_resultado CrearInstancia(@WebParam(name = "instanciaActual") instancia instanciaActual, @WebParam(name = "sesionActual") sesion sesionActual, @WebParam(name = "periodoActual") periodo periodoActual, @WebParam(name = "grupoActual") grupo grupoActual, @WebParam(name = "procesoActual") proceso procesoActual, @WebParam(name = "tareaInicial") tarea tareaInicial) {
         WR_resultado Resultado = new WR_resultado();
         Resultado = myValidador.validarCrearInstancia(sesionActual, periodoActual, grupoActual, procesoActual, tareaInicial);
         if (Resultado.getEstatus().compareTo("OK") != 0) {
@@ -576,6 +570,21 @@ public class GestionDeInstancias {
             if (instanciaActual.getIdUsuario().getBorrado()) {
                 Resultado.setEstatus("FAIL");
                 Resultado.setObservacion("usuario no encontrado");
+                return Resultado;
+            }
+            if (instanciaActual.getReferencia().isEmpty() || instanciaActual.getReferencia() == null) {
+                Resultado.setEstatus("FAIL");
+                Resultado.setObservacion("No tiene la referencia de la instancia");
+                return Resultado;
+            }
+            if (instanciaActual.getDescripcion().isEmpty() || instanciaActual.getDescripcion() == null) {
+                Resultado.setEstatus("FAIL");
+                Resultado.setObservacion("No tiene la descripción de la instancia");
+                return Resultado;
+            }
+            if (instanciaActual.getEstado().isEmpty() || instanciaActual.getEstado() == null) {
+                Resultado.setEstatus("FAIL");
+                Resultado.setObservacion("No tiene el estado de la instancia");
                 return Resultado;
             }
             periodoActual = myPeriodoFacade.find(periodoActual.getId());
@@ -626,7 +635,7 @@ public class GestionDeInstancias {
             nuevaActividad.setIdPrioridad(tareaInicial.getIdPrioridad());
             nuevaActividad.setIdTarea(tareaInicial);
             nuevaActividad.setIdUsuarioOrigen(instanciaActual.getIdUsuario());
-          
+
 
             EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("WebApplication2PU");
             Long idPeriodoGrupoProcesoActual = null;
@@ -647,9 +656,6 @@ public class GestionDeInstancias {
             instanciaActual.setIdPeriodoGrupoProceso(nuevoPeriodoGrupoProceso);
             instanciaActual.setEstado("abierta");
             instanciaActual.setFechaApertura(new Date());
-            instanciaActual.setDescripcion(descripcionInstancia);
-            instanciaActual.setReferencia(referenciaInstancia);
-            instanciaActual.setEstado(estadoInstancia);
 
             myInstanciaFacade.create(instanciaActual);
             nuevaActividad.setIdInstancia(instanciaActual);
@@ -844,7 +850,7 @@ public class GestionDeInstancias {
     /**
      * Método que consulta la ultima instancia registrada
      *
-     * @return 
+     * @return
      * @returna WR_instancia con el resultado
      */
     @WebMethod(operationName = "consultarInstanciaXMaxId")

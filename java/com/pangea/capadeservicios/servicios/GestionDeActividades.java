@@ -665,9 +665,7 @@ public class GestionDeActividades {
             actividadActual.setFechaCierre(new Date());
             myActividadFacade.edit(actividadActual);
             Resultado.setEstatus("OK");
-            /**
-             * AQUI VAS!!
-             */
+
         } catch (Exception e) {
             Resultado.setEstatus("FAIL");
             Resultado.setObservacion(e.getMessage());
